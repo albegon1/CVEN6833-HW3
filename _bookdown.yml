@@ -1,7 +1,7 @@
-book_filename: "bookdown-start"
-chapter_name: "Chapter "
-repo: https://github.com/seankross/bookdown-start
+book_filename: "CVEN 6833 - HW#3"
+chapter_name: "Exercise "
+repo: https://github.com/albegon1/CVEN6833-HW3
 output_dir: docs
-htm_files: ["HW_2e2-main.html", "HW_2e3-main.html"]
+#rmd_files: ["HW_2e2-main.html", "HW_2e3-main.html"]
 clean: [packages.bib, bookdown.bbl]
-new_session: yes
+new_session: no
