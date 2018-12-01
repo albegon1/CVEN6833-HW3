@@ -8,7 +8,7 @@ bibliography: [book.bib]
 biblio-style: apalike
 link-citations: yes
 github-repo: albegon1/CVEN6833-HW3
-url: 'https://albegon1.github.io/CVEN6833-HW3/'
+url: 'https\://albegon1.github.io/CVEN6833-HW3/'
 description: "Code and output for Homework Set 3"
 ---
 
