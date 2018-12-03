@@ -1,3 +1,27 @@
+--- 
+title: "CVEN 6833 - Homework 3"
+author: "Alex Belenguer"
+#date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: albegon1/CVEN6833-HW3
+#url: 'https://albegon1.github.io/CVEN6833-HW3/'
+description: "Code and output for Homework Set 3"
+---
+
+## Topics {-}
+
+* Parametric/Nonparametric Time Series 
+* Hidden Markov Model 
+* Wavelet Spectral Analysis 
+* Extreme Value Time Series
+* Copulas
+
+<!--chapter:end:index.Rmd-->
+
 ---
 title: "01-Nonstationary time series model"
 output: html_document
@@ -343,3 +367,6 @@ plot.pdf(yeval,year.density,year.pdf)
 ```
 
 The same effect is depicted in the anual PDF.
+
+<!--chapter:end:01-AR1_MODEL.Rmd-->
+

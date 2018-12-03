@@ -1,6 +1,6 @@
 book_filename: "CVEN 6833 - HW#3"
 chapter_name: "Exercise "
-repo: https://github.com/albegon1/CVEN6833-HW3
+#repo: https://github.com/albegon1/CVEN6833-HW3
 output_dir: docs
 #rmd_files: ["HW_2e2-main.html", "HW_2e3-main.html"] # can be specified. Otherwise all rmd files are knitted
 clean: [packages.bib, bookdown.bbl]

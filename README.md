@@ -1,12 +1,12 @@
-# CVEN6833 - HW#3
+## CVEN6833 - HW#3
 
-# Topics {-}
+## Topics
 
-Parametric/Nonparametric Time Series 
-Hidden Markov Model 
-Wavelet Spectral Analysis 
-Extreme Value Time Series
-Copulas
+* Parametric/Nonparametric Time Series 
+* Hidden Markov Model 
+* Wavelet Spectral Analysis 
+* Extreme Value Time Series
+* Copulas
 
 Access [here](https://albegon1.github.io/CVEN6833-HW3/)
 

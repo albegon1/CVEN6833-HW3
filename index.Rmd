@@ -1,21 +1,21 @@
 --- 
 title: "CVEN 6833 - Homework 3"
 author: "Alex Belenguer"
-date: "`r Sys.Date()`"
+#date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib]
 biblio-style: apalike
 link-citations: yes
 github-repo: albegon1/CVEN6833-HW3
-url: 'https\://albegon1.github.io/CVEN6833-HW3/'
+#url: 'https://albegon1.github.io/CVEN6833-HW3/'
 description: "Code and output for Homework Set 3"
 ---
 
-# Topics {-}
+## Topics {-}
 
-Parametric/Nonparametric Time Series 
-Hidden Markov Model 
-Wavelet Spectral Analysis 
-Extreme Value Time Series
-Copulas
+* Parametric/Nonparametric Time Series 
+* Hidden Markov Model 
+* Wavelet Spectral Analysis 
+* Extreme Value Time Series
+* Copulas

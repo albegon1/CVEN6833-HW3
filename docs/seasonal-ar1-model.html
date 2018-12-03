@@ -11,7 +11,7 @@
 
   <meta property="og:title" content="CVEN 6833 - Homework 3" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="<a href="https://albegon1.github.io/CVEN6833-HW3/" class="uri">https://albegon1.github.io/CVEN6833-HW3/</a>" />
+  
   
   <meta property="og:description" content="Code and output for Homework Set 3" />
   <meta name="github-repo" content="albegon1/CVEN6833-HW3" />
@@ -25,15 +25,14 @@
 <meta name="author" content="Alex Belenguer">
 
 
-<meta name="date" content="2018-12-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="diving-in.html">
+
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -103,11 +102,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="./">CVEN 6833 - HW#3</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Topics</a></li>
-<li class="chapter" data-level="1" data-path="seasonal-ar1-model.html"><a href="seasonal-ar1-model.html"><i class="fa fa-check"></i><b>1</b> - Seasonal AR(1) model</a></li>
-<li class="chapter" data-level="2" data-path="diving-in.html"><a href="diving-in.html"><i class="fa fa-check"></i><b>2</b> Diving In</a></li>
-<li class="chapter" data-level="3" data-path="technical-details.html"><a href="technical-details.html"><i class="fa fa-check"></i><b>3</b> Technical Details</a></li>
-<li class="chapter" data-level="4" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>4</b> Introduction</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#topics"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="1" data-path="01-AR1_MODEL.html"><a href="#seasonal-ar1-model"><i class="fa fa-check"></i><b>1</b> Seasonal AR(1) model</a><ul>
+<li class="chapter" data-level="1.1" data-path="01-AR1_MODEL.html"><a href="#generate-250-simulations-each-of-same-length-as-the-historical-data."><i class="fa fa-check"></i><b>1.1</b> Generate 250 simulations each of same length as the historical data.</a></li>
+<li class="chapter" data-level="1.2" data-path="01-AR1_MODEL.html"><a href="#plot-statistics-from-simulations"><i class="fa fa-check"></i><b>1.2</b> Plot statistics from simulations</a></li>
+<li class="chapter" data-level="1.3" data-path="01-AR1_MODEL.html"><a href="#replace-the-simulation-of-the-errors-or-innovations-from-normal-to-gamma"><i class="fa fa-check"></i><b>1.3</b> Replace the simulation of the errors (or innovations) from Normal to Gamma</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -128,18 +128,20 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">CVEN 6833 - Homework 3</h1>
+<h4 class="author"><em>Alex Belenguer</em></h4>
+</div>
 <div id="seasonal-ar1-model" class="section level1">
-<h1><span class="header-section-number">Exercise 1</span> - Seasonal AR(1) model</h1>
+<h1><span class="header-section-number">Exercise 1</span> Seasonal AR(1) model</h1>
 <p><strong>Fit a seasonal AR(1) model – i.e., nonstationary time series model to the monthly Colorado River Flow at Lees Ferry.</strong></p>
-<ul>
-<li><strong>Generate 250 simulations each of same length as the historical data.</strong></li>
-</ul>
+<div id="generate-250-simulations-each-of-same-length-as-the-historical-data." class="section level2">
+<h2><span class="header-section-number">1.1</span> Generate 250 simulations each of same length as the historical data.</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load libraries</span>
 libr=<span class="kw">c</span>(<span class="st">&quot;magrittr&quot;</span>,<span class="st">&quot;sm&quot;</span>,<span class="st">&quot;stats&quot;</span>,<span class="st">&quot;moments&quot;</span>)
 <span class="kw">options</span>(<span class="dt">warn=</span><span class="dv">1</span>)
 <span class="kw">suppressPackageStartupMessages</span>(<span class="kw">lapply</span>(libr, require, <span class="dt">character.only =</span> <span class="ot">TRUE</span>))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># import and set up flow data</span>
-
 flow =<span class="st"> </span><span class="kw">read.table</span>(
   <span class="st">&quot;http://civil.colorado.edu/~balajir/CVEN6833/HWs/HW-3-2018/LeesFerry-monflows-1906-2016.txt&quot;</span>)
 
@@ -171,19 +173,38 @@ flow =<span class="st"> </span>flow[,<span class="dv">2</span><span class="op">:
               <span class="dt">main =</span> <span class="kw">colnames</span>(flow)[<span class="dv">13</span>],<span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>)
   <span class="kw">sm.density</span>(flow[,<span class="dv">13</span>], <span class="dt">add=</span><span class="ot">TRUE</span>)</code></pre></div>
 <p><img src="CVEN_6833_-_HW_3_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>The seasonal AR model is fitted using the Thomas Fiering coefficients. The anual flow AR model is fitted using <em>stats::arima</em>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get the parameters of the Thomas Fiering Model (12 models, 1 for each transition)</span>
-
 coef1 =<span class="st"> </span>coef2 =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>,<span class="dt">length.out =</span> <span class="dv">12</span>)
 
 coef1[<span class="dv">1</span>] =<span class="st"> </span><span class="kw">cor</span>(flow[<span class="op">-</span><span class="dv">1</span>,<span class="st">&quot;jan&quot;</span>],flow[<span class="op">-</span><span class="dv">111</span>,<span class="st">&quot;dec&quot;</span>]) <span class="co"># jan - dec</span>
 coef2[<span class="dv">1</span>] =<span class="st"> </span><span class="kw">sqrt</span>((<span class="kw">var</span>(flow[,<span class="dv">1</span>])) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span>. <span class="op">-</span><span class="st"> </span>coef1[<span class="dv">1</span>]<span class="op">*</span>coef1[<span class="dv">1</span>]))
 
-<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="dv">12</span>){ <span class="co"># all the remaining months</span>
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="dv">12</span>){ <span class="co"># remaining month pairs</span>
     coef1[i] =<span class="st"> </span><span class="kw">cor</span>(flow[,i],flow[,i<span class="op">-</span><span class="dv">1</span>])
     coef2[i] =<span class="st"> </span><span class="kw">sqrt</span>((<span class="kw">var</span>(flow[,i])) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span>. <span class="op">-</span><span class="st"> </span>coef1[i]<span class="op">*</span>coef1[i]))
+}
+
+<span class="co"># The anual flow is modeled using single AR(1) model</span>
+ar.year=<span class="kw">ar</span>(flow<span class="op">$</span>year,<span class="dt">order.max =</span> <span class="dv">1</span>) <span class="co">#AR order 1, MA</span></code></pre></div>
+<p>The 12 pairs of the TF coefficients are used to run 250 simulations (synthetic values) that will populate the statistics for the models. For the anual flow model, the simulations are obtained via <em>stats::arima.sim</em>.</p>
+<p>The random gamma values are related to the normal following the relationship explained in the thread below: <a href="https://stats.stackexchange.com/questions/37461/the-relationship-between-the-gamma-distribution-and-the-normal-distribution" class="uri">https://stats.stackexchange.com/questions/37461/the-relationship-between-the-gamma-distribution-and-the-normal-distribution</a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">innovation =<span class="st"> &quot;Normal&quot;</span> <span class="co"># defines nature of innovations: &quot;Normal&quot; or &quot;Gamma&quot;</span>
+
+<span class="co"># parameters for equivalent gamma distribution</span>
+<span class="co"># N(x;0,s) ~ lim(a -&gt; +inf) G((a-1)*sqrt(1/a)*s;a,sqrt(1/a)*s)</span>
+a=<span class="dv">5</span>
+sm=<span class="dv">1</span> <span class="co">#sd for monthly innovations</span>
+sy=<span class="kw">sd</span>(flow<span class="op">$</span>year) <span class="co">#sd for monthly innovations</span>
+
+<span class="co"># peak density for each month</span>
+peak=<span class="kw">rep</span>(<span class="ot">NA</span>,<span class="dv">12</span>)
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>){
+  aux=<span class="kw">sm.density</span>(flow[,i],<span class="dt">display=</span><span class="st">&quot;none&quot;</span>)
+  peak[i]=aux<span class="op">$</span>eval.points[<span class="kw">which.max</span>(aux<span class="op">$</span>estimate)]<span class="op">*</span><span class="fl">1.5</span>
 }</code></pre></div>
-<p>The 12 pairs of coefficients are used to run 250 simulations (synthetic values) that will populate the statistics for the models.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nsim=<span class="dv">250</span>    <span class="co"># number of simulations</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulations (innovation defines st. distribution of error)</span>
+nsim=<span class="dv">250</span>    <span class="co"># number of simulations</span>
 nyrs=<span class="kw">length</span>(flow[,<span class="dv">1</span>]) <span class="co"># years </span>
 
 armean=<span class="kw">matrix</span>(<span class="dv">0</span>,nsim,<span class="dv">12</span>)    <span class="co">#matrices that store the statistics</span>
@@ -193,19 +214,24 @@ arskw=<span class="kw">matrix</span>(<span class="dv">0</span>,nsim,<span class=
 armax=<span class="kw">matrix</span>(<span class="dv">0</span>,nsim,<span class="dv">12</span>)
 armin=<span class="kw">matrix</span>(<span class="dv">0</span>,nsim,<span class="dv">12</span>)
 
+ar.year.stat=<span class="kw">matrix</span>(<span class="ot">NA</span>,<span class="dt">ncol =</span> <span class="dv">6</span>,<span class="dt">nrow =</span> nsim) <span class="co"># year statistics</span>
+<span class="kw">colnames</span>(ar.year.stat) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;mean&quot;</span>,<span class="st">&quot;stdev&quot;</span>,<span class="st">&quot;min&quot;</span>,<span class="st">&quot;max&quot;</span>,<span class="st">&quot;skew&quot;</span>,<span class="st">&quot;cor&quot;</span>)
+
 <span class="co"># Points where May PDF is evaluated </span>
 xeval=<span class="kw">seq</span>(<span class="kw">min</span>(flow<span class="op">$</span>may)<span class="op">-</span><span class="fl">0.25</span><span class="op">*</span><span class="kw">sd</span>(flow<span class="op">$</span>may),
           <span class="kw">max</span>(flow<span class="op">$</span>may)<span class="op">+</span><span class="fl">0.25</span><span class="op">*</span><span class="kw">sd</span>(flow<span class="op">$</span>may),<span class="dt">length=</span><span class="dv">100</span>)
 simpdf=<span class="kw">matrix</span>(<span class="dv">0</span>,<span class="dt">nrow=</span>nsim,<span class="dt">ncol=</span><span class="dv">100</span>) <span class="co"># Array to store May simulated PDF</span>
 
-
-## Simulations
+<span class="co"># Points where anual PDF is evaluated </span>
+yeval=<span class="kw">seq</span>(<span class="kw">min</span>(flow<span class="op">$</span>year)<span class="op">-</span><span class="fl">0.25</span><span class="op">*</span><span class="kw">sd</span>(flow<span class="op">$</span>year),
+          <span class="kw">max</span>(flow<span class="op">$</span>year)<span class="op">+</span><span class="fl">0.25</span><span class="op">*</span><span class="kw">sd</span>(flow<span class="op">$</span>year),<span class="dt">length=</span><span class="dv">100</span>)
+year.pdf=<span class="kw">matrix</span>(<span class="dv">0</span>,<span class="dt">nrow=</span>nsim,<span class="dt">ncol=</span><span class="dv">100</span>) <span class="co"># Array to store anual simulated PDF</span>
 
 <span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim){ 
   nmons=nyrs<span class="op">*</span><span class="dv">12</span> <span class="co">#number of values to be generated</span>
   xsim=<span class="dv">1</span><span class="op">:</span>nmons
   r=<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>nyrs,<span class="dv">1</span>)
-
+  
   xsim[<span class="dv">1</span>]=flow[r,<span class="dv">1</span>] <span class="co"># Starting point for sim</span>
   xprev=xsim[<span class="dv">1</span>]
   
@@ -216,8 +242,9 @@ simpdf=<span class="kw">matrix</span>(<span class="dv">0</span>,<span class="dt"
     
     <span class="cf">if</span>(j <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) j1=<span class="dv">12</span>
     
-    x1=xprev<span class="op">-</span><span class="kw">mean</span>(flow[,j1])
-    x2=coef2[j]<span class="op">*</span><span class="kw">rnorm</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>)
+    x1=xprev<span class="op">-</span><span class="kw">ifelse</span>(innovation<span class="op">==</span><span class="st">&quot;Normal&quot;</span>,<span class="kw">mean</span>(flow[,j1]),peak[j1])
+    x2=coef2[j]<span class="op">*</span><span class="kw">ifelse</span>(innovation<span class="op">==</span><span class="st">&quot;Normal&quot;</span>,<span class="kw">rnorm</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>),
+        <span class="kw">rgamma</span>(<span class="dv">1</span>,<span class="dt">shape=</span>a,<span class="dt">scale=</span><span class="kw">sqrt</span>(<span class="dv">1</span><span class="op">/</span>a)<span class="op">*</span>sm)<span class="op">-</span>(a<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span><span class="kw">sqrt</span>(<span class="dv">1</span><span class="op">/</span>a)<span class="op">*</span>sm)
     
     xsim[i]=<span class="kw">mean</span>(flow[,j]) <span class="op">+</span><span class="st"> </span>x1<span class="op">*</span>coef1[j] <span class="op">+</span><span class="st"> </span>x2
     xprev=xsim[i]
@@ -226,26 +253,48 @@ simpdf=<span class="kw">matrix</span>(<span class="dv">0</span>,<span class="dt"
   <span class="co">#Store simulated values in matrix form, get May values and PDF</span>
   simdismon=<span class="kw">matrix</span>(xsim,<span class="dt">ncol =</span> <span class="dv">12</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>) <span class="co"># filled by row</span>
   maysim =<span class="st"> </span>simdismon[,<span class="dv">5</span>] <span class="co"># Synthetic values for May</span>
-    simpdf[k,]=<span class="kw">sm.density</span>(maysim,<span class="dt">eval.points=</span>xeval,<span class="dt">display=</span><span class="st">&quot;none&quot;</span>)<span class="op">$</span>estimate
-    
-    <span class="co"># Fill statistics for each month</span>
-    <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>){
-      armean[k,j]=<span class="kw">mean</span>(simdismon[,j])
+  simpdf[k,]=<span class="kw">sm.density</span>(maysim,<span class="dt">eval.points=</span>xeval,<span class="dt">display=</span><span class="st">&quot;none&quot;</span>)<span class="op">$</span>estimate
+  
+  <span class="co"># Fill statistics for each month</span>
+  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>){
+    armean[k,j]=<span class="kw">mean</span>(simdismon[,j])
     armax[k,j]=<span class="kw">max</span>(simdismon[,j])
     armin[k,j]=<span class="kw">min</span>(simdismon[,j])
     arstdev[k,j]=<span class="kw">sd</span>(simdismon[,j])
-        arskw[k,j]=<span class="kw">skewness</span>(simdismon[,j])
-    }
-    
-    arcor[k,<span class="dv">1</span>]=<span class="kw">cor</span>(simdismon[<span class="op">-</span>nyrs,<span class="dv">12</span>],simdismon[<span class="dv">2</span><span class="op">:</span>nyrs,<span class="dv">1</span>]) <span class="co">#cor dec-jan</span>
-    
-    <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="dv">12</span>){ <span class="co"># rest of pairs</span>
-      j1=j<span class="op">-</span><span class="dv">1</span>
+    arskw[k,j]=<span class="kw">skewness</span>(simdismon[,j])
+  }
+  arcor[k,<span class="dv">1</span>]=<span class="kw">cor</span>(simdismon[<span class="op">-</span>nyrs,<span class="dv">12</span>],simdismon[<span class="dv">2</span><span class="op">:</span>nyrs,<span class="dv">1</span>]) <span class="co">#cor dec-jan</span>
+  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="dv">12</span>){ <span class="co"># rest of pairs</span>
+    j1=j<span class="op">-</span><span class="dv">1</span>
     arcor[k,j]=<span class="kw">cor</span>(simdismon[,j],simdismon[,j1])
-    }
+  }
+  
+  <span class="co"># anual flow simulations</span>
+  <span class="cf">if</span>(innovation<span class="op">==</span><span class="st">&quot;Normal&quot;</span>){
+    ar.year.sim =<span class="st"> </span><span class="kw">arima.sim</span>(<span class="dt">n =</span> nyrs, <span class="kw">list</span>(<span class="dt">ar =</span> ar.year<span class="op">$</span>ar),
+                            <span class="dt">sd =</span> <span class="kw">sqrt</span>(ar.year<span class="op">$</span>var.pred)) <span class="op">+</span><span class="st"> </span>
+<span class="st">      </span><span class="kw">mean</span>(flow<span class="op">$</span>year)
+  }<span class="cf">else</span>{
+    ar.year.sim =<span class="st"> </span><span class="kw">arima.sim</span>(<span class="dt">n =</span> nyrs, <span class="kw">list</span>(<span class="dt">ar =</span> ar.year<span class="op">$</span>ar),
+      <span class="dt">rand.gen =</span> <span class="cf">function</span>(n, ...) <span class="kw">rgamma</span>(n,<span class="dt">shape=</span>a,
+      <span class="dt">scale=</span><span class="kw">sqrt</span>(<span class="dv">1</span><span class="op">/</span>a)<span class="op">*</span>sy)<span class="op">-</span>(a<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span><span class="kw">sqrt</span>(<span class="dv">1</span><span class="op">/</span>a)<span class="op">*</span>sy) <span class="op">+</span>
+<span class="st">      </span>yeval[<span class="kw">which.max</span>(year.density)]<span class="op">*</span><span class="fl">0.85</span>      
+
+  }
+  <span class="co"># Get anual PDF</span>
+  year.pdf[k,]=<span class="kw">sm.density</span>(ar.year.sim,<span class="dt">eval.points=</span>
+                            yeval,<span class="dt">display=</span><span class="st">&quot;none&quot;</span>)<span class="op">$</span>estimate
+  
+  <span class="co"># Calculate statistics</span>
+  ar.year.stat[k,<span class="st">&quot;mean&quot;</span>]=<span class="kw">mean</span>(ar.year.sim)
+  ar.year.stat[k,<span class="st">&quot;max&quot;</span>]=<span class="kw">max</span>(ar.year.sim)
+  ar.year.stat[k,<span class="st">&quot;min&quot;</span>]=<span class="kw">min</span>(ar.year.sim)
+  ar.year.stat[k,<span class="st">&quot;stdev&quot;</span>]=<span class="kw">sd</span>(ar.year.sim)
+  ar.year.stat[k,<span class="st">&quot;skew&quot;</span>]=<span class="kw">skewness</span>(ar.year.sim)
+  ar.year.stat[k,<span class="st">&quot;cor&quot;</span>]=<span class="kw">cor</span>(ar.year.sim[<span class="op">-</span>nyrs],ar.year.sim[<span class="dv">2</span><span class="op">:</span>nyrs])
 }</code></pre></div>
-<p>To compare the statistics from the synthetic values with the historical data, they are bound together in the same matrix.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Compute statistics from the Historical DAta.</span>
+<p>The statistics from the synthetic values and the historical data are bound in the same matrix.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compute statistics from the historical data.</span>
 obsmean=<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>
 obsstdev=<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>
 obscor=<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>
@@ -261,42 +310,123 @@ obsmin=<span class="dv">1</span><span class="op">:</span><span class="dv">12</sp
     obsskw[i]=<span class="kw">skewness</span>(flow[,i])
 }
 
+obscor[<span class="dv">1</span>]=<span class="st"> </span><span class="kw">cor</span>(flow[<span class="op">-</span>nyrs,<span class="dv">12</span>], flow[<span class="dv">2</span><span class="op">:</span>nyrs,<span class="dv">1</span>])
 <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="dv">12</span>){
   i1=i<span class="op">-</span><span class="dv">1</span>
   obscor[i]=<span class="kw">cor</span>(flow[,i], flow[,i1])
 }
 
-obscor[<span class="dv">1</span>]=<span class="st"> </span><span class="kw">cor</span>(flow[<span class="op">-</span>nyrs,<span class="dv">12</span>], flow[<span class="dv">2</span><span class="op">:</span>nyrs,<span class="dv">1</span>])
+<span class="co"># bind the stats of the historic data at the top..</span>
+armean=<span class="kw">rbind</span>(obsmean,armean)
+arstdev=<span class="kw">rbind</span>(obsstdev,arstdev)
+arskw=<span class="kw">rbind</span>(obsskw,arskw)
+arcor=<span class="kw">rbind</span>(obscor,arcor)
+armax=<span class="kw">rbind</span>(obsmax,armax)
+armin=<span class="kw">rbind</span>(obsmin,armin)
 
-### bind the stats of the observed data at the top..
-        armean=<span class="kw">rbind</span>(obsmean,armean)
-        arstdev=<span class="kw">rbind</span>(obsstdev,arstdev)
-        arskw=<span class="kw">rbind</span>(obsskw,arskw)
-        arcor=<span class="kw">rbind</span>(obscor,arcor)
-        armax=<span class="kw">rbind</span>(obsmax,armax)
-        armin=<span class="kw">rbind</span>(obsmin,armin)
+<span class="co"># anual flow binding</span>
+year.stat=<span class="kw">c</span>(<span class="kw">mean</span>(flow<span class="op">$</span>year),<span class="kw">sd</span>(flow<span class="op">$</span>year),<span class="kw">min</span>(flow<span class="op">$</span>year),
+            <span class="kw">max</span>(flow<span class="op">$</span>year),<span class="kw">skewness</span>(flow<span class="op">$</span>year),
+            <span class="kw">cor</span>(flow<span class="op">$</span>year[<span class="op">-</span>nyrs],flow<span class="op">$</span>year[<span class="dv">2</span><span class="op">:</span>nyrs]))
 
-<span class="co">#write the stats in separate files..</span>
-
-<span class="kw">write</span>(<span class="kw">t</span>(arcor),<span class="dt">file=</span><span class="st">&quot;arcorrs1&quot;</span>,<span class="dt">ncol=</span><span class="dv">12</span>)
-<span class="kw">write</span>(<span class="kw">t</span>(armean),<span class="dt">file=</span><span class="st">&quot;armeans&quot;</span>,<span class="dt">ncol=</span><span class="dv">12</span>)
-<span class="kw">write</span>(<span class="kw">t</span>(arstdev),<span class="dt">file=</span><span class="st">&quot;arstdevs&quot;</span>,<span class="dt">ncol=</span><span class="dv">12</span>)
-<span class="kw">write</span>(<span class="kw">t</span>(arskw),<span class="dt">file=</span><span class="st">&quot;arskews&quot;</span>,<span class="dt">ncol=</span><span class="dv">12</span>)
-<span class="kw">write</span>(<span class="kw">t</span>(armax),<span class="dt">file=</span><span class="st">&quot;armax&quot;</span>,<span class="dt">ncol=</span><span class="dv">12</span>)
-<span class="kw">write</span>(<span class="kw">t</span>(armin),<span class="dt">file=</span><span class="st">&quot;armin&quot;</span>,<span class="dt">ncol=</span><span class="dv">12</span>)</code></pre></div>
+ar.year.stat =<span class="st"> </span><span class="kw">rbind</span>(year.stat,ar.year.stat)</code></pre></div>
+</div>
+<div id="plot-statistics-from-simulations" class="section level2">
+<h2><span class="header-section-number">1.2</span> Plot statistics from simulations</h2>
 <ul>
-<li><p><strong>Create boxplots of annual and monthly, mean, variance, skew, lag-1 correlation, minimum, maximum and PDFs of May and annual flows. Comment on what you observe and also on why some of the monthly statistics are not captured.</strong></p></li>
-<li><p><strong>For fun, replace the simulation of the errors (or innovations) from Normal to Gamma.</strong></p></li>
+<li><strong>Create boxplots of annual and monthly, mean, variance, skew, lag-1 correlation, minimum, maximum and PDFs of May and annual flows. Comment on what you observe and also on why some of the monthly statistics are not captured.</strong></li>
 </ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># function to plot boxplots with the structure: hist. in first row</span>
+plot.bp =<span class="st"> </span><span class="cf">function</span>(matrix,name){
+  xmeans=<span class="kw">as.matrix</span>(matrix)
+  n=<span class="kw">length</span>(xmeans[,<span class="dv">1</span>])
+  xmeans1=<span class="kw">as.matrix</span>(xmeans[<span class="dv">2</span><span class="op">:</span>n,]) <span class="co">#the first row is the original data</span>
+  xs=<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>
+  zz=<span class="kw">boxplot</span>(<span class="kw">split</span>(xmeans1,<span class="kw">col</span>(xmeans1)), <span class="dt">plot=</span>F, <span class="dt">cex=</span><span class="fl">1.0</span>)
+  zz<span class="op">$</span>names=<span class="kw">rep</span>(<span class="st">&quot;&quot;</span>,<span class="kw">length</span>(zz<span class="op">$</span>names))
+  z1=<span class="kw">bxp</span>(zz,<span class="dt">ylim=</span><span class="kw">range</span>(xmeans),<span class="dt">xlab=</span><span class="st">&quot;&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;&quot;</span>,<span class="dt">cex=</span><span class="fl">1.00</span>)
+  <span class="kw">points</span>(z1,xmeans[<span class="dv">1</span>,],<span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)
+  <span class="kw">lines</span>(z1,xmeans[<span class="dv">1</span>,],<span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>)
+  <span class="kw">title</span>(<span class="dt">main=</span>name)
+}</code></pre></div>
+<p>The plots for the statistics of the simulated time series (shown as boxplots) vs. the historical data (shown as points and lines) are reproduced below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>))
+<span class="kw">plot.bp</span>(armean,<span class="st">&quot;Mean&quot;</span>)
+<span class="kw">plot.bp</span>(arstdev,<span class="st">&quot;Standard Deviation&quot;</span>)
+<span class="kw">plot.bp</span>(armin,<span class="st">&quot;Min&quot;</span>)
+<span class="kw">plot.bp</span>(armax,<span class="st">&quot;Max&quot;</span>)
+<span class="kw">plot.bp</span>(arskw,<span class="st">&quot;Skews&quot;</span>)
+<span class="kw">plot.bp</span>(arcor,<span class="st">&quot;Lag-1 correlation&quot;</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW_3_files/figure-html/plot.month-1.png" width="672" /></p>
+<p>The model proficiently captures the mean and max values. A fair fit is obtained with the standard deviation. However, the normality of the innovations results in a poor fit of minimum values and skews.</p>
+<p>The anual statistics are similarly represented below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))
+<span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;mean&quot;</span>],<span class="st">&quot;Mean&quot;</span>)
+<span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;stdev&quot;</span>],<span class="st">&quot;Standard Deviation&quot;</span>)
+<span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;min&quot;</span>],<span class="st">&quot;Min&quot;</span>)
+<span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;max&quot;</span>],<span class="st">&quot;Max&quot;</span>)
+<span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;skew&quot;</span>],<span class="st">&quot;Skews&quot;</span>)
+<span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;cor&quot;</span>],<span class="st">&quot;Lag-1 correlation&quot;</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW_3_files/figure-html/plot.year-1.png" width="672" /></p>
+<p>The best fitting occurs for mean, sd, and correlation. Min, max and skew hardly contain historical values within the 25th/75th percentile limits.</p>
+<p>The simulated May PDF vs. the historical May PDF is plotted at 100 points.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xdensityorig =<span class="st"> </span>flow<span class="op">$</span>may <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sm.density</span>(.,<span class="dt">eval.points=</span>xeval,<span class="dt">display=</span><span class="st">&quot;none&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>.<span class="op">$</span>estimate
 
+plot.pdf =<span class="st"> </span><span class="cf">function</span>(eval,histPDF,simPDF){
+  xeval =<span class="st"> </span>eval
+  <span class="kw">plot</span>(xeval,histPDF,<span class="dt">pch=</span><span class="st">&quot;.&quot;</span>,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>,<span class="dt">ylim=</span><span class="kw">range</span>(simPDF,histPDF),
+       <span class="dt">xlab=</span><span class="st">&quot;&quot;</span>,<span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>)
+  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim)<span class="kw">lines</span>(xeval,simPDF[i,],<span class="dt">col=</span><span class="st">&#39;lightgrey&#39;</span>,<span class="dt">lty=</span><span class="dv">3</span>)
+  <span class="kw">lines</span>(xeval,histPDF,<span class="dt">lwd=</span><span class="dv">3</span>,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)
+  <span class="kw">title</span>(<span class="dt">main=</span><span class="st">&quot;Historical vs. simulated PDF&quot;</span>)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.pdf</span>(xeval,xdensityorig,simpdf)</code></pre></div>
+<p><img src="CVEN_6833_-_HW_3_files/figure-html/plot.pdf.month-1.png" width="672" /></p>
+<p>The bimodal historical May PDF is not captured by the simulations due to the Normal nature of the innovations.</p>
+<p>The simulated vs. historical anual flow PDF is similarly compared.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">year.density =<span class="st"> </span>flow<span class="op">$</span>year <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sm.density</span>(.,<span class="dt">eval.points=</span>yeval,
+               <span class="dt">display=</span><span class="st">&quot;none&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>.<span class="op">$</span>estimate</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.pdf</span>(yeval,year.density,year.pdf)</code></pre></div>
+<p><img src="CVEN_6833_-_HW_3_files/figure-html/plot.pdf.year-1.png" width="672" /></p>
+</div>
+<div id="replace-the-simulation-of-the-errors-or-innovations-from-normal-to-gamma" class="section level2">
+<h2><span class="header-section-number">1.3</span> Replace the simulation of the errors (or innovations) from Normal to Gamma</h2>
+<p>The simulation code chunks are rerun via r markdown code with innovation = “Gamma”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">innovation=<span class="st">&quot;Gamma&quot;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>))
+<span class="kw">plot.bp</span>(armean,<span class="st">&quot;Mean&quot;</span>)
+<span class="kw">plot.bp</span>(arstdev,<span class="st">&quot;Standard Deviation&quot;</span>)
+<span class="kw">plot.bp</span>(armin,<span class="st">&quot;Min&quot;</span>)
+<span class="kw">plot.bp</span>(armax,<span class="st">&quot;Max&quot;</span>)
+<span class="kw">plot.bp</span>(arskw,<span class="st">&quot;Skews&quot;</span>)
+<span class="kw">plot.bp</span>(arcor,<span class="st">&quot;Lag-1 correlation&quot;</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW_3_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>The graphs show a differentiated skew performance, although the fit seems to be equivalent.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))
+<span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;mean&quot;</span>],<span class="st">&quot;Mean&quot;</span>)
+<span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;stdev&quot;</span>],<span class="st">&quot;Standard Deviation&quot;</span>)
+<span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;min&quot;</span>],<span class="st">&quot;Min&quot;</span>)
+<span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;max&quot;</span>],<span class="st">&quot;Max&quot;</span>)
+<span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;skew&quot;</span>],<span class="st">&quot;Skews&quot;</span>)
+<span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;cor&quot;</span>],<span class="st">&quot;Lag-1 correlation&quot;</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW_3_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.pdf</span>(xeval,xdensityorig,simpdf)</code></pre></div>
+<p><img src="CVEN_6833_-_HW_3_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>The simulated May PDF is no longer symmetric, as it would be expected from a Gamma Distribution</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.pdf</span>(yeval,year.density,year.pdf)</code></pre></div>
+<p><img src="CVEN_6833_-_HW_3_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>The same effect is depicted in the anual PDF.</p>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="diving-in.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
