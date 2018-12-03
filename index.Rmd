@@ -12,7 +12,7 @@ github-repo: albegon1/CVEN6833-HW3
 description: "Code and output for Homework Set 3"
 ---
 
-## Topics {-}
+# Topics {-}
 
 * Parametric/Nonparametric Time Series 
 * Hidden Markov Model 
