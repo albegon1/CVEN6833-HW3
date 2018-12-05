@@ -2,12 +2,18 @@ bookdown::gitbook:
   css: style.css
   split_by: chapter
   config:
+    download: ["pdf", "epub", "mobi"]
+    sharing: 
+        twitter: yes
+        github: yes
+        facebook: no
     toc:
       collapse: subsection
+      scroll_highlight: yes
       before: |
         <li><a href="./">CVEN 6833 - HW#3</a></li>
       after: |
-        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li> 
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex

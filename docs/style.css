@@ -12,3 +12,29 @@ pre {
 pre code {
   white-space: inherit;
 }
+
+body{ /* Normal  */
+      font-size: 12px;
+  }
+h1.title {
+  font-size: 24px;
+  color: DarkBlue;
+}
+h1 { /* Header 1 */
+  font-size: 18px;
+  color: DarkBlue;
+}
+h2 { /* Header 2 */
+    font-size: 12px;
+  color: DarkBlue;
+}
+h3 { /* Header 3 */
+  font-size: 12px;
+  color: DarkBlue;
+}
+code.r{ /* Code block */
+    font-size: 12px;
+}
+pre { /* Code block - determines code spacing between lines */
+    font-size: 14px;
+}
