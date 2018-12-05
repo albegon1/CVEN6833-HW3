@@ -113,8 +113,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="nonparametric-seasonal-lag-1-model.html"><a href="nonparametric-seasonal-lag-1-model.html#plot-statistics-from-simulations-1"><i class="fa fa-check"></i><b>2.2</b> Plot statistics from simulations</a></li>
 <li class="chapter" data-level="2.3" data-path="nonparametric-seasonal-lag-1-model.html"><a href="nonparametric-seasonal-lag-1-model.html#advantagesdisadvantages-with-a-nonparametric-approach."><i class="fa fa-check"></i><b>2.3</b> Advantages/disadvantages with a nonparametric approach. **</a></li>
 </ul></li>
+<li class="chapter" data-level="3" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html"><i class="fa fa-check"></i><b>3</b> Multivariate Simulation - Copulas</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#data-import-and-setup"><i class="fa fa-check"></i><b>3.0.1</b> Data import and setup</a></li>
+<li class="chapter" data-level="3.1" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#fit-a-copula-to-the-joint-cdf-copula-by-pairs"><i class="fa fa-check"></i><b>3.1</b> Fit a Copula to the joint CDF (copula by pairs)</a></li>
+<li class="chapter" data-level="3.2" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#simulate-from-the-copula-and-invert"><i class="fa fa-check"></i><b>3.2</b> Simulate from the Copula and invert</a></li>
+<li class="chapter" data-level="3.3" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#boxplot-the-statistics-listed-in-problem-1-and-compare-with-the-results-from-the-previous-methods"><i class="fa fa-check"></i><b>3.3</b> Boxplot the statistics listed in problem 1 and compare with the results from the previous methods</a></li>
+<li class="chapter" data-level="3.4" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#months-copula"><i class="fa fa-check"></i><b>3.4</b> 12 months copula</a></li>
+</ul></li>
 <li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li> 
 
 </ul>
 
@@ -168,12 +175,12 @@ flow =<span class="st"> </span>flow[,<span class="dv">2</span><span class="op">:
        <span class="dt">main =</span> <span class="kw">colnames</span>(flow)[i],<span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,<span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>)
   <span class="kw">sm.density</span>(flow[,i], <span class="dt">add=</span><span class="ot">TRUE</span>)
   }</code></pre></div>
-<p><img src="CVEN_6833_-_HW_3_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)) <span class="co"># plot histogram and density of anual flow</span>
   <span class="kw">hist</span>(flow[,<span class="dv">13</span>], <span class="dt">freq=</span><span class="ot">FALSE</span>,
               <span class="dt">main =</span> <span class="kw">colnames</span>(flow)[<span class="dv">13</span>],<span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>)
   <span class="kw">sm.density</span>(flow[,<span class="dv">13</span>], <span class="dt">add=</span><span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="CVEN_6833_-_HW_3_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>The seasonal AR model is fitted using the Thomas Fiering coefficients. The anual flow AR model is fitted using <em>stats::arima</em>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get the parameters of the Thomas Fiering Model (12 models, 1 for each transition)</span>
 coef1 =<span class="st"> </span>coef2 =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>,<span class="dt">length.out =</span> <span class="dv">12</span>)
@@ -358,7 +365,7 @@ plot.bp =<span class="st"> </span><span class="cf">function</span>(matrix,name){
 <span class="kw">plot.bp</span>(armax,<span class="st">&quot;Max&quot;</span>)
 <span class="kw">plot.bp</span>(arskw,<span class="st">&quot;Skews&quot;</span>)
 <span class="kw">plot.bp</span>(arcor,<span class="st">&quot;Lag-1 correlation&quot;</span>)</code></pre></div>
-<p><img src="CVEN_6833_-_HW_3_files/figure-html/plot.month-1.png" width="672" /></p>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/plot.month-1.png" width="672" /></p>
 <p>The model proficiently captures the mean and max values. A fair fit is obtained with the standard deviation. However, the normality of the innovations results in a poor fit of minimum values and skews.</p>
 <p>The anual statistics are similarly represented below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))
@@ -368,7 +375,7 @@ plot.bp =<span class="st"> </span><span class="cf">function</span>(matrix,name){
 <span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;max&quot;</span>],<span class="st">&quot;Max&quot;</span>)
 <span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;skew&quot;</span>],<span class="st">&quot;Skews&quot;</span>)
 <span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;cor&quot;</span>],<span class="st">&quot;Lag-1 correlation&quot;</span>)</code></pre></div>
-<p><img src="CVEN_6833_-_HW_3_files/figure-html/plot.year-1.png" width="672" /></p>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/plot.year-1.png" width="672" /></p>
 <p>The best fitting occurs for mean, sd, and correlation. Min, max and skew hardly contain historical values within the 25th/75th percentile limits.</p>
 <p>The simulated May PDF vs. the historical May PDF is plotted at 100 points.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xdensityorig =<span class="st"> </span>flow<span class="op">$</span>may <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sm.density</span>(.,<span class="dt">eval.points=</span>xeval,<span class="dt">display=</span><span class="st">&quot;none&quot;</span>) <span class="op">%&gt;%</span>
@@ -383,13 +390,13 @@ plot.pdf =<span class="st"> </span><span class="cf">function</span>(eval,histPDF
   <span class="kw">title</span>(<span class="dt">main=</span><span class="st">&quot;Historical vs. simulated PDF&quot;</span>)
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.pdf</span>(xeval,xdensityorig,simpdf)</code></pre></div>
-<p><img src="CVEN_6833_-_HW_3_files/figure-html/plot.pdf.month-1.png" width="672" /></p>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/plot.pdf.month-1.png" width="672" /></p>
 <p>The bimodal historical May PDF is not captured by the simulations due to the Normal nature of the innovations.</p>
 <p>The simulated vs. historical anual flow PDF is similarly compared.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">year.density =<span class="st"> </span>flow<span class="op">$</span>year <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sm.density</span>(.,<span class="dt">eval.points=</span>yeval,
                <span class="dt">display=</span><span class="st">&quot;none&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>.<span class="op">$</span>estimate</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.pdf</span>(yeval,year.density,year.pdf)</code></pre></div>
-<p><img src="CVEN_6833_-_HW_3_files/figure-html/plot.pdf.year-1.png" width="672" /></p>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/plot.pdf.year-1.png" width="672" /></p>
 </div>
 <div id="replace-the-simulation-of-the-errors-or-innovations-from-normal-to-gamma" class="section level2">
 <h2><span class="header-section-number">1.3</span> Replace the simulation of the errors (or innovations) from Normal to Gamma</h2>
@@ -402,7 +409,7 @@ plot.pdf =<span class="st"> </span><span class="cf">function</span>(eval,histPDF
 <span class="kw">plot.bp</span>(armax,<span class="st">&quot;Max&quot;</span>)
 <span class="kw">plot.bp</span>(arskw,<span class="st">&quot;Skews&quot;</span>)
 <span class="kw">plot.bp</span>(arcor,<span class="st">&quot;Lag-1 correlation&quot;</span>)</code></pre></div>
-<p><img src="CVEN_6833_-_HW_3_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>The graphs show a differentiated skew performance, although the fit seems to be equivalent.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))
 <span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;mean&quot;</span>],<span class="st">&quot;Mean&quot;</span>)
@@ -411,12 +418,12 @@ plot.pdf =<span class="st"> </span><span class="cf">function</span>(eval,histPDF
 <span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;max&quot;</span>],<span class="st">&quot;Max&quot;</span>)
 <span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;skew&quot;</span>],<span class="st">&quot;Skews&quot;</span>)
 <span class="kw">plot.bp</span>(ar.year.stat[,<span class="st">&quot;cor&quot;</span>],<span class="st">&quot;Lag-1 correlation&quot;</span>)</code></pre></div>
-<p><img src="CVEN_6833_-_HW_3_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.pdf</span>(xeval,xdensityorig,simpdf)</code></pre></div>
-<p><img src="CVEN_6833_-_HW_3_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>The simulated May PDF is no longer symmetric, as it would be expected from a Gamma Distribution</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.pdf</span>(yeval,year.density,year.pdf)</code></pre></div>
-<p><img src="CVEN_6833_-_HW_3_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>The same effect is depicted in the anual PDF.</p>
 
 </div>
@@ -441,8 +448,8 @@ plot.pdf =<span class="st"> </span><span class="cf">function</span>(eval,histPDF
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
-"facebook": true,
+"github": true,
+"facebook": false,
 "twitter": true,
 "google": false,
 "linkedin": false,
@@ -460,9 +467,10 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["CVEN 6833 - HW3.pdf", "CVEN 6833 - HW3.epub", "CVEN 6833 - HW3.mobi"],
 "toc": {
-"collapse": "subsection"
+"collapse": "subsection",
+"scroll_highlight": true
 }
 });
 });

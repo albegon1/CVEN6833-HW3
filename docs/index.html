@@ -113,8 +113,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="nonparametric-seasonal-lag-1-model.html"><a href="nonparametric-seasonal-lag-1-model.html#plot-statistics-from-simulations-1"><i class="fa fa-check"></i><b>2.2</b> Plot statistics from simulations</a></li>
 <li class="chapter" data-level="2.3" data-path="nonparametric-seasonal-lag-1-model.html"><a href="nonparametric-seasonal-lag-1-model.html#advantagesdisadvantages-with-a-nonparametric-approach."><i class="fa fa-check"></i><b>2.3</b> Advantages/disadvantages with a nonparametric approach. **</a></li>
 </ul></li>
+<li class="chapter" data-level="3" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html"><i class="fa fa-check"></i><b>3</b> Multivariate Simulation - Copulas</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#data-import-and-setup"><i class="fa fa-check"></i><b>3.0.1</b> Data import and setup</a></li>
+<li class="chapter" data-level="3.1" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#fit-a-copula-to-the-joint-cdf-copula-by-pairs"><i class="fa fa-check"></i><b>3.1</b> Fit a Copula to the joint CDF (copula by pairs)</a></li>
+<li class="chapter" data-level="3.2" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#simulate-from-the-copula-and-invert"><i class="fa fa-check"></i><b>3.2</b> Simulate from the Copula and invert</a></li>
+<li class="chapter" data-level="3.3" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#boxplot-the-statistics-listed-in-problem-1-and-compare-with-the-results-from-the-previous-methods"><i class="fa fa-check"></i><b>3.3</b> Boxplot the statistics listed in problem 1 and compare with the results from the previous methods</a></li>
+<li class="chapter" data-level="3.4" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#months-copula"><i class="fa fa-check"></i><b>3.4</b> 12 months copula</a></li>
+</ul></li>
 <li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li> 
 
 </ul>
 
@@ -168,8 +175,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
-"facebook": true,
+"github": true,
+"facebook": false,
 "twitter": true,
 "google": false,
 "linkedin": false,
@@ -187,9 +194,10 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["CVEN 6833 - HW3.pdf", "CVEN 6833 - HW3.epub", "CVEN 6833 - HW3.mobi"],
 "toc": {
-"collapse": "subsection"
+"collapse": "subsection",
+"scroll_highlight": true
 }
 });
 });

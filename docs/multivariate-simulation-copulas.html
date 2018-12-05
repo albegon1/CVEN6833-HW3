@@ -118,7 +118,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.1" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#fit-a-copula-to-the-joint-cdf-copula-by-pairs"><i class="fa fa-check"></i><b>3.1</b> Fit a Copula to the joint CDF (copula by pairs)</a></li>
 <li class="chapter" data-level="3.2" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#simulate-from-the-copula-and-invert"><i class="fa fa-check"></i><b>3.2</b> Simulate from the Copula and invert</a></li>
 <li class="chapter" data-level="3.3" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#boxplot-the-statistics-listed-in-problem-1-and-compare-with-the-results-from-the-previous-methods"><i class="fa fa-check"></i><b>3.3</b> Boxplot the statistics listed in problem 1 and compare with the results from the previous methods</a></li>
-<li class="chapter" data-level="3.4" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#fit-a-copula-to-the-joint-cdf-copula-by-pairs-1"><i class="fa fa-check"></i><b>3.4</b> Fit a Copula to the joint CDF (copula by pairs)</a></li>
+<li class="chapter" data-level="3.4" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#months-copula"><i class="fa fa-check"></i><b>3.4</b> 12 months copula</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li> 
@@ -301,7 +301,7 @@ plot.bp =<span class="st"> </span><span class="cf">function</span>(matrix,name){
 <span class="kw">plot.bp</span>(armax,<span class="st">&quot;Max&quot;</span>)
 <span class="kw">plot.bp</span>(arskw,<span class="st">&quot;Skews&quot;</span>)
 <span class="kw">plot.bp</span>(arcor,<span class="st">&quot;Lag-1 correlation&quot;</span>)</code></pre></div>
-<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 <p>As observed, mean, st.dev, max and skews are well fit. Min values are overestimated, and lag-1 is not captured. In general, the statics are better than the ones using autoregressive models.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xdensityorig =<span class="st"> </span><span class="kw">matrix</span> (<span class="dv">0</span>,<span class="dt">nrow =</span> <span class="dv">100</span>,<span class="dt">ncol =</span> <span class="dv">12</span>) <span class="co">#initialize original PDF</span>
 
@@ -324,11 +324,11 @@ plot.pdf =<span class="st"> </span><span class="cf">function</span>(eval,histPDF
 <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>){
   <span class="kw">plot.pdf</span>(xeval[,j],xdensityorig[,j],simpdf[,j,],<span class="kw">colnames</span>(flow[j]))
 }</code></pre></div>
-<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 <p>The simulated PDF do not respond to a probabilistic distribution, sitting closely around the empirical PDF.</p>
 <p>The result is more precise that the one using autoregressive models.</p>
 </div>
-<div id="fit-a-copula-to-the-joint-cdf-copula-by-pairs-1" class="section level2">
+<div id="months-copula" class="section level2">
 <h2><span class="header-section-number">3.4</span> 12 months copula</h2>
 <p>Now we will use the full copula between all months.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">u =<span class="st"> </span><span class="kw">pobs</span>(flow) <span class="co"># convert to pseudo-observations</span>
@@ -377,7 +377,7 @@ carmin=<span class="kw">rbind</span>(obsmin,carmin)</code></pre></div>
 <span class="kw">plot.bp</span>(carmax,<span class="st">&quot;Max&quot;</span>)
 <span class="kw">plot.bp</span>(carskw,<span class="st">&quot;Skews&quot;</span>)
 <span class="kw">plot.bp</span>(carcor,<span class="st">&quot;Lag-1 correlation&quot;</span>)</code></pre></div>
-<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
 <p>The results are at least as good as the copula by pairs. Also, the lag-1 correlation is captured (with the exception of jan and feb).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">3</span>))
 <span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))
@@ -385,7 +385,7 @@ carmin=<span class="kw">rbind</span>(obsmin,carmin)</code></pre></div>
 <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>){
   <span class="kw">plot.pdf</span>(xeval[,j],xdensityorig[,j],cop_pdf[,j,],<span class="kw">colnames</span>(flow[j]))
 }</code></pre></div>
-<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <p>The simulated PDF are also really close to the empirical PDF, being able to mimic the multimodal behavior of February, May, July, etc.</p>
 
 </div>
