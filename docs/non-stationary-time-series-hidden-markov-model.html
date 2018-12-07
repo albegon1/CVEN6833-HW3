@@ -124,7 +124,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.1" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#fit-a-best-hmm-for-the-may-lees-ferry-streamflow"><i class="fa fa-check"></i><b>4.1</b> Fit a best HMM for the May Lees Ferry streamflow</a></li>
 <li class="chapter" data-level="4.2" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#generate-250-simulations-from-the-fitted-hmm"><i class="fa fa-check"></i><b>4.2</b> Generate 250 simulations from the fitted HMM</a></li>
 <li class="chapter" data-level="4.3" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#boxplot-the-resulting-statistics"><i class="fa fa-check"></i><b>4.3</b> Boxplot the resulting statistics</a></li>
-<li class="chapter" data-level="4.4" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#fit-an-glm-for-the-state-series"><i class="fa fa-check"></i><b>4.4</b> Fit an GLM for the state series</a></li>
+<li class="chapter" data-level="4.4" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#fit-a-glm-for-the-state-series"><i class="fa fa-check"></i><b>4.4</b> Fit a GLM for the state series</a></li>
 <li class="chapter" data-level="4.5" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#use-the-state-glm-to-simulate-flows-from-the-component-distribution"><i class="fa fa-check"></i><b>4.5</b> Use the state GLM to simulate flows from the component distribution</a></li>
 </ul></li>
 <li class="divider"></li>
@@ -150,6 +150,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="non-stationary-time-series---hidden-markov-model" class="section level1">
 <h1><span class="header-section-number">Exercise 4</span> Non stationary time series - Hidden Markov Model</h1>
 <p>Another way to simulate a time series is using Hidden Markov Model (Markov Chain + resampling).</p>
+<p>First, we load the libraries, streamflow data, and functions via R markdown (attached at the end of the document).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># libraries</span>
 libr=<span class="kw">c</span>(<span class="st">&quot;HiddenMarkov&quot;</span>,<span class="st">&quot;ggplot2&quot;</span>,<span class="st">&quot;data.table&quot;</span>,<span class="st">&quot;ggthemes&quot;</span>,
        <span class="st">&quot;magrittr&quot;</span>,<span class="st">&quot;sm&quot;</span>,<span class="st">&quot;moments&quot;</span>,<span class="st">&quot;MASS&quot;</span>,<span class="st">&quot;leaps&quot;</span>)
@@ -169,7 +170,7 @@ flow =<span class="st"> </span>flow[,<span class="dv">2</span><span class="op">:
 x =<span class="st"> </span>flow<span class="op">$</span>may    ## select the May month flows</code></pre></div>
 <div id="fit-a-best-hmm-for-the-may-lees-ferry-streamflow" class="section level2">
 <h2><span class="header-section-number">4.1</span> Fit a best HMM for the May Lees Ferry streamflow</h2>
-<p>The code below fits HMM models of orders 2 through 6 and calculates the AIC for each. Best order is the one with the least value of AIC.</p>
+<p>The code below fits HMM models of orders 2 through 6 and calculates the AIC for each. The best order is the one with the least value of AIC.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Fit HMM models of orders 2 through 6. Obtain the AIC  for each
 ## Best order is the one with the least value of AIC.
 family &lt;-<span class="st"> &quot;gamma&quot;</span>  <span class="co"># underlying distribution for hmm</span>
@@ -202,8 +203,8 @@ aic1=<span class="kw">c</span>()
   aic &lt;-<span class="st"> </span><span class="kw">AIC</span>(hmm)
   aic1=<span class="kw">c</span>(aic1,aic)
 }</code></pre></div>
-<p>We select the hmm model with the lowest AIC. In this case, this happens to be of order 2.</p>
-<p>We rerun the HMM for best order (m=2). Below is the the model summary and the best state sequence resulting from it.</p>
+<p>We select the HMM with the lowest AIC. In this case, this happens to be of order 2.</p>
+<p>We rerun the HMM for best order (m=2) and generate the state sequence (decoding) resulting from it. The model summary is also attached.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Get the best order
 bestorder =<span class="st"> </span><span class="kw">order</span>(aic1)[<span class="dv">1</span>] <span class="op">+</span><span class="dv">1</span>
 ## Fit the model for this best order
@@ -221,15 +222,14 @@ hmm &lt;-<span class="st"> </span><span class="kw">dthmm</span>(x, <span class="
 hmm &lt;-<span class="st"> </span><span class="kw">BaumWelch</span>(hmm, <span class="kw">bwcontrol</span>(<span class="dt">maxiter =</span> <span class="dv">1000</span>, <span class="dt">tol =</span> <span class="fl">1e-08</span>)) 
 <span class="kw">sink</span>() <span class="co"># end hidding output</span>
 decoding &lt;-<span class="st"> </span><span class="kw">Viterbi</span>(hmm)</code></pre></div>
-<p>The summary of the resulting model is shown below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">summary</span>(hmm))</code></pre></div>
 <pre><code>## $delta
-## [1] 1.122144e-104  1.000000e+00
+## [1]  1.000000e+00 1.165686e-105
 ## 
 ## $Pi
 ##           [,1]      [,2]
-## [1,] 0.6585751 0.3414249
-## [2,] 0.2953837 0.7046163
+## [1,] 0.7046161 0.2953839
+## [2,] 0.3414245 0.6585755
 ## 
 ## $nonstat
 ## [1] TRUE
@@ -239,10 +239,10 @@ decoding &lt;-<span class="st"> </span><span class="kw">Viterbi</span>(hmm)</cod
 ## 
 ## $pm
 ## $pm$rate
-## [1] 2.974823 4.062193
+## [1] 4.062194 2.974821
 ## 
 ## $pm$shape
-## [1]  6.992025 15.203073
+## [1] 15.20308  6.99202
 ## 
 ## 
 ## $discrete
@@ -256,12 +256,12 @@ decoding &lt;-<span class="st"> </span><span class="kw">Viterbi</span>(hmm)</cod
 <span class="kw">print</span>(p)</code></pre></div>
 <pre><code>## Warning: Removed 1 rows containing missing values (geom_bar).</code></pre>
 <p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">state1=<span class="kw">ifelse</span>(decoding<span class="op">==</span><span class="dv">1</span>,<span class="dv">2</span>,<span class="ot">NA</span>)
-state2=<span class="kw">ifelse</span>(decoding<span class="op">==</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="ot">NA</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">state.<span class="dv">1</span>=<span class="kw">ifelse</span>(decoding<span class="op">==</span><span class="dv">1</span>,<span class="fl">2.5</span>,<span class="ot">NA</span>)
+state.<span class="dv">2</span>=<span class="kw">ifelse</span>(decoding<span class="op">==</span><span class="dv">2</span>,<span class="fl">0.5</span>,<span class="ot">NA</span>)
 <span class="kw">plot</span>(flow<span class="op">$</span>may<span class="op">-</span><span class="kw">mean</span>(flow<span class="op">$</span>may)<span class="op">+</span><span class="fl">1.5</span>,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;&quot;</span>,
      <span class="dt">main=</span><span class="st">&quot;Modified May flows and states (supperposed)&quot;</span>)
-<span class="kw">points</span>(state1,<span class="dt">col=</span><span class="st">&#39;blue&#39;</span>)
-<span class="kw">points</span>(state2,<span class="dt">col=</span><span class="st">&#39;red&#39;</span>)
+<span class="kw">points</span>(state.<span class="dv">2</span>,<span class="dt">col=</span><span class="st">&#39;blue&#39;</span>)
+<span class="kw">points</span>(state.<span class="dv">1</span>,<span class="dt">col=</span><span class="st">&#39;red&#39;</span>)
 <span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>,<span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;state 1&quot;</span>,<span class="st">&quot;state 2&quot;</span>),<span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>),<span class="dt">pch=</span><span class="dv">1</span>)</code></pre></div>
 <p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
 </div>
@@ -344,11 +344,24 @@ plot.bp =<span class="st"> </span><span class="cf">function</span>(matrix,name){
 <span class="kw">plot.bp</span>(may.stat[,<span class="st">&quot;skew&quot;</span>],<span class="st">&quot;Skews&quot;</span>)
 <span class="kw">plot.bp</span>(may.stat[,<span class="st">&quot;cor&quot;</span>],<span class="st">&quot;Lag-1 correlation&quot;</span>)</code></pre></div>
 <p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xdensityorig =<span class="st"> </span>flow<span class="op">$</span>may <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sm.density</span>(.,<span class="dt">eval.points=</span>xeval,<span class="dt">display=</span><span class="st">&quot;none&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>.<span class="op">$</span>estimate
+
+plot.pdf =<span class="st"> </span><span class="cf">function</span>(eval,histPDF,simPDF){
+  xeval =<span class="st"> </span>eval
+  <span class="kw">plot</span>(xeval,histPDF,<span class="dt">pch=</span><span class="st">&quot;.&quot;</span>,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>,<span class="dt">ylim=</span><span class="kw">range</span>(simPDF,histPDF),
+       <span class="dt">xlab=</span><span class="st">&quot;&quot;</span>,<span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>)
+  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim)<span class="kw">lines</span>(xeval,simPDF[i,],<span class="dt">col=</span><span class="st">&#39;lightgrey&#39;</span>,<span class="dt">lty=</span><span class="dv">3</span>)
+  <span class="kw">lines</span>(xeval,histPDF,<span class="dt">lwd=</span><span class="dv">3</span>,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)
+  <span class="kw">title</span>(<span class="dt">main=</span><span class="st">&quot;Historical vs. simulated PDF&quot;</span>)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.pdf</span>(xeval,xdensityorig,sim.pdf)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/plot.pdf.month-1.png" width="672" /></p>
 <p>The model is able to represent accurately all statistics, including lag-1 correlation.</p>
 </div>
-<div id="fit-an-glm-for-the-state-series" class="section level2">
-<h2><span class="header-section-number">4.4</span> Fit an GLM for the state series</h2>
-<p>Instead of simulating the flows from a “static” state sequence, the goal is to simulate the state as a prediction from a best logistic GLM.</p>
+<div id="fit-a-glm-for-the-state-series" class="section level2">
+<h2><span class="header-section-number">4.4</span> Fit a GLM for the state series</h2>
+<p>Instead of simulating the streamflow from a “static” state sequence simulation, the goal is to simulate the state as a prediction from a best logistic GLM. The uncertainty is added choosing random values and comparing them to the initial probability (p1 / p2) of being in a particular state.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">enso=<span class="kw">read.table</span>(<span class="st">&quot;C:/Users/alexb/Google Drive/CVEN 6833 ADAT/zz Homeworks/HW3/enso.txt&quot;</span>)
 amo=<span class="kw">read.table</span>(<span class="st">&quot;C:/Users/alexb/Google Drive/CVEN 6833 ADAT/zz Homeworks/HW3/amo.txt&quot;</span>)
 pdo=<span class="kw">read.table</span>(<span class="st">&quot;C:/Users/alexb/Google Drive/CVEN 6833 ADAT/zz Homeworks/HW3/pdo.txt&quot;</span>)
@@ -357,43 +370,34 @@ X =<span class="st"> </span><span class="kw">data.frame</span>(decoding[<span cl
 <span class="kw">colnames</span>(X) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ts1&quot;</span>,<span class="st">&quot;enso&quot;</span>,<span class="st">&quot;amo&quot;</span>,<span class="st">&quot;pdo&quot;</span>)
 Y =<span class="st"> </span>decoding[<span class="op">-</span><span class="dv">1</span>]<span class="op">-</span><span class="dv">1</span>
 
-links =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;logit&quot;</span>, <span class="st">&quot;probit&quot;</span>, <span class="st">&quot;cauchit&quot;</span>,<span class="st">&quot;log&quot;</span>,<span class="st">&quot;cloglog&quot;</span>)
+links =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;logit&quot;</span>, <span class="st">&quot;probit&quot;</span>, <span class="st">&quot;cauchit&quot;</span>,<span class="st">&quot;log&quot;</span>,<span class="st">&quot;cloglog&quot;</span>) <span class="co"># potential links</span>
 
-comb=<span class="kw">leaps</span>(X,Y, <span class="dt">nbest=</span><span class="dv">40</span>,<span class="dt">method=</span><span class="st">&quot;adjr2&quot;</span>)<span class="op">$</span>which
+comb=<span class="kw">leaps</span>(X,Y, <span class="dt">nbest=</span><span class="dv">40</span>,<span class="dt">method=</span><span class="st">&quot;adjr2&quot;</span>)<span class="op">$</span>which <span class="co"># all combinations of cov.</span>
 aic &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="fl">1e6</span>,<span class="dt">ncol=</span><span class="kw">length</span>(links),<span class="dt">nrow =</span> <span class="kw">length</span>(comb[,<span class="dv">1</span>]))
 <span class="kw">colnames</span>(aic) =<span class="st"> </span>links[<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(links)]
 
-<span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(comb[,<span class="dv">1</span>])){
+<span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(comb[,<span class="dv">1</span>])){ <span class="co"># try every link f. with every comb.</span>
   xx =<span class="st"> </span>X[,comb[k,]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>(.)
   <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(links)){
     zz=<span class="kw">try</span>(<span class="kw">glm</span>(Y <span class="op">~</span><span class="st"> </span>., <span class="dt">data=</span>xx, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link=</span>links[i]), <span class="dt">maxit=</span><span class="dv">500</span>),<span class="dt">silent=</span><span class="ot">TRUE</span>)
     <span class="cf">if</span>(<span class="kw">class</span>(zz)[<span class="dv">1</span>]<span class="op">!=</span><span class="st">&quot;try-error&quot;</span>)aic[k,i]=zz<span class="op">$</span>aic[<span class="dv">1</span>]
   }
 }
-<span class="kw">print</span>(aic)</code></pre></div>
-<pre><code>##          logit   probit  cauchit          log  cloglog
-##  [1,] 125.3869 125.3869 125.3869     125.3869 125.3869
-##  [2,] 146.9211 146.8480 147.3203     145.5355 146.4292
-##  [3,] 148.3173 148.4183 147.6240 1000000.0000 148.6837
-##  [4,] 151.5616 151.5576 151.5843     151.5075 151.5440
-##  [5,] 124.8050 124.6801 125.4507 1000000.0000 124.3818
-##  [6,] 125.5837 125.6196 125.6204 1000000.0000 125.7163
-##  [7,] 127.1229 127.1318 127.0643 1000000.0000 127.2388
-##  [8,] 146.4187 146.4280 146.2500 1000000.0000 146.2306
-##  [9,] 148.7136 148.6357 149.1384 1000000.0000 148.1738
-## [10,] 150.2624 150.3579 149.5969 1000000.0000 150.5938
-## [11,] 125.5740 125.5788 125.7137 1000000.0000 125.6044
-## [12,] 126.6695 126.5771 127.1292 1000000.0000 126.3762
-## [13,] 127.5618 127.5892 127.6183 1000000.0000 127.6096
-## [14,] 148.3169 148.3151 148.2090 1000000.0000 148.1186
-## [15,] 127.5421 127.5283 127.7116 1000000.0000 127.4138</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">index =<span class="st"> </span><span class="kw">which</span>(aic <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(aic), <span class="dt">arr.ind =</span> <span class="ot">TRUE</span>)
+<span class="kw">head</span>(aic)</code></pre></div>
+<pre><code>##         logit   probit  cauchit          log  cloglog
+## [1,] 125.3869 125.3869 125.3869     125.3869 125.3869
+## [2,] 146.9211 146.8480 147.3203     147.6516 147.2601
+## [3,] 148.3173 148.4183 147.6240     148.3154 148.2197
+## [4,] 151.5616 151.5576 151.5843     151.5754 151.5692
+## [5,] 124.8050 124.6801 125.4507 1000000.0000 125.1181
+## [6,] 125.5837 125.6196 125.6204 1000000.0000 125.7381</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">index =<span class="st"> </span><span class="kw">which</span>(aic <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(aic), <span class="dt">arr.ind =</span> <span class="ot">TRUE</span>) <span class="co"># select min. AIC</span>
 <span class="kw">print</span>(
 <span class="kw">sprintf</span>(<span class="st">&quot;Choosing the GLM which minimizes AIC for binomial family: %s link function and %s covariates&quot;</span>,links[index[,<span class="st">&quot;col&quot;</span>]],
         <span class="kw">paste</span>(<span class="kw">colnames</span>(X)[comb[index[,<span class="st">&quot;row&quot;</span>],]],<span class="dt">collapse =</span> <span class="st">&#39;, &#39;</span>)))</code></pre></div>
-<pre><code>## [1] &quot;Choosing the GLM which minimizes AIC for binomial family: cloglog link function and ts1, amo covariates&quot;</code></pre>
+<pre><code>## [1] &quot;Choosing the GLM which minimizes AIC for binomial family: probit link function and ts1, amo covariates&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">state.glm =<span class="st"> </span><span class="kw">glm</span>(Y <span class="op">~</span><span class="st"> </span>., <span class="dt">data=</span>X[,comb[index[,<span class="st">&quot;row&quot;</span>],]], <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link=</span>links[index[,<span class="st">&quot;col&quot;</span>]]))
-<span class="kw">summary</span>(state.glm)</code></pre></div>
+<span class="kw">summary</span>(state.glm) <span class="co"># Model selected</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Y ~ ., family = binomial(link = links[index[, &quot;col&quot;]]), 
@@ -401,38 +405,42 @@ aic &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="fl
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -2.0521  -0.8416   0.4986   0.7478   1.7263  
+## -1.7872  -0.7333  -0.5345   0.8427   1.9937  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)  -0.9698     0.2798  -3.466 0.000528 ***
-## ts1           1.4190     0.3205   4.427 9.55e-06 ***
-## amo          -1.0552     0.5872  -1.797 0.072305 .  
+## (Intercept)  -0.8180     0.1756  -4.658 3.19e-06 ***
+## ts1           1.2820     0.2683   4.779 1.76e-06 ***
+## amo           0.9847     0.5931   1.660   0.0969 .  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
 ##     Null deviance: 148.06  on 109  degrees of freedom
-## Residual deviance: 118.38  on 107  degrees of freedom
-## AIC: 124.38
+## Residual deviance: 118.68  on 107  degrees of freedom
+## AIC: 124.68
 ## 
-## Number of Fisher Scoring iterations: 6</code></pre>
-<p>ENSO and PDO resulted to be insignificant covariates for the logistic regression. We tried to lag them with respect to the prediction year without success.</p>
+## Number of Fisher Scoring iterations: 4</code></pre>
+<p>ENSO and PDO covariates resulted to be insignificant for the logistic regression, even if several laggings from the original data have been tried.</p>
 </div>
 <div id="use-the-state-glm-to-simulate-flows-from-the-component-distribution" class="section level2">
 <h2><span class="header-section-number">4.5</span> Use the state GLM to simulate flows from the component distribution</h2>
+<p>With the fitted values from the logistic regression, we calculate first the probabilities (p1, p2) of each state.</p>
+<p>These are used to generate a random initial state and simulate the rest of the state sequence.</p>
+<p>Depending on the simulated sequence, a random gamma value is taken from either state 1 or state 2, creating a new streamflow time series, with the same length as the original data.</p>
+<p>The simulation is repeated 250 to generate statistics and ensemble PDF.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X.new =<span class="st"> </span>X[,comb[index[,<span class="st">&quot;row&quot;</span>],]]
 p1 =<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">round</span>(state.glm<span class="op">$</span>fitted.values))<span class="op">/</span><span class="kw">length</span>(state.glm<span class="op">$</span>fitted.values)
+
 state =<span class="st"> </span><span class="dv">1</span><span class="op">:</span>N <span class="co"># init. state</span>
-state.p1 =<span class="st"> </span><span class="dv">1</span><span class="op">:</span>nsim <span class="co"># store p1</span>
+state.p1 =<span class="st"> </span><span class="dv">1</span><span class="op">:</span>nsim <span class="co"># store p1 for debugging</span>
 
 may.sim.glm =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>,<span class="dt">nrow=</span>nsim,<span class="dt">ncol=</span>N)
 sim.pdf.glm =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>,<span class="dt">nrow=</span>nsim,<span class="dt">ncol=</span><span class="dv">100</span>) <span class="co"># Array to store May simulated PDF</span>
 
 may.stat.glm=<span class="kw">matrix</span>(<span class="ot">NA</span>,<span class="dt">ncol =</span> <span class="dv">6</span>,<span class="dt">nrow =</span> nsim) <span class="co"># statistics</span>
 <span class="kw">colnames</span>(may.stat.glm) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;mean&quot;</span>,<span class="st">&quot;stdev&quot;</span>,<span class="st">&quot;min&quot;</span>,<span class="st">&quot;max&quot;</span>,<span class="st">&quot;skew&quot;</span>,<span class="st">&quot;cor&quot;</span>)
-
 
 <span class="co"># simulation</span>
 <span class="cf">for</span>(isim <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim){
@@ -441,7 +449,7 @@ may.stat.glm=<span class="kw">matrix</span>(<span class="ot">NA</span>,<span cla
     <span class="cf">if</span>(j<span class="op">==</span><span class="dv">1</span>){
       state[<span class="dv">1</span>]=<span class="kw">ifelse</span>(<span class="kw">runif</span>(<span class="dv">1</span>)<span class="op">&lt;</span>p1,<span class="dv">1</span>,<span class="dv">2</span>)
     }<span class="cf">else</span>{
-      state[j]=<span class="kw">ifelse</span>(<span class="kw">runif</span>(<span class="dv">1</span>)<span class="op">&gt;</span>state.glm<span class="op">$</span>fitted.values[j<span class="op">-</span><span class="dv">1</span>],<span class="dv">1</span>,<span class="dv">2</span>)
+      state[j]=<span class="kw">ifelse</span>(state.glm<span class="op">$</span>fitted.values[j<span class="op">-</span><span class="dv">1</span>]<span class="op">&lt;</span><span class="kw">runif</span>(<span class="dv">1</span>),<span class="dv">1</span>,<span class="dv">2</span>)
     }
     <span class="cf">if</span>(state[j]<span class="op">==</span><span class="dv">1</span>){
       may.sim.glm[isim,j]=<span class="kw">rgamma</span>(<span class="dv">1</span>,<span class="dt">shape =</span> hmm<span class="op">$</span>pm<span class="op">$</span>shape[<span class="dv">1</span>],hmm<span class="op">$</span>pm<span class="op">$</span>rate[<span class="dv">1</span>])
@@ -469,22 +477,10 @@ may.stat.glm=<span class="kw">rbind</span>(obs,may.stat.glm)
 <span class="kw">plot.bp</span>(may.stat.glm[,<span class="st">&quot;max&quot;</span>],<span class="st">&quot;Max&quot;</span>)
 <span class="kw">plot.bp</span>(may.stat.glm[,<span class="st">&quot;skew&quot;</span>],<span class="st">&quot;Skews&quot;</span>)
 <span class="kw">plot.bp</span>(may.stat.glm[,<span class="st">&quot;cor&quot;</span>],<span class="st">&quot;Lag-1 correlation&quot;</span>)</code></pre></div>
-<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xdensityorig =<span class="st"> </span>flow<span class="op">$</span>may <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sm.density</span>(.,<span class="dt">eval.points=</span>xeval,<span class="dt">display=</span><span class="st">&quot;none&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>.<span class="op">$</span>estimate
-
-plot.pdf =<span class="st"> </span><span class="cf">function</span>(eval,histPDF,simPDF){
-  xeval =<span class="st"> </span>eval
-  <span class="kw">plot</span>(xeval,histPDF,<span class="dt">pch=</span><span class="st">&quot;.&quot;</span>,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>,<span class="dt">ylim=</span><span class="kw">range</span>(simPDF,histPDF),
-       <span class="dt">xlab=</span><span class="st">&quot;&quot;</span>,<span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>)
-  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim)<span class="kw">lines</span>(xeval,simPDF[i,],<span class="dt">col=</span><span class="st">&#39;lightgrey&#39;</span>,<span class="dt">lty=</span><span class="dv">3</span>)
-  <span class="kw">lines</span>(xeval,histPDF,<span class="dt">lwd=</span><span class="dv">3</span>,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)
-  <span class="kw">title</span>(<span class="dt">main=</span><span class="st">&quot;Historical vs. simulated PDF&quot;</span>)
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.pdf</span>(xeval,xdensityorig,sim.pdf)</code></pre></div>
-<p><img src="CVEN_6833_-_HW3_files/figure-html/plot.pdf.month-1.png" width="672" /></p>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.pdf</span>(xeval,xdensityorig,sim.pdf.glm)</code></pre></div>
-<p><img src="CVEN_6833_-_HW3_files/figure-html/plot.pdf.month-2.png" width="672" /></p>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Functions from lib.R:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># source functions</span>
 <span class="co"># takend from &quot;http://civil.colorado.edu/~balajir/CVEN6833/R-sessions/session3/files-4HW3/lib.R&quot;</span>
 

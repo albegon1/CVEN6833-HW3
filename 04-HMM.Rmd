@@ -8,6 +8,8 @@ output: html_document
 
 Another way to simulate a time series is using Hidden Markov Model (Markov Chain + resampling).
 
+First, we load the libraries, streamflow data, and functions via R markdown (attached at the end of the document).
+
 ```{r results=FALSE}
 # libraries
 libr=c("HiddenMarkov","ggplot2","data.table","ggthemes",
@@ -37,7 +39,7 @@ x = flow$may	## select the May month flows
 
 ## Fit a best HMM for the May Lees Ferry streamflow
 
-The code below fits HMM models of orders 2 through 6 and calculates the AIC  for each. Best order is the one with the least value of AIC.
+The code below fits HMM models of orders 2 through 6 and calculates the AIC  for each. The best order is the one with the least value of AIC.
 
 ```{r p.4.hmmfit, results= 'hide', message=FALSE}
 ## Fit HMM models of orders 2 through 6. Obtain the AIC  for each
@@ -74,9 +76,9 @@ for(imodel in 2:6){
 }
 ```
 
-We select the hmm model with the lowest AIC. In this case, this happens to be of order 2.
+We select the HMM  with the lowest AIC. In this case, this happens to be of order 2.
 
-We rerun the HMM for best order (m=2). Below is the the model summary and the best state sequence resulting from it.
+We rerun the HMM for best order (m=2) and generate the state sequence (decoding) resulting from it. The model summary is also attached.
 
 ```{r p.4.besthmm, echo = TRUE, results = 'hide'}
 ## Get the best order
@@ -98,20 +100,18 @@ sink() # end hidding output
 decoding <- Viterbi(hmm)
 ```
 
-The summary of the resulting model is shown below:
-
 ```{r}
 print(summary(hmm))
 cat('Model order:',m,'\n')
 p <- ggplot_stationary_hmm(hmm,.5)
 print(p)
 
-state1=ifelse(decoding==1,1,NA)
-state2=ifelse(decoding==2,2,NA)
+state.1=ifelse(decoding==1,2.5,NA)
+state.2=ifelse(decoding==2,0.5,NA)
 plot(flow$may-mean(flow$may)+1.5,type="l",ylab="",
      main="Modified May flows and states (supperposed)")
-points(state1,col='blue')
-points(state2,col='red')
+points(state.2,col='blue')
+points(state.1,col='red')
 legend("topright",legend=c("state 1","state 2"),col=c("red","blue"),pch=1)
 ```
 
@@ -206,11 +206,28 @@ plot.bp(may.stat[,"skew"],"Skews")
 plot.bp(may.stat[,"cor"],"Lag-1 correlation")
 ```
 
+```{r}
+xdensityorig = flow$may %>% sm.density(.,eval.points=xeval,display="none") %>%
+  .$estimate
+
+plot.pdf = function(eval,histPDF,simPDF){
+  xeval = eval
+  plot(xeval,histPDF,pch=".",col="red",ylim=range(simPDF,histPDF),
+       xlab="",ylab = "")
+  for(i in 1:nsim)lines(xeval,simPDF[i,],col='lightgrey',lty=3)
+  lines(xeval,histPDF,lwd=3,col="red")
+  title(main="Historical vs. simulated PDF")
+}
+```
+```{r plot.pdf.month}
+plot.pdf(xeval,xdensityorig,sim.pdf)
+```
+
 The model is able to represent accurately all statistics, including lag-1 correlation.
 
-## Fit an GLM for the state series
+## Fit a GLM for the state series
 
-Instead of simulating the flows from a "static" state sequence, the goal is to simulate the state as a prediction from a best logistic GLM. 
+Instead of simulating the streamflow from a "static" state sequence simulation, the goal is to simulate the state as a prediction from a best logistic GLM. The uncertainty is added choosing random values and comparing them to the initial probability (p1 / p2) of being in a particular state. 
 
 ```{r}
 enso=read.table("C:/Users/alexb/Google Drive/CVEN 6833 ADAT/zz Homeworks/HW3/enso.txt")
@@ -221,44 +238,53 @@ X = data.frame(decoding[-N]-1,enso[-N,],amo[-N,],pdo[-N,])
 colnames(X) = c("ts1","enso","amo","pdo")
 Y = decoding[-1]-1
 
-links = c("logit", "probit", "cauchit","log","cloglog")
+links = c("logit", "probit", "cauchit","log","cloglog") # potential links
 
-comb=leaps(X,Y, nbest=40,method="adjr2")$which
+comb=leaps(X,Y, nbest=40,method="adjr2")$which # all combinations of cov.
 aic <- matrix(1e6,ncol=length(links),nrow = length(comb[,1]))
 colnames(aic) = links[1:length(links)]
 
-for(k in 1:length(comb[,1])){
+for(k in 1:length(comb[,1])){ # try every link f. with every comb.
   xx = X[,comb[k,]] %>% as.data.frame(.)
   for(i in 1:length(links)){
     zz=try(glm(Y ~ ., data=xx, family = binomial(link=links[i]), maxit=500),silent=TRUE)
     if(class(zz)[1]!="try-error")aic[k,i]=zz$aic[1]
   }
 }
-print(aic)
-index = which(aic == min(aic), arr.ind = TRUE)
+head(aic)
+index = which(aic == min(aic), arr.ind = TRUE) # select min. AIC
 print(
 sprintf("Choosing the GLM which minimizes AIC for binomial family: %s link function and %s covariates",links[index[,"col"]],
         paste(colnames(X)[comb[index[,"row"],]],collapse = ', ')))
 state.glm = glm(Y ~ ., data=X[,comb[index[,"row"],]], family = binomial(link=links[index[,"col"]]))
-summary(state.glm)
+summary(state.glm) # Model selected
 ```
 
-ENSO and PDO resulted to be insignificant covariates for the logistic regression. We tried to lag them with respect to the prediction year without success. 
+ENSO and PDO covariates resulted to be insignificant for the logistic regression, even if several laggings from the original data have been tried.
 
 ## Use the state GLM to simulate flows from the component distribution
+
+With the fitted values from the logistic regression, we calculate first the probabilities (p1, p2) of each state.
+
+These are used to generate a random initial state and simulate the rest of the state sequence.
+
+Depending on the simulated sequence, a random gamma value is taken from either state 1 or state 2, creating a new streamflow time series, with the same length as the original data.
+
+The simulation is repeated 250 to generate statistics and ensemble PDF.
+
 
 ```{r}
 X.new = X[,comb[index[,"row"],]]
 p1 = 1 - sum(round(state.glm$fitted.values))/length(state.glm$fitted.values)
+
 state = 1:N # init. state
-state.p1 = 1:nsim # store p1
+state.p1 = 1:nsim # store p1 for debugging
 
 may.sim.glm = matrix(0,nrow=nsim,ncol=N)
 sim.pdf.glm = matrix(0,nrow=nsim,ncol=100) # Array to store May simulated PDF
 
 may.stat.glm=matrix(NA,ncol = 6,nrow = nsim) # statistics
 colnames(may.stat.glm) = c("mean","stdev","min","max","skew","cor")
-
 
 # simulation
 for(isim in 1:nsim){
@@ -267,7 +293,7 @@ for(isim in 1:nsim){
     if(j==1){
       state[1]=ifelse(runif(1)<p1,1,2)
     }else{
-      state[j]=ifelse(runif(1)>state.glm$fitted.values[j-1],1,2)
+      state[j]=ifelse(state.glm$fitted.values[j-1]<runif(1),1,2)
     }
     if(state[j]==1){
       may.sim.glm[isim,j]=rgamma(1,shape = hmm$pm$shape[1],hmm$pm$rate[1])
@@ -300,24 +326,11 @@ plot.bp(may.stat.glm[,"skew"],"Skews")
 plot.bp(may.stat.glm[,"cor"],"Lag-1 correlation")
 ```
 ```{r}
-xdensityorig = flow$may %>% sm.density(.,eval.points=xeval,display="none") %>%
-  .$estimate
-
-plot.pdf = function(eval,histPDF,simPDF){
-  xeval = eval
-  plot(xeval,histPDF,pch=".",col="red",ylim=range(simPDF,histPDF),
-       xlab="",ylab = "")
-  for(i in 1:nsim)lines(xeval,simPDF[i,],col='lightgrey',lty=3)
-  lines(xeval,histPDF,lwd=3,col="red")
-  title(main="Historical vs. simulated PDF")
-}
-```
-```{r plot.pdf.month}
-plot.pdf(xeval,xdensityorig,sim.pdf)
 plot.pdf(xeval,xdensityorig,sim.pdf.glm)
 ```
 
 
+Functions from lib.R:
 
 ```{r p.4.functions}
 # source functions
