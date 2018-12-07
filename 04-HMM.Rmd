@@ -219,7 +219,7 @@ plot.pdf = function(eval,histPDF,simPDF){
   title(main="Historical vs. simulated PDF")
 }
 ```
-```{r plot.pdf.month}
+```{r}
 plot.pdf(xeval,xdensityorig,sim.pdf)
 ```
 
