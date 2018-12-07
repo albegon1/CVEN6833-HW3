@@ -273,7 +273,7 @@ plot.pdf(yeval,year.density,year.pdf)
 
 Many results are repeated (only 111 values for 100 simulations of 111 time series), creating a crisp PDF. Not realistic.
 
-## Advantages/disadvantages with a nonparametric approach. **
+## Advantages/disadvantages with a nonparametric approach. 
 
 When the dataset is large enough, the fitted PDF and statistics over perform the parametric modelling.
 
