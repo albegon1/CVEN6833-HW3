@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>CVEN 6833 - Homework 3</title>
+  <meta name="description" content="Code and output for Homework Set 3">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="CVEN 6833 - Homework 3" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Code and output for Homework Set 3" />
+  <meta name="github-repo" content="albegon1/CVEN6833-HW3" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="CVEN 6833 - Homework 3" />
+  
+  <meta name="twitter:description" content="Code and output for Homework Set 3" />
+  
+
+<meta name="author" content="Alex Belenguer">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="spectral-simulation.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">CVEN 6833 - HW#3</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="1" data-path="seasonal-ar1-model.html"><a href="seasonal-ar1-model.html"><i class="fa fa-check"></i><b>1</b> Seasonal AR(1) model</a><ul>
+<li class="chapter" data-level="1.1" data-path="seasonal-ar1-model.html"><a href="seasonal-ar1-model.html#generate-250-simulations-each-of-same-length-as-the-historical-data."><i class="fa fa-check"></i><b>1.1</b> Generate 250 simulations each of same length as the historical data.</a></li>
+<li class="chapter" data-level="1.2" data-path="seasonal-ar1-model.html"><a href="seasonal-ar1-model.html#plot-statistics-from-simulations"><i class="fa fa-check"></i><b>1.2</b> Plot statistics from simulations</a></li>
+<li class="chapter" data-level="1.3" data-path="seasonal-ar1-model.html"><a href="seasonal-ar1-model.html#replace-the-simulation-of-the-errors-or-innovations-from-normal-to-gamma"><i class="fa fa-check"></i><b>1.3</b> Replace the simulation of the errors (or innovations) from Normal to Gamma</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="nonparametric-seasonal-lag-1-model.html"><a href="nonparametric-seasonal-lag-1-model.html"><i class="fa fa-check"></i><b>2</b> Nonparametric seasonal lag-1 model</a><ul>
+<li class="chapter" data-level="2.1" data-path="nonparametric-seasonal-lag-1-model.html"><a href="nonparametric-seasonal-lag-1-model.html#generate-250-simulations-each-of-same-length-as-the-historical-data.-1"><i class="fa fa-check"></i><b>2.1</b> Generate 250 simulations each of same length as the historical data.</a></li>
+<li class="chapter" data-level="2.2" data-path="nonparametric-seasonal-lag-1-model.html"><a href="nonparametric-seasonal-lag-1-model.html#plot-statistics-from-simulations-1"><i class="fa fa-check"></i><b>2.2</b> Plot statistics from simulations</a></li>
+<li class="chapter" data-level="2.3" data-path="nonparametric-seasonal-lag-1-model.html"><a href="nonparametric-seasonal-lag-1-model.html#advantagesdisadvantages-with-a-nonparametric-approach."><i class="fa fa-check"></i><b>2.3</b> Advantages/disadvantages with a nonparametric approach.</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html"><i class="fa fa-check"></i><b>3</b> Multivariate Simulation - Copulas</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#data-import-and-setup"><i class="fa fa-check"></i><b>3.0.1</b> Data import and setup</a></li>
+<li class="chapter" data-level="3.1" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#fit-a-copula-to-the-joint-cdf-copula-by-pairs"><i class="fa fa-check"></i><b>3.1</b> Fit a Copula to the joint CDF (copula by pairs)</a></li>
+<li class="chapter" data-level="3.2" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#simulate-from-the-copula-and-invert"><i class="fa fa-check"></i><b>3.2</b> Simulate from the Copula and invert</a></li>
+<li class="chapter" data-level="3.3" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#boxplot-the-statistics-listed-in-problem-1-and-compare-with-the-results-from-the-previous-methods"><i class="fa fa-check"></i><b>3.3</b> Boxplot the statistics listed in problem 1 and compare with the results from the previous methods</a></li>
+<li class="chapter" data-level="3.4" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#months-copula"><i class="fa fa-check"></i><b>3.4</b> 12 months copula</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html"><i class="fa fa-check"></i><b>4</b> Non stationary time series - Hidden Markov Model</a><ul>
+<li class="chapter" data-level="4.1" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#load-flow-data"><i class="fa fa-check"></i><b>4.1</b> Load flow data</a></li>
+<li class="chapter" data-level="4.2" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#fit-a-best-hmm-for-the-may-lees-ferry-streamflow"><i class="fa fa-check"></i><b>4.2</b> Fit a best HMM for the May Lees Ferry streamflow</a></li>
+<li class="chapter" data-level="4.3" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#fit-hmm-models-of-orders-2-through-6.-obtain-the-aic-for-each"><i class="fa fa-check"></i><b>4.3</b> Fit HMM models of orders 2 through 6. Obtain the AIC for each</a></li>
+<li class="chapter" data-level="4.4" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#best-order-is-the-one-with-the-least-value-of-aic."><i class="fa fa-check"></i><b>4.4</b> Best order is the one with the least value of AIC.</a></li>
+<li class="chapter" data-level="4.5" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#get-the-best-order"><i class="fa fa-check"></i><b>4.5</b> Get the best order</a></li>
+<li class="chapter" data-level="4.6" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#fit-the-model-for-this-best-order"><i class="fa fa-check"></i><b>4.6</b> Fit the model for this best order</a></li>
+<li class="chapter" data-level="4.7" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#generate-250-simulations-from-the-fitted-hmm"><i class="fa fa-check"></i><b>4.7</b> Generate 250 simulations from the fitted HMM</a></li>
+<li class="chapter" data-level="4.8" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#boxplot-the-resulting-statistics"><i class="fa fa-check"></i><b>4.8</b> Boxplot the resulting statistics</a></li>
+<li class="chapter" data-level="4.9" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#fit-a-glm-for-the-state-series"><i class="fa fa-check"></i><b>4.9</b> Fit a GLM for the state series</a></li>
+<li class="chapter" data-level="4.10" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#use-the-state-glm-to-simulate-flows-from-the-component-distribution"><i class="fa fa-check"></i><b>4.10</b> Use the state GLM to simulate flows from the component distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="spectral-simulation.html"><a href="spectral-simulation.html"><i class="fa fa-check"></i><b>5</b> Spectral Simulation</a></li>
+<li class="chapter" data-level="6" data-path="modeling-nonstationary-extreme-value-time-series.html"><a href="modeling-nonstationary-extreme-value-time-series.html"><i class="fa fa-check"></i><b>6</b> Modeling Nonstationary Extreme Value Time series</a><ul>
+<li class="chapter" data-level="6.1" data-path="modeling-nonstationary-extreme-value-time-series.html"><a href="modeling-nonstationary-extreme-value-time-series.html#fit-a-stationary-gev"><i class="fa fa-check"></i><b>6.1</b> Fit a stationary GEV</a></li>
+<li class="chapter" data-level="6.2" data-path="modeling-nonstationary-extreme-value-time-series.html"><a href="modeling-nonstationary-extreme-value-time-series.html#fit-a-best-nonstationary-gev-model"><i class="fa fa-check"></i><b>6.2</b> Fit a best nonstationary GEV model</a></li>
+<li class="chapter" data-level="6.3" data-path="modeling-nonstationary-extreme-value-time-series.html"><a href="modeling-nonstationary-extreme-value-time-series.html#repeat-by-varying-scale-and-location"><i class="fa fa-check"></i><b>6.3</b> Repeat by varying scale and location</a></li>
+<li class="chapter" data-level="6.4" data-path="modeling-nonstationary-extreme-value-time-series.html"><a href="modeling-nonstationary-extreme-value-time-series.html#plot-the-results"><i class="fa fa-check"></i><b>6.4</b> Plot the results</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li> 
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CVEN 6833 - Homework 3</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="modeling-nonstationary-extreme-value-time-series" class="section level1">
+<h1><span class="header-section-number">Exercise 6</span> Modeling Nonstationary Extreme Value Time series</h1>
+<p>Annual maximum flow on Clark Fork River, MT has a strong relationship with two large scale climate drivers – winter El Nino Southern Oscillation (ENSO) and winter Pacific Decadal Oscillation (PDO).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># libraries</span>
+libr=<span class="kw">c</span>(<span class="st">&quot;extRemes&quot;</span>,<span class="st">&quot;tidyverse&quot;</span>,<span class="st">&quot;reshape2&quot;</span>)
+<span class="kw">options</span>(<span class="dt">warn=</span><span class="op">-</span><span class="dv">1</span>)
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">lapply</span>(libr, 
+                require, <span class="dt">character.only =</span> <span class="ot">TRUE</span>))</code></pre></div>
+<div id="fit-a-stationary-gev" class="section level2">
+<h2><span class="header-section-number">6.1</span> Fit a stationary GEV</h2>
+<p>Fit a stationary GEV to the annual maximum flow series – traditional approach. Estimate the 2-year, 50-year, 100-year and 1000-year return period.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data=<span class="kw">read.table</span>(
+  <span class="st">&quot;http://civil.colorado.edu/~balajir/CVEN6833/HWs/HW-3-2018/Cfork-enso-pdo.txt&quot;</span>)
+<span class="kw">colnames</span>(data) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;year&quot;</span>,<span class="st">&quot;CFR&quot;</span>,<span class="st">&quot;ENSO&quot;</span>,<span class="st">&quot;PDO&quot;</span>)
+<span class="kw">rownames</span>(data) =<span class="st"> </span>data<span class="op">$</span>year
+data =<span class="st"> </span>data[,<span class="op">!</span><span class="kw">colnames</span>(data) <span class="op">%in%</span><span class="st"> &quot;year&quot;</span>]
+
+fit.gev.s &lt;-<span class="st"> </span><span class="kw">fevd</span>(CFR,data) <span class="co"># fits a stationary GEV</span>
+<span class="kw">summary</span>(fit.gev.s) <span class="co"># model info</span></code></pre></div>
+<pre><code>## 
+## fevd(x = CFR, data = data)
+## 
+## [1] &quot;Estimation Method used: MLE&quot;
+## 
+## 
+##  Negative Log-Likelihood Value:  86.67505 
+## 
+## 
+##  Estimated parameters:
+##    location       scale       shape 
+## -0.32384381  0.70877948 -0.01945511 
+## 
+##  Standard Error Estimates:
+##   location      scale      shape 
+## 0.09392425 0.06716585 0.08069709 
+## 
+##  Estimated parameter covariance matrix.
+##              location        scale        shape
+## location  0.008821764  0.002204481 -0.002573214
+## scale     0.002204481  0.004511251 -0.001523174
+## shape    -0.002573214 -0.001523174  0.006512021
+## 
+##  AIC = 179.3501 
+## 
+##  BIC = 186.1381</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rl.s =<span class="st"> </span><span class="kw">return.level</span>(fit.gev.s,<span class="dt">return.period =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">50</span>,<span class="dv">100</span>,<span class="dv">1000</span>)) <span class="co"># return periods</span></code></pre></div>
+</div>
+<div id="fit-a-best-nonstationary-gev-model" class="section level2">
+<h2><span class="header-section-number">6.2</span> Fit a best nonstationary GEV model</h2>
+<p>Fit a best nonstationary GEV model varying just the location parameter and estimate the above four return periods.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alt =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;~ ENSO&quot;</span>,<span class="st">&quot;~ PDO&quot;</span>,<span class="st">&quot;~ ENSO + PDO&quot;</span>) <span class="co"># alternatives</span>
+AIC.ns =<span class="st"> </span>BIC.ns =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span> <span class="co"># AIC, BIC values</span>
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>){
+  bns=<span class="kw">fevd</span>(CFR,data,<span class="dt">location.fun =</span> <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> alt[i])),
+           <span class="dt">use.phi =</span> <span class="ot">TRUE</span>) <span class="co"># location: ENSO</span>
+  AIC.ns[i]=<span class="kw">summary</span>(bns,<span class="dt">silent=</span><span class="ot">TRUE</span>)<span class="op">$</span>AIC
+  BIC.ns[i]=<span class="kw">summary</span>(bns,<span class="dt">silent=</span><span class="ot">TRUE</span>)<span class="op">$</span>BIC  
+}
+<span class="kw">print</span>(AIC.ns)</code></pre></div>
+<pre><code>## [1] 163.5837 174.0022 164.2446</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(BIC.ns)</code></pre></div>
+<pre><code>## [1] 172.6344 183.0529 175.5580</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">index =<span class="st"> </span><span class="kw">which</span>(AIC.ns <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(AIC.ns),<span class="dt">arr.ind =</span> <span class="ot">TRUE</span>)
+<span class="kw">print</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Best non-stationary GEV model: %s location&quot;</span>,
+              alt[index]))</code></pre></div>
+<pre><code>## [1] &quot;Best non-stationary GEV model: ~ ENSO location&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.gev.ns =<span class="st"> </span><span class="kw">fevd</span>(CFR,data,<span class="dt">location.fun =</span> <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> alt[index[<span class="dv">1</span>]])),
+                  <span class="dt">use.phi =</span> <span class="ot">TRUE</span>)
+<span class="kw">summary</span>(fit.gev.ns)</code></pre></div>
+<pre><code>## 
+## fevd(x = CFR, data = data, location.fun = eval(parse(text = alt[index[1]])), 
+##     use.phi = TRUE)
+## 
+## [1] &quot;Estimation Method used: MLE&quot;
+## 
+## 
+##  Negative Log-Likelihood Value:  77.79183 
+## 
+## 
+##  Estimated parameters:
+##         mu0         mu1       scale       shape 
+## -0.24530588  0.36192879  0.62352993 -0.01653051 
+## 
+##  Standard Error Estimates:
+##        mu0        mu1      scale      shape 
+## 0.08430145 0.08447899 0.06016464 0.08631796 
+## 
+##  Estimated parameter covariance matrix.
+##                mu0           mu1         scale        shape
+## mu0    0.007106734  0.0012043692  0.0018846668 -0.002714174
+## mu1    0.001204369  0.0071366989  0.0004828137 -0.001382696
+## scale  0.001884667  0.0004828137  0.0036197834 -0.001628543
+## shape -0.002714174 -0.0013826961 -0.0016285431  0.007450791
+## 
+##  AIC = 163.5837 
+## 
+##  BIC = 172.6344</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rl.ns =<span class="st"> </span><span class="kw">return.level</span>(fit.gev.ns,<span class="dt">return.period =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">50</span>,<span class="dv">100</span>,<span class="dv">1000</span>))
+rl.ns[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dv">69</span><span class="op">:</span><span class="dv">71</span>),]</code></pre></div>
+<pre><code>##      2-year level 50-year level 100-year level 1000-year level
+## 1930   0.03248117      2.160811       2.566626        3.874737
+## 1931   0.24746687      2.375797       2.781611        4.089723
+## 1932   0.06215933      2.190489       2.596304        3.904415
+## 1998   0.43060283      2.558933       2.964747        4.272859
+## 1999  -0.18178068      1.946549       2.352364        3.660475
+## 2000  -0.46770442      1.660626       2.066440        3.374551</code></pre>
+</div>
+<div id="repeat-by-varying-scale-and-location" class="section level2">
+<h2><span class="header-section-number">6.3</span> Repeat by varying scale and location</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">warn=</span><span class="op">-</span><span class="dv">999</span>)
+alt =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;~ ENSO&quot;</span>,<span class="st">&quot;~ PDO&quot;</span>,<span class="st">&quot;~ ENSO + PDO&quot;</span>) <span class="co"># alternatives</span>
+AIC.ns =<span class="st"> </span>BIC.ns =<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>,<span class="dt">nrow =</span> <span class="dv">3</span>,<span class="dt">ncol =</span> <span class="dv">3</span>) <span class="co"># store AIC, BIC for all alt.</span>
+
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>){
+  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>){
+    bns=<span class="kw">fevd</span>(CFR,data,<span class="dt">location.fun =</span> <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> alt[i])),
+             <span class="dt">scale.fun =</span> <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> alt[j])),<span class="dt">use.phi =</span> <span class="ot">TRUE</span>)
+    AIC.ns[i,j] =<span class="st"> </span><span class="kw">summary</span>(bns,<span class="dt">silent=</span><span class="ot">TRUE</span>)<span class="op">$</span>AIC
+    BIC.ns[i,j] =<span class="st"> </span><span class="kw">summary</span>(bns,<span class="dt">silent=</span><span class="ot">TRUE</span>)<span class="op">$</span>BIC
+  }
+}
+<span class="kw">print</span>(AIC.ns)</code></pre></div>
+<pre><code>##          [,1]     [,2]     [,3]
+## [1,] 163.7752 159.9197 161.8728
+## [2,] 174.2619 172.6655 174.4243
+## [3,] 164.3930 160.9743 162.8786</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(BIC.ns)</code></pre></div>
+<pre><code>##          [,1]     [,2]     [,3]
+## [1,] 175.0886 171.2331 175.4489
+## [2,] 185.5753 183.9789 188.0004
+## [3,] 177.9690 174.5503 178.7174</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">index =<span class="st"> </span><span class="kw">which</span>(AIC.ns <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(AIC.ns),<span class="dt">arr.ind =</span> <span class="ot">TRUE</span>)
+<span class="kw">print</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Best non-stationary GEV model: %s location and %s scale&quot;</span>,
+              alt[index[<span class="dv">1</span>]],alt[index[<span class="dv">2</span>]]))</code></pre></div>
+<pre><code>## [1] &quot;Best non-stationary GEV model: ~ ENSO location and ~ PDO scale&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.gev.ns.ls =<span class="st"> </span><span class="kw">fevd</span>(CFR,data,<span class="dt">location.fun =</span> <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> alt[index[<span class="dv">1</span>]])),
+             <span class="dt">scale.fun =</span> <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> alt[index[<span class="dv">2</span>]])),<span class="dt">use.phi =</span> <span class="ot">TRUE</span>)
+<span class="kw">summary</span>(fit.gev.ns.ls)</code></pre></div>
+<pre><code>## 
+## fevd(x = CFR, data = data, location.fun = eval(parse(text = alt[index[1]])), 
+##     scale.fun = eval(parse(text = alt[index[2]])), use.phi = TRUE)
+## 
+## [1] &quot;Estimation Method used: MLE&quot;
+## 
+## 
+##  Negative Log-Likelihood Value:  74.95986 
+## 
+## 
+##  Estimated parameters:
+##           mu0           mu1          phi0          phi1         shape 
+## -2.693319e-01  3.602204e-01  1.663393e-01 -2.235114e-05 -6.554171e-02 
+## 
+##  Standard Error Estimates:
+##        mu0        mu1       phi0       phi1      shape 
+## 0.07822364 0.07563862 0.09533687 0.00000002 0.07896250 
+## 
+##  Estimated parameter covariance matrix.
+##                 mu0           mu1          phi0          phi1
+## mu0    6.118937e-03  1.605458e-03  2.141504e-03 -3.040912e-14
+## mu1    1.605458e-03  5.721201e-03  4.574934e-06 -6.495898e-17
+## phi0   2.141504e-03  4.574934e-06  9.089118e-03 -1.290651e-13
+## phi1  -3.040912e-14 -6.495898e-17 -1.290651e-13  3.999998e-16
+## shape -2.059310e-03 -1.309432e-04 -2.805681e-03  3.983996e-14
+##               shape
+## mu0   -2.059310e-03
+## mu1   -1.309432e-04
+## phi0  -2.805681e-03
+## phi1   3.983996e-14
+## shape  6.235077e-03
+## 
+##  AIC = 159.9197 
+## 
+##  BIC = 171.2331</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rl.ns.ls =<span class="st"> </span><span class="kw">return.level</span>(fit.gev.ns.ls,<span class="dt">return.period =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">50</span>,<span class="dv">100</span>,<span class="dv">1000</span>))
+rl.ns.ls[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dv">69</span><span class="op">:</span><span class="dv">71</span>),]</code></pre></div>
+<pre><code>##      2-year level 50-year level 100-year level 1000-year level
+## 1930   0.06961405      2.530161       2.952235        4.217186
+## 1931   0.31996007      3.089952       3.565108        4.989143
+## 1932   0.05017785      2.094097       2.444704        3.495470
+## 1998   0.44409223      2.719489       3.109804        4.279570
+## 1999  -0.22040302      1.587085       1.897135        2.826353
+## 2000  -0.40116031      2.289504       2.751052        4.134305</code></pre>
+</div>
+<div id="plot-the-results" class="section level2">
+<h2><span class="header-section-number">6.4</span> Plot the results</h2>
+<p>Include the annual maximum flow series, the stationary return periods and the nonstationary.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">series.stat =<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">year =</span> <span class="kw">rownames</span>(data),
+  <span class="dt">observed =</span> data<span class="op">$</span>CFR,
+  <span class="st">&quot;2.year&quot;</span> =<span class="st"> </span><span class="kw">rep</span>(rl.s[<span class="dv">1</span>],<span class="dt">length.out =</span> <span class="kw">length</span>(data[,<span class="dv">1</span>])),
+  <span class="st">&quot;50.year&quot;</span> =<span class="st"> </span><span class="kw">rep</span>(rl.s[<span class="dv">2</span>],<span class="dt">length.out =</span> <span class="kw">length</span>(data[,<span class="dv">1</span>])),
+  <span class="st">&quot;100.year&quot;</span> =<span class="st"> </span><span class="kw">rep</span>(rl.s[<span class="dv">3</span>],<span class="dt">length.out =</span> <span class="kw">length</span>(data[,<span class="dv">1</span>])),
+  <span class="st">&quot;1000.year&quot;</span> =<span class="st"> </span><span class="kw">rep</span>(rl.s[<span class="dv">4</span>],<span class="dt">length.out =</span> <span class="kw">length</span>(data[,<span class="dv">1</span>]))
+)
+series.non.stat =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">year =</span> <span class="kw">rownames</span>(data),
+  <span class="dt">observed =</span> data<span class="op">$</span>CFR,<span class="st">&quot;2.year&quot;</span> =<span class="st"> </span>rl.ns[,<span class="dv">1</span>],<span class="st">&quot;50.year&quot;</span> =<span class="st"> </span>rl.ns[,<span class="dv">2</span>],
+  <span class="st">&quot;100.year&quot;</span> =<span class="st"> </span>rl.ns[,<span class="dv">3</span>],<span class="st">&quot;1000.year&quot;</span> =<span class="st"> </span>rl.ns[,<span class="dv">4</span>])
+series.non.stat.ls =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">year =</span> <span class="kw">rownames</span>(data),
+  <span class="dt">observed =</span> data<span class="op">$</span>CFR,<span class="st">&quot;2.year&quot;</span> =<span class="st"> </span>rl.ns.ls[,<span class="dv">1</span>],<span class="st">&quot;50.year&quot;</span> =<span class="st"> </span>rl.ns.ls[,<span class="dv">2</span>],
+  <span class="st">&quot;100.year&quot;</span> =<span class="st"> </span>rl.ns.ls[,<span class="dv">3</span>],<span class="st">&quot;1000.year&quot;</span> =<span class="st"> </span>rl.ns.ls[,<span class="dv">4</span>])
+
+plot.series =<span class="st"> </span><span class="cf">function</span>(series,title){
+  series =<span class="st"> </span><span class="kw">melt</span>(series,<span class="dt">id.vars =</span> <span class="st">&quot;year&quot;</span>,<span class="dt">variable.name =</span><span class="st">&quot;series&quot;</span>)
+  <span class="kw">ggplot</span>(series, <span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(year)),<span class="dt">y=</span>value,<span class="dt">group=</span>series))<span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">linetype=</span>series,<span class="dt">color=</span>series))<span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="st">&quot;&quot;</span>,
+                        <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>,<span class="st">&quot;purple&quot;</span>,<span class="st">&quot;red&quot;</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_linetype_manual</span>(<span class="st">&quot;&quot;</span>,<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;solid&quot;</span>,<span class="st">&quot;longdash&quot;</span>,<span class="st">&quot;longdash&quot;</span>,<span class="st">&quot;longdash&quot;</span>,<span class="st">&quot;longdash&quot;</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> title, <span class="dt">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Peak Flow at return level&quot;</span>)<span class="op">+</span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>),<span class="dt">plot.margin=</span><span class="kw">unit</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">9</span>,<span class="dv">1</span>,<span class="dv">1</span>),<span class="st">&quot;cm&quot;</span>),<span class="dt">legend.position=</span><span class="kw">c</span>(<span class="fl">1.25</span>, .<span class="dv">8</span>))
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.series</span>(series.stat,<span class="st">&quot;Historical Stationary Return Levels</span><span class="ch">\n</span><span class="st">&quot;</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-7-1.png" width="1152" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.series</span>(series.non.stat,<span class="st">&quot;Historical Non-Stationary (location) Return Levels</span><span class="ch">\n</span><span class="st">&quot;</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-7-2.png" width="1152" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.series</span>(series.non.stat.ls,<span class="st">&quot;Historical Non-Stationary (location and Scale Return Levels</span><span class="ch">\n</span><span class="st">&quot;</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-7-3.png" width="1152" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="spectral-simulation.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["CVEN 6833 - HW3.pdf", "CVEN 6833 - HW3.epub", "CVEN 6833 - HW3.mobi"],
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+</body>
+
+</html>

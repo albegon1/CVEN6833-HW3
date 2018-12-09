@@ -1,0 +1,123 @@
+---
+title: "06-Non-Stationary-Extreme-Value-TS"
+output: html_document
+---
+
+# Modeling Nonstationary Extreme Value Time series
+
+Annual maximum flow on Clark Fork River, MT has a strong relationship with two large scale climate drivers – winter El Nino Southern Oscillation (ENSO) and winter Pacific Decadal Oscillation (PDO).
+
+```{r results=FALSE}
+# libraries
+libr=c("extRemes","tidyverse","reshape2")
+options(warn=-1)
+suppressPackageStartupMessages(lapply(libr, 
+                require, character.only = TRUE))
+```
+
+## Fit a stationary GEV
+
+Fit a stationary GEV to the annual maximum flow series – traditional approach. Estimate the 2-year, 50-year, 100-year and 1000-year return period.
+
+```{r}
+data=read.table(
+  "http://civil.colorado.edu/~balajir/CVEN6833/HWs/HW-3-2018/Cfork-enso-pdo.txt")
+colnames(data) = c("year","CFR","ENSO","PDO")
+rownames(data) = data$year
+data = data[,!colnames(data) %in% "year"]
+
+fit.gev.s <- fevd(CFR,data) # fits a stationary GEV
+summary(fit.gev.s) # model info
+rl.s = return.level(fit.gev.s,return.period = c(2,50,100,1000)) # return periods
+```
+
+## Fit a best nonstationary GEV model
+
+Fit a best nonstationary GEV model varying just the location parameter and estimate the above four return periods.
+
+```{r}
+alt = c("~ ENSO","~ PDO","~ ENSO + PDO") # alternatives
+AIC.ns = BIC.ns = 1:3 # AIC, BIC values
+for(i in 1:3){
+  bns=fevd(CFR,data,location.fun = eval(parse(text = alt[i])),
+           use.phi = TRUE) # location: ENSO
+  AIC.ns[i]=summary(bns,silent=TRUE)$AIC
+  BIC.ns[i]=summary(bns,silent=TRUE)$BIC  
+}
+print(AIC.ns)
+print(BIC.ns)
+index = which(AIC.ns == min(AIC.ns),arr.ind = TRUE)
+print(sprintf("Best non-stationary GEV model: %s location",
+              alt[index]))
+fit.gev.ns = fevd(CFR,data,location.fun = eval(parse(text = alt[index[1]])),
+                  use.phi = TRUE)
+summary(fit.gev.ns)
+rl.ns = return.level(fit.gev.ns,return.period = c(2,50,100,1000))
+rl.ns[c(1:3,69:71),]
+```
+
+## Repeat by varying scale and location
+
+```{r}
+options(warn=-999)
+alt = c("~ ENSO","~ PDO","~ ENSO + PDO") # alternatives
+AIC.ns = BIC.ns = matrix(NA,nrow = 3,ncol = 3) # store AIC, BIC for all alt.
+
+for(i in 1:3){
+  for(j in 1:3){
+    bns=fevd(CFR,data,location.fun = eval(parse(text = alt[i])),
+             scale.fun = eval(parse(text = alt[j])),use.phi = TRUE)
+    AIC.ns[i,j] = summary(bns,silent=TRUE)$AIC
+    BIC.ns[i,j] = summary(bns,silent=TRUE)$BIC
+  }
+}
+print(AIC.ns)
+print(BIC.ns)
+index = which(AIC.ns == min(AIC.ns),arr.ind = TRUE)
+print(sprintf("Best non-stationary GEV model: %s location and %s scale",
+              alt[index[1]],alt[index[2]]))
+fit.gev.ns.ls = fevd(CFR,data,location.fun = eval(parse(text = alt[index[1]])),
+             scale.fun = eval(parse(text = alt[index[2]])),use.phi = TRUE)
+summary(fit.gev.ns.ls)
+rl.ns.ls = return.level(fit.gev.ns.ls,return.period = c(2,50,100,1000))
+rl.ns.ls[c(1:3,69:71),]
+```
+
+## Plot the results
+
+Include the annual maximum flow series, the stationary return periods and the nonstationary.
+
+```{r}
+series.stat = data.frame(
+  year = rownames(data),
+  observed = data$CFR,
+  "2.year" = rep(rl.s[1],length.out = length(data[,1])),
+  "50.year" = rep(rl.s[2],length.out = length(data[,1])),
+  "100.year" = rep(rl.s[3],length.out = length(data[,1])),
+  "1000.year" = rep(rl.s[4],length.out = length(data[,1]))
+)
+series.non.stat = data.frame(year = rownames(data),
+  observed = data$CFR,"2.year" = rl.ns[,1],"50.year" = rl.ns[,2],
+  "100.year" = rl.ns[,3],"1000.year" = rl.ns[,4])
+series.non.stat.ls = data.frame(year = rownames(data),
+  observed = data$CFR,"2.year" = rl.ns.ls[,1],"50.year" = rl.ns.ls[,2],
+  "100.year" = rl.ns.ls[,3],"1000.year" = rl.ns.ls[,4])
+
+plot.series = function(series,title){
+  series = melt(series,id.vars = "year",variable.name ="series")
+  ggplot(series, aes(x=as.numeric(as.character(year)),y=value,group=series))+
+    geom_line(aes(linetype=series,color=series))+
+    scale_colour_manual("",
+                        values = c("black", "green", "blue","purple","red")) +
+    scale_linetype_manual("",values=c("solid","longdash","longdash","longdash","longdash")) +
+    labs(title = title, x = "Year", y = "Peak Flow at return level")+
+    theme(plot.title = element_text(hjust = 0.5),plot.margin=unit(c(1,9,1,1),"cm"),legend.position=c(1.25, .8))
+}
+```
+```{r fig.width=12}
+plot.series(series.stat,"Historical Stationary Return Levels\n")
+plot.series(series.non.stat,"Historical Non-Stationary (location) Return Levels\n")
+plot.series(series.non.stat.ls,"Historical Non-Stationary (location and Scale Return Levels\n")
+```
+
+

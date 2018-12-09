@@ -1,0 +1,14 @@
+---
+title: "05-Spectral-Analysis"
+output: html_document
+---
+
+# Spectral Simulation
+
+Placeholder
+
+```{r}
+
+# Placeholder
+
+```
