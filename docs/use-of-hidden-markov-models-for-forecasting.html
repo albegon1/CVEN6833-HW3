@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>CVEN 6833 - Homework 3</title>
+  <meta name="description" content="Code and output for Homework Set 3">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="CVEN 6833 - Homework 3" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Code and output for Homework Set 3" />
+  <meta name="github-repo" content="albegon1/CVEN6833-HW3" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="CVEN 6833 - Homework 3" />
+  
+  <meta name="twitter:description" content="Code and output for Homework Set 3" />
+  
+
+<meta name="author" content="Alex Belenguer">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="modeling-nonstationary-extreme-value-time-series.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">CVEN 6833 - HW#3</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="1" data-path="seasonal-ar1-model.html"><a href="seasonal-ar1-model.html"><i class="fa fa-check"></i><b>1</b> Seasonal AR(1) model</a><ul>
+<li class="chapter" data-level="1.1" data-path="seasonal-ar1-model.html"><a href="seasonal-ar1-model.html#generate-250-simulations-each-of-same-length-as-the-historical-data."><i class="fa fa-check"></i><b>1.1</b> Generate 250 simulations each of same length as the historical data.</a></li>
+<li class="chapter" data-level="1.2" data-path="seasonal-ar1-model.html"><a href="seasonal-ar1-model.html#plot-statistics-from-simulations"><i class="fa fa-check"></i><b>1.2</b> Plot statistics from simulations</a></li>
+<li class="chapter" data-level="1.3" data-path="seasonal-ar1-model.html"><a href="seasonal-ar1-model.html#replace-the-simulation-of-the-errors-or-innovations-from-normal-to-gamma"><i class="fa fa-check"></i><b>1.3</b> Replace the simulation of the errors (or innovations) from Normal to Gamma</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="nonparametric-seasonal-lag-1-model.html"><a href="nonparametric-seasonal-lag-1-model.html"><i class="fa fa-check"></i><b>2</b> Nonparametric seasonal lag-1 model</a><ul>
+<li class="chapter" data-level="2.1" data-path="nonparametric-seasonal-lag-1-model.html"><a href="nonparametric-seasonal-lag-1-model.html#generate-250-simulations-each-of-same-length-as-the-historical-data.-1"><i class="fa fa-check"></i><b>2.1</b> Generate 250 simulations each of same length as the historical data.</a></li>
+<li class="chapter" data-level="2.2" data-path="nonparametric-seasonal-lag-1-model.html"><a href="nonparametric-seasonal-lag-1-model.html#plot-statistics-from-simulations-1"><i class="fa fa-check"></i><b>2.2</b> Plot statistics from simulations</a></li>
+<li class="chapter" data-level="2.3" data-path="nonparametric-seasonal-lag-1-model.html"><a href="nonparametric-seasonal-lag-1-model.html#advantagesdisadvantages-with-a-nonparametric-approach."><i class="fa fa-check"></i><b>2.3</b> Advantages/disadvantages with a nonparametric approach.</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html"><i class="fa fa-check"></i><b>3</b> Multivariate Simulation - Copulas</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#data-import-and-setup"><i class="fa fa-check"></i><b>3.0.1</b> Data import and setup</a></li>
+<li class="chapter" data-level="3.1" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#fit-a-copula-to-the-joint-cdf-copula-by-pairs"><i class="fa fa-check"></i><b>3.1</b> Fit a Copula to the joint CDF (copula by pairs)</a></li>
+<li class="chapter" data-level="3.2" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#simulate-from-the-copula-and-invert"><i class="fa fa-check"></i><b>3.2</b> Simulate from the Copula and invert</a></li>
+<li class="chapter" data-level="3.3" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#boxplot-the-statistics-listed-in-problem-1-and-compare-with-the-results-from-the-previous-methods"><i class="fa fa-check"></i><b>3.3</b> Boxplot the statistics listed in problem 1 and compare with the results from the previous methods</a></li>
+<li class="chapter" data-level="3.4" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#months-copula"><i class="fa fa-check"></i><b>3.4</b> 12 months copula</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html"><i class="fa fa-check"></i><b>4</b> Non stationary time series - Hidden Markov Model</a><ul>
+<li class="chapter" data-level="4.1" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#load-flow-data"><i class="fa fa-check"></i><b>4.1</b> Load flow data</a></li>
+<li class="chapter" data-level="4.2" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#fit-a-best-hmm-for-the-may-lees-ferry-streamflow"><i class="fa fa-check"></i><b>4.2</b> Fit a best HMM for the May Lees Ferry streamflow</a></li>
+<li class="chapter" data-level="4.3" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#fit-hmm-models-of-orders-2-through-6.-obtain-the-aic-for-each"><i class="fa fa-check"></i><b>4.3</b> Fit HMM models of orders 2 through 6. Obtain the AIC for each</a></li>
+<li class="chapter" data-level="4.4" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#best-order-is-the-one-with-the-least-value-of-aic."><i class="fa fa-check"></i><b>4.4</b> Best order is the one with the least value of AIC.</a></li>
+<li class="chapter" data-level="4.5" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#get-the-best-order"><i class="fa fa-check"></i><b>4.5</b> Get the best order</a></li>
+<li class="chapter" data-level="4.6" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#fit-the-model-for-this-best-order"><i class="fa fa-check"></i><b>4.6</b> Fit the model for this best order</a></li>
+<li class="chapter" data-level="4.7" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#generate-250-simulations-from-the-fitted-hmm"><i class="fa fa-check"></i><b>4.7</b> Generate 250 simulations from the fitted HMM</a></li>
+<li class="chapter" data-level="4.8" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#boxplot-the-resulting-statistics"><i class="fa fa-check"></i><b>4.8</b> Boxplot the resulting statistics</a></li>
+<li class="chapter" data-level="4.9" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#fit-a-glm-for-the-state-series"><i class="fa fa-check"></i><b>4.9</b> Fit a GLM for the state series</a></li>
+<li class="chapter" data-level="4.10" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#use-the-state-glm-to-simulate-flows-from-the-component-distribution"><i class="fa fa-check"></i><b>4.10</b> Use the state GLM to simulate flows from the component distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="spectral-simulation.html"><a href="spectral-simulation.html"><i class="fa fa-check"></i><b>5</b> Spectral Simulation</a></li>
+<li class="chapter" data-level="6" data-path="modeling-nonstationary-extreme-value-time-series.html"><a href="modeling-nonstationary-extreme-value-time-series.html"><i class="fa fa-check"></i><b>6</b> Modeling Nonstationary Extreme Value Time series</a><ul>
+<li class="chapter" data-level="6.1" data-path="modeling-nonstationary-extreme-value-time-series.html"><a href="modeling-nonstationary-extreme-value-time-series.html#fit-a-stationary-gev"><i class="fa fa-check"></i><b>6.1</b> Fit a stationary GEV</a></li>
+<li class="chapter" data-level="6.2" data-path="modeling-nonstationary-extreme-value-time-series.html"><a href="modeling-nonstationary-extreme-value-time-series.html#fit-a-best-nonstationary-gev-model"><i class="fa fa-check"></i><b>6.2</b> Fit a best nonstationary GEV model</a></li>
+<li class="chapter" data-level="6.3" data-path="modeling-nonstationary-extreme-value-time-series.html"><a href="modeling-nonstationary-extreme-value-time-series.html#repeat-by-varying-scale-and-location"><i class="fa fa-check"></i><b>6.3</b> Repeat by varying scale and location</a></li>
+<li class="chapter" data-level="6.4" data-path="modeling-nonstationary-extreme-value-time-series.html"><a href="modeling-nonstationary-extreme-value-time-series.html#plot-the-results"><i class="fa fa-check"></i><b>6.4</b> Plot the results</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html"><i class="fa fa-check"></i><b>7</b> Use of Hidden Markov Models for forecasting</a><ul>
+<li class="chapter" data-level="7.1" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#fit-a-best-hmm-model-for-the-spring-season-flows"><i class="fa fa-check"></i><b>7.1</b> Fit a best HMM model for the spring season flows</a></li>
+<li class="chapter" data-level="7.2" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#generate-250-simulations-each-of-same-length-as-the-historical-data"><i class="fa fa-check"></i><b>7.2</b> Generate 250 simulations each of same length as the historical data</a></li>
+<li class="chapter" data-level="7.3" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#fit-a-best-glm-to-the-state-sequence"><i class="fa fa-check"></i><b>7.3</b> Fit a best GLM to the state sequence</a></li>
+<li class="chapter" data-level="7.4" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#for-each-year-based-on-the-predictors-obtain-the-probabilities-of-the-states"><i class="fa fa-check"></i><b>7.4</b> For each year based on the predictors, obtain the probabilities of the states</a></li>
+<li class="chapter" data-level="7.5" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#using-these-state-probabilities-simulate-flow-from-the-corresponding-state-pdfs"><i class="fa fa-check"></i><b>7.5</b> Using these state probabilities, simulate flow from the corresponding state PDFs</a></li>
+<li class="chapter" data-level="7.6" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#compute-the-median-and-compare-with-the-observed-flow.-compute-rpss-at-the-terciles."><i class="fa fa-check"></i><b>7.6</b> Compute the median and compare with the observed flow. Compute RPSS at the terciles.</a></li>
+<li class="chapter" data-level="7.7" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#make-blind-predictions-from-2001-and-on"><i class="fa fa-check"></i><b>7.7</b> Make blind predictions from 2001 and on</a><ul>
+<li class="chapter" data-level="7.7.1" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#correlation-of-median-streamflows"><i class="fa fa-check"></i><b>7.7.1</b> Correlation of median streamflows</a></li>
+<li class="chapter" data-level="7.7.2" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#rpss"><i class="fa fa-check"></i><b>7.7.2</b> RPSS</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#functions-from-lib.r"><i class="fa fa-check"></i><b>7.8</b> Functions from lib.R</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li> 
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CVEN 6833 - Homework 3</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="use-of-hidden-markov-models-for-forecasting" class="section level1">
+<h1><span class="header-section-number">Exercise 7</span> Use of Hidden Markov Models for forecasting</h1>
+<p>For the spring season flow (Apr-Jun average) at Lees Ferry on the Colorado River, use HMM to develop a forecasting model, as follows:</p>
+<div id="fit-a-best-hmm-model-for-the-spring-season-flows" class="section level2">
+<h2><span class="header-section-number">7.1</span> Fit a best HMM model for the spring season flows</h2>
+<p>First we load libraries, data, and functions as in exercise 4.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>) <span class="co"># allow repetition of results</span>
+<span class="co"># libraries</span>
+libr=<span class="kw">c</span>(<span class="st">&quot;HiddenMarkov&quot;</span>,<span class="st">&quot;ggplot2&quot;</span>,<span class="st">&quot;data.table&quot;</span>,<span class="st">&quot;ggthemes&quot;</span>,
+       <span class="st">&quot;magrittr&quot;</span>,<span class="st">&quot;sm&quot;</span>,<span class="st">&quot;moments&quot;</span>,<span class="st">&quot;MASS&quot;</span>,<span class="st">&quot;leaps&quot;</span>,<span class="st">&quot;verification&quot;</span>)
+<span class="kw">options</span>(<span class="dt">warn=</span><span class="op">-</span><span class="dv">999</span>)
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">lapply</span>(libr, 
+                require, <span class="dt">character.only =</span> <span class="ot">TRUE</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load flow data</span>
+mflow =<span class="st"> </span><span class="kw">read.table</span>(
+  <span class="st">&quot;http://civil.colorado.edu/~balajir/CVEN6833/HWs/HW-3-2018/LeesFerry-monflows-1906-2016.txt&quot;</span>)
+x =<span class="st"> </span>mflow[,<span class="dv">2</span><span class="op">:</span><span class="dv">13</span>] <span class="op">%&gt;%</span><span class="st"> `</span><span class="dt">rownames&lt;-</span><span class="st">`</span>(mflow[,<span class="dv">1</span>]) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Apr - Jun</span>
+<span class="st">  </span>{<span class="kw">rowSums</span>(.[,<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>])} <span class="op">%&gt;%</span><span class="st"> </span>{.<span class="op">/</span><span class="dv">10</span><span class="op">^</span><span class="dv">6</span>} <span class="co"># convert AF to MAF</span></code></pre></div>
+<p>Finding a best HMM implies obtaining the best component (state) PDFs and the state sequence.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Fit HMM models of orders 1 through 6. Obtain the AIC  for each
+## Best order is the one with the least value of AIC.
+family &lt;-<span class="st"> &quot;gamma&quot;</span>  <span class="co"># underlying distribution for hmm</span>
+discrete &lt;-<span class="st"> </span><span class="ot">FALSE</span>
+aic1=<span class="kw">c</span>()
+
+<span class="cf">for</span>(imodel <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>){
+  m &lt;-<span class="st"> </span>imodel      <span class="co">#model order to fit</span>
+  stationary &lt;-<span class="st"> </span>F   <span class="co"># use a stationary distribution of mixtures</span>
+      <span class="co"># different initial condition types when family == &quot;norm&quot;</span>
+  ic &lt;-<span class="st"> &quot;same.sd&quot;</span><span class="co">#c(&quot;same.sd&quot;,&quot;same.both&quot;,&quot;both.diff&quot;)</span>
+  fd.name &lt;-<span class="st"> </span><span class="kw">ifelse</span>(family <span class="op">==</span><span class="st"> &quot;norm&quot;</span>, <span class="st">&quot;normal&quot;</span>, family)
+  Pi &lt;-<span class="st"> </span><span class="kw">Pi_init</span>(m)     <span class="co"># T.P.M.</span>
+  delta &lt;-<span class="st"> </span><span class="kw">delta_init</span>(m)
+  pars &lt;-<span class="st"> </span><span class="kw">get.named.parlist</span>(x, m, fd.name, <span class="dt">lower=</span>.<span class="dv">0</span>, ic)<span class="co">#,start=list(shape1=2,shape2=2))</span>
+  <span class="co"># set up the model</span>
+  hmm &lt;-<span class="st"> </span><span class="kw">dthmm</span>(x, <span class="dt">Pi=</span>Pi, <span class="dt">delta=</span>delta, family, pars, <span class="dt">nonstat=</span><span class="op">!</span>stationary, <span class="dt">discrete =</span> discrete)
+  <span class="kw">sink</span>(<span class="st">&quot;p.7.hmm.fit&quot;</span>)
+  <span class="cf">if</span>(imodel <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>){
+   hmm &lt;-<span class="st"> </span><span class="kw">BaumWelch</span>(hmm, <span class="kw">bwcontrol</span>(<span class="dt">maxiter =</span> <span class="dv">1000</span>,
+          <span class="dt">posdiff=</span><span class="ot">TRUE</span>,<span class="dt">converge =</span> <span class="kw">expression</span>(diff <span class="op">&gt;</span><span class="st"> </span>tol)))
+   } <span class="cf">else</span> {
+   hmm &lt;-<span class="st"> </span><span class="kw">BaumWelch</span>(hmm, <span class="kw">bwcontrol</span>(<span class="dt">maxiter =</span> <span class="dv">1000</span>, <span class="dt">tol =</span> <span class="fl">1e-08</span>))
+   }
+  <span class="kw">sink</span>()
+  <span class="co"># get the hidden states from the fitted model </span>
+  <span class="co"># Global decoding. To get the probability of being in a state: hmm$u</span>
+  decoding &lt;-<span class="st"> </span><span class="kw">Viterbi</span>(hmm)
+  <span class="co"># get AIC</span>
+  aic &lt;-<span class="st"> </span><span class="kw">AIC</span>(hmm)
+  aic1=<span class="kw">c</span>(aic1,aic)
+}
+<span class="kw">print</span>(aic1)</code></pre></div>
+<pre><code>## [1] 545.0622 544.6791 551.4169 559.6687 570.5841 571.4997</code></pre>
+<p>We select the HMM with the lowest AIC. In this case, this happens to be of order 2.</p>
+<p>We rerun the HMM for best order (m=2) and generate the state sequence (decoding) resulting from it.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Get the best order
+bestorder =<span class="st"> </span><span class="kw">order</span>(aic1)[<span class="dv">1</span>]
+## Fit the model for this best order
+m &lt;-<span class="st"> </span>bestorder      <span class="co">#model order to fit</span>
+stationary &lt;-<span class="st"> </span>F   <span class="co"># use a stationary distribution of mixtures</span>
+    <span class="co"># different initial condition types when family == &quot;norm&quot;</span>
+ic &lt;-<span class="st"> &quot;same.sd&quot;</span><span class="co">#c(&quot;same.sd&quot;,&quot;same.both&quot;,&quot;both.diff&quot;)</span>
+fd.name &lt;-<span class="st"> </span><span class="kw">ifelse</span>(family <span class="op">==</span><span class="st"> &quot;norm&quot;</span>, <span class="st">&quot;normal&quot;</span>, family)
+Pi &lt;-<span class="st"> </span><span class="kw">Pi_init</span>(m)   <span class="co"># T.P.M.</span>
+delta &lt;-<span class="st"> </span><span class="kw">delta_init</span>(m)
+pars &lt;-<span class="st"> </span><span class="kw">get.named.parlist</span>(x, m, fd.name, <span class="dt">lower=</span>.<span class="dv">0</span>, ic)<span class="co">#,start=list(shape1=2,shape2=2))</span>
+  <span class="co"># set up the model</span>
+hmm &lt;-<span class="st"> </span><span class="kw">dthmm</span>(x, <span class="dt">Pi=</span>Pi, <span class="dt">delta=</span>delta, family, pars, <span class="dt">nonstat=</span><span class="op">!</span>stationary, <span class="dt">discrete =</span> discrete)
+<span class="kw">sink</span>(<span class="st">&quot;p.7.best.hmm&quot;</span>)
+hmm &lt;-<span class="st"> </span><span class="kw">BaumWelch</span>(hmm, <span class="kw">bwcontrol</span>(<span class="dt">maxiter =</span> <span class="dv">1000</span>, <span class="dt">tol =</span> <span class="fl">1e-08</span>)) 
+<span class="kw">sink</span>() <span class="co"># end hidding output</span>
+decoding &lt;-<span class="st"> </span><span class="kw">Viterbi</span>(hmm)</code></pre></div>
+<p>The model summary is also attached together with the state probabilities and state sequence plots.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">summary</span>(hmm))</code></pre></div>
+<pre><code>## $delta
+## [1] 1.0000e+00 3.5938e-72
+## 
+## $Pi
+##           [,1]      [,2]
+## [1,] 0.7377182 0.2622818
+## [2,] 0.3051391 0.6948609
+## 
+## $nonstat
+## [1] TRUE
+## 
+## $distn
+## [1] &quot;gamma&quot;
+## 
+## $pm
+## $pm$rate
+## [1] 1.990288 1.129834
+## 
+## $pm$shape
+## [1] 19.253742  7.583725
+## 
+## 
+## $discrete
+## [1] FALSE
+## 
+## $n
+## [1] 111</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cat</span>(<span class="st">&#39;Model order:&#39;</span>,m,<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)</code></pre></div>
+<pre><code>## Model order: 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ggplot_stationary_hmm</span>(hmm,.<span class="dv">5</span>)
+<span class="kw">print</span>(p)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">state.<span class="dv">1</span>=<span class="kw">ifelse</span>(decoding<span class="op">==</span><span class="dv">1</span>,<span class="kw">mean</span>(x)<span class="op">-</span><span class="dv">1</span>,<span class="ot">NA</span>)
+state.<span class="dv">2</span>=<span class="kw">ifelse</span>(decoding<span class="op">==</span><span class="dv">2</span>,<span class="kw">mean</span>(x)<span class="op">+</span><span class="dv">1</span>,<span class="ot">NA</span>)
+<span class="kw">plot</span>(x,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;&quot;</span>,
+     <span class="dt">main=</span><span class="st">&quot;Modified Spring flows and states (supperposed)&quot;</span>)
+<span class="kw">points</span>(state.<span class="dv">2</span>,<span class="dt">col=</span><span class="st">&#39;blue&#39;</span>)
+<span class="kw">points</span>(state.<span class="dv">1</span>,<span class="dt">col=</span><span class="st">&#39;red&#39;</span>)
+<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>,<span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;state 1&quot;</span>,<span class="st">&quot;state 2&quot;</span>),<span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>),<span class="dt">pch=</span><span class="dv">1</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
+</div>
+<div id="generate-250-simulations-each-of-same-length-as-the-historical-data" class="section level2">
+<h2><span class="header-section-number">7.2</span> Generate 250 simulations each of same length as the historical data</h2>
+<p>This involves generating the state sequence from the transition probability matrix and resampling flows from the corresponding component distribution.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># simulate from the transition probability</span>
+N =<span class="st"> </span><span class="kw">length</span>(x)
+nsim =<span class="st"> </span><span class="dv">250</span>
+nprob =<span class="st"> </span><span class="kw">length</span>(decoding[decoding <span class="op">==</span><span class="st"> </span><span class="dv">1</span>])<span class="op">/</span>N
+delta1=<span class="kw">c</span>(nprob,<span class="dv">1</span><span class="op">-</span>nprob)   <span class="co">#stationary probability</span>
+zsim =<span class="st"> </span><span class="kw">mchain</span>(<span class="ot">NULL</span>,hmm<span class="op">$</span>Pi,<span class="dt">delta=</span>delta1)
+spring.sim =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>,<span class="dt">nrow=</span>nsim,<span class="dt">ncol=</span>N)
+
+<span class="co"># Points where May PDF is evaluated </span>
+xeval=<span class="kw">seq</span>(<span class="kw">min</span>(x)<span class="op">-</span><span class="fl">0.25</span><span class="op">*</span><span class="kw">sd</span>(x),
+          <span class="kw">max</span>(x)<span class="op">+</span><span class="fl">0.25</span><span class="op">*</span><span class="kw">sd</span>(x),<span class="dt">length=</span><span class="dv">100</span>)
+sim.pdf=<span class="kw">matrix</span>(<span class="dv">0</span>,<span class="dt">nrow=</span>nsim,<span class="dt">ncol=</span><span class="dv">100</span>) <span class="co"># Array to store May simulated PDF</span>
+
+spring.stat=<span class="kw">matrix</span>(<span class="ot">NA</span>,<span class="dt">ncol =</span> <span class="dv">6</span>,<span class="dt">nrow =</span> nsim) <span class="co"># year statistics</span>
+<span class="kw">colnames</span>(spring.stat) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;mean&quot;</span>,<span class="st">&quot;stdev&quot;</span>,<span class="st">&quot;min&quot;</span>,<span class="st">&quot;max&quot;</span>,<span class="st">&quot;skew&quot;</span>,<span class="st">&quot;cor&quot;</span>)
+
+<span class="cf">for</span>(isim <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim){
+  zsim =<span class="st"> </span><span class="kw">simulate</span>(zsim,<span class="dt">nsim=</span>N)
+  ## now simulate the flows from the corresponding PDF
+  flowsim =<span class="st"> </span><span class="kw">c</span>()
+  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>N){
+    <span class="cf">if</span>(zsim<span class="op">$</span>mc[i] <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)xx=<span class="kw">rgamma</span>(<span class="dv">1</span>,<span class="dt">shape=</span>hmm<span class="op">$</span>pm<span class="op">$</span>shape[<span class="dv">1</span>],
+                                 <span class="dt">scale=</span><span class="dv">1</span><span class="op">/</span>hmm<span class="op">$</span>pm<span class="op">$</span>rate[<span class="dv">1</span>])
+    <span class="cf">if</span>(zsim<span class="op">$</span>mc[i] <span class="op">==</span><span class="st"> </span><span class="dv">2</span>)xx=<span class="kw">rgamma</span>(<span class="dv">1</span>,<span class="dt">shape=</span>hmm<span class="op">$</span>pm<span class="op">$</span>shape[<span class="dv">2</span>],
+                                 <span class="dt">scale=</span><span class="dv">1</span><span class="op">/</span>hmm<span class="op">$</span>pm<span class="op">$</span>rate[<span class="dv">2</span>])
+    flowsim=<span class="kw">c</span>(flowsim,xx)
+  }
+  spring.sim[isim,]=flowsim
+  sim.pdf[isim,]=<span class="kw">sm.density</span>(flowsim,<span class="dt">eval.points=</span>xeval,
+                            <span class="dt">display=</span><span class="st">&quot;none&quot;</span>)<span class="op">$</span>estimate
+  <span class="co"># fill statistics</span>
+  spring.stat[isim,<span class="st">&quot;mean&quot;</span>]=<span class="kw">mean</span>(flowsim)
+  spring.stat[isim,<span class="st">&quot;max&quot;</span>]=<span class="kw">max</span>(flowsim)
+  spring.stat[isim,<span class="st">&quot;min&quot;</span>]=<span class="kw">min</span>(flowsim)
+  spring.stat[isim,<span class="st">&quot;stdev&quot;</span>]=<span class="kw">sd</span>(flowsim)
+  spring.stat[isim,<span class="st">&quot;skew&quot;</span>]=<span class="kw">skewness</span>(flowsim)
+  spring.stat[isim,<span class="st">&quot;cor&quot;</span>]=<span class="kw">cor</span>(flowsim[<span class="op">-</span>N],flowsim[<span class="dv">2</span><span class="op">:</span>N])
+}</code></pre></div>
+<p>The statistics from the 250 simulations and the simulated PDF are plotted with the original data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compute statistics from the historical data.</span>
+obs=<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>
+obs[<span class="dv">1</span>]=<span class="kw">mean</span>(x)
+obs[<span class="dv">2</span>]=<span class="kw">sd</span>(x)
+obs[<span class="dv">3</span>]=<span class="kw">min</span>(x)
+obs[<span class="dv">4</span>]=<span class="kw">max</span>(x)
+obs[<span class="dv">5</span>]=<span class="kw">skewness</span>(x)
+obs[<span class="dv">6</span>]=<span class="kw">cor</span>(x[<span class="op">-</span>N],x[<span class="dv">2</span><span class="op">:</span>N])
+<span class="co"># bind the stats of the historic data at the top..</span>
+spring.stat=<span class="kw">rbind</span>(obs,spring.stat)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># function to plot boxplots with the structure: hist. in first row</span>
+plot.bp =<span class="st"> </span><span class="cf">function</span>(matrix,name){
+  xmeans=<span class="kw">as.matrix</span>(matrix)
+  n=<span class="kw">length</span>(xmeans[,<span class="dv">1</span>])
+  xmeans1=<span class="kw">as.matrix</span>(xmeans[<span class="dv">2</span><span class="op">:</span>n,]) <span class="co">#the first row is the original data</span>
+  xs=<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>
+  zz=<span class="kw">boxplot</span>(<span class="kw">split</span>(xmeans1,<span class="kw">col</span>(xmeans1)), <span class="dt">plot=</span>F, <span class="dt">cex=</span><span class="fl">1.0</span>)
+  zz<span class="op">$</span>names=<span class="kw">rep</span>(<span class="st">&quot;&quot;</span>,<span class="kw">length</span>(zz<span class="op">$</span>names))
+  z1=<span class="kw">bxp</span>(zz,<span class="dt">ylim=</span><span class="kw">range</span>(xmeans),<span class="dt">xlab=</span><span class="st">&quot;&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;&quot;</span>,<span class="dt">cex=</span><span class="fl">1.00</span>)
+  <span class="kw">points</span>(z1,xmeans[<span class="dv">1</span>,],<span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)
+  <span class="kw">lines</span>(z1,xmeans[<span class="dv">1</span>,],<span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>)
+  <span class="kw">title</span>(<span class="dt">main=</span>name)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))
+<span class="kw">plot.bp</span>(spring.stat[,<span class="st">&quot;mean&quot;</span>],<span class="st">&quot;Mean&quot;</span>)
+<span class="kw">plot.bp</span>(spring.stat[,<span class="st">&quot;stdev&quot;</span>],<span class="st">&quot;Standard Deviation&quot;</span>)
+<span class="kw">plot.bp</span>(spring.stat[,<span class="st">&quot;min&quot;</span>],<span class="st">&quot;Min&quot;</span>)
+<span class="kw">plot.bp</span>(spring.stat[,<span class="st">&quot;max&quot;</span>],<span class="st">&quot;Max&quot;</span>)
+<span class="kw">plot.bp</span>(spring.stat[,<span class="st">&quot;skew&quot;</span>],<span class="st">&quot;Skews&quot;</span>)
+<span class="kw">plot.bp</span>(spring.stat[,<span class="st">&quot;cor&quot;</span>],<span class="st">&quot;Lag-1 correlation&quot;</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xdensityorig =<span class="st"> </span>x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sm.density</span>(.,<span class="dt">eval.points=</span>xeval,<span class="dt">display=</span><span class="st">&quot;none&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>.<span class="op">$</span>estimate
+
+plot.pdf =<span class="st"> </span><span class="cf">function</span>(eval,histPDF,simPDF){
+  xeval =<span class="st"> </span>eval
+  <span class="kw">plot</span>(xeval,histPDF,<span class="dt">pch=</span><span class="st">&quot;.&quot;</span>,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>,<span class="dt">ylim=</span><span class="kw">range</span>(simPDF,histPDF),
+       <span class="dt">xlab=</span><span class="st">&quot;&quot;</span>,<span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>)
+  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim)<span class="kw">lines</span>(xeval,simPDF[i,],<span class="dt">col=</span><span class="st">&#39;lightgrey&#39;</span>,<span class="dt">lty=</span><span class="dv">3</span>)
+  <span class="kw">lines</span>(xeval,histPDF,<span class="dt">lwd=</span><span class="dv">3</span>,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)
+  <span class="kw">title</span>(<span class="dt">main=</span><span class="st">&quot;Historical vs. simulated PDF&quot;</span>)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.pdf</span>(xeval,xdensityorig,sim.pdf)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="fit-a-best-glm-to-the-state-sequence" class="section level2">
+<h2><span class="header-section-number">7.3</span> Fit a best GLM to the state sequence</h2>
+<p>Use the predictor as a function of preceeding winter season climate indices and the state from the previous year.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">enso=<span class="kw">read.table</span>(<span class="st">&quot;C:/Users/alexb/Google Drive/CVEN 6833 ADAT/zz Homeworks/HW3/enso.txt&quot;</span>)
+amo=<span class="kw">read.table</span>(<span class="st">&quot;C:/Users/alexb/Google Drive/CVEN 6833 ADAT/zz Homeworks/HW3/amo.txt&quot;</span>)
+pdo=<span class="kw">read.table</span>(<span class="st">&quot;C:/Users/alexb/Google Drive/CVEN 6833 ADAT/zz Homeworks/HW3/pdo.txt&quot;</span>)
+
+X =<span class="st"> </span><span class="kw">data.frame</span>(decoding[<span class="op">-</span>N]<span class="op">-</span><span class="dv">1</span>,enso[<span class="op">-</span>N,],amo[<span class="op">-</span>N,],pdo[<span class="op">-</span>N,])
+<span class="kw">colnames</span>(X) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ts1&quot;</span>,<span class="st">&quot;enso&quot;</span>,<span class="st">&quot;amo&quot;</span>,<span class="st">&quot;pdo&quot;</span>)
+Y =<span class="st"> </span>decoding[<span class="op">-</span><span class="dv">1</span>]<span class="op">-</span><span class="dv">1</span>
+
+links =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;logit&quot;</span>, <span class="st">&quot;probit&quot;</span>, <span class="st">&quot;cauchit&quot;</span>,<span class="st">&quot;log&quot;</span>,<span class="st">&quot;cloglog&quot;</span>) <span class="co"># potential links</span>
+
+comb=<span class="kw">leaps</span>(X,Y, <span class="dt">nbest=</span><span class="dv">40</span>,<span class="dt">method=</span><span class="st">&quot;adjr2&quot;</span>)<span class="op">$</span>which <span class="co"># all combinations of cov.</span>
+aic &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="fl">1e6</span>,<span class="dt">ncol=</span><span class="kw">length</span>(links),<span class="dt">nrow =</span> <span class="kw">length</span>(comb[,<span class="dv">1</span>]))
+<span class="kw">colnames</span>(aic) =<span class="st"> </span>links[<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(links)]
+
+<span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(comb[,<span class="dv">1</span>])){ <span class="co"># try every link f. with every comb.</span>
+  xx =<span class="st"> </span>X[,comb[k,]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>(.)
+  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(links)){
+    zz=<span class="kw">try</span>(<span class="kw">glm</span>(Y <span class="op">~</span><span class="st"> </span>., <span class="dt">data=</span>xx, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link=</span>links[i]), <span class="dt">maxit=</span><span class="dv">500</span>),<span class="dt">silent=</span><span class="ot">TRUE</span>)
+    <span class="cf">if</span>(<span class="kw">class</span>(zz)[<span class="dv">1</span>]<span class="op">!=</span><span class="st">&quot;try-error&quot;</span>)aic[k,i]=zz<span class="op">$</span>aic[<span class="dv">1</span>]
+  }
+}
+<span class="kw">head</span>(aic)</code></pre></div>
+<pre><code>##          logit    probit   cauchit          log   cloglog
+## [1,]  97.74487  97.74487  97.74487 9.774487e+01  97.74487
+## [2,] 126.88566 126.47855 128.77622 1.000000e+06 128.60526
+## [3,] 148.52354 148.52630 148.52114 1.485643e+02 148.53909
+## [4,] 148.87507 148.86830 148.91355 1.489096e+02 148.89203
+## [5,]  92.64201  92.79124  91.54990 1.000000e+06  93.72228
+## [6,]  99.22276  99.27680  98.72933 1.000000e+06  98.71944</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">index =<span class="st"> </span><span class="kw">which</span>(aic <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(aic), <span class="dt">arr.ind =</span> <span class="ot">TRUE</span>) <span class="co"># select min. AIC</span>
+<span class="kw">print</span>(
+<span class="kw">sprintf</span>(<span class="kw">paste</span>(<span class="st">&quot;Choosing the GLM which minimizes AIC for binomial&quot;</span>,
+              <span class="st">&quot;family: %s link function and %s covariates&quot;</span>),
+        links[index[,<span class="st">&quot;col&quot;</span>]],
+        <span class="kw">paste</span>(<span class="kw">colnames</span>(X)[comb[index[,<span class="st">&quot;row&quot;</span>],]],<span class="dt">collapse =</span> <span class="st">&#39;, &#39;</span>)))</code></pre></div>
+<pre><code>## [1] &quot;Choosing the GLM which minimizes AIC for binomial family: cauchit link function and ts1, amo covariates&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">state.glm =<span class="st"> </span><span class="kw">glm</span>(Y <span class="op">~</span><span class="st"> </span>., <span class="dt">data=</span>X[,comb[index[,<span class="st">&quot;row&quot;</span>],]], 
+                <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link=</span>links[index[,<span class="st">&quot;col&quot;</span>]]))
+<span class="kw">summary</span>(state.glm) <span class="co"># Model selected</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Y ~ ., family = binomial(link = links[index[, &quot;col&quot;]]), 
+##     data = X[, comb[index[, &quot;row&quot;], ]])
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.2583  -0.4897  -0.3741   0.5019   2.2797  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)   
+## (Intercept)  -2.8665     0.9469  -3.027  0.00247 **
+## ts1           3.9808     1.2182   3.268  0.00108 **
+## amo           6.1710     2.5808   2.391  0.01680 * 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 145.29  on 109  degrees of freedom
+## Residual deviance:  85.55  on 107  degrees of freedom
+## AIC: 91.55
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<p>To evaluate if the difference of the variance of the model is significantly better we will perform an ANOVA (via Likelihood Ratio Test) of the best model vs. the most complex model (4 covariates) with the lowest AIC.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">glm.complex =<span class="st"> </span><span class="kw">glm</span>(Y <span class="op">~</span><span class="st"> </span>., <span class="dt">data=</span>X, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link=</span><span class="st">&quot;cauchit&quot;</span>), <span class="dt">maxit=</span><span class="dv">500</span>)
+<span class="kw">anova</span>(glm.complex,state.glm, <span class="dt">test =</span> <span class="st">&quot;LRT&quot;</span>)</code></pre></div>
+<pre><code>## Analysis of Deviance Table
+## 
+## Model 1: Y ~ ts1 + enso + amo + pdo
+## Model 2: Y ~ ts1 + amo
+##   Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)
+## 1       105     84.252                     
+## 2       107     85.550 -2  -1.2984   0.5225</code></pre>
+<p>The variance is not significantly better and we accept H0 hypothesis. We retain the most complex model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">state.glm=glm.complex</code></pre></div>
+</div>
+<div id="for-each-year-based-on-the-predictors-obtain-the-probabilities-of-the-states" class="section level2">
+<h2><span class="header-section-number">7.4</span> For each year based on the predictors, obtain the probabilities of the states</h2>
+<p>We have used a binomial glm where state 1 = 0 and state 2 = 1. Therefore, the fitted values (ranging from 0 to 1) represent the probability of of being on state 2.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(state.glm<span class="op">$</span>fitted.values)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+</div>
+<div id="using-these-state-probabilities-simulate-flow-from-the-corresponding-state-pdfs" class="section level2">
+<h2><span class="header-section-number">7.5</span> Using these state probabilities, simulate flow from the corresponding state PDFs</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">state.p =<span class="st"> </span><span class="dv">1</span><span class="op">:</span>N <span class="co"># init. state probabilities</span>
+state.p[<span class="dv">1</span>] =<span class="st"> </span><span class="kw">sum</span>(<span class="kw">round</span>(state.glm<span class="op">$</span>fitted.values))<span class="op">/</span><span class="kw">length</span>(state.glm<span class="op">$</span>fitted.values) <span class="co"># 1906</span>
+state.p[<span class="dv">2</span><span class="op">:</span>N] =<span class="st"> </span>state.glm<span class="op">$</span>fitted.values <span class="co"># 1907 - 2016</span>
+state.sim =<span class="st"> </span><span class="dv">1</span><span class="op">:</span>N <span class="co"># init. simulated state</span>
+
+flow.sim.glm =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>,<span class="dt">nrow=</span>nsim,<span class="dt">ncol=</span>N)
+sim.pdf.glm =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>,<span class="dt">nrow=</span>nsim,<span class="dt">ncol=</span><span class="dv">100</span>) <span class="co"># Array to store May simulated PDF</span>
+
+spring.stat.glm=<span class="kw">matrix</span>(<span class="ot">NA</span>,<span class="dt">ncol =</span> <span class="dv">6</span>,<span class="dt">nrow =</span> nsim) <span class="co"># statistics</span>
+<span class="kw">colnames</span>(spring.stat.glm) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;mean&quot;</span>,<span class="st">&quot;stdev&quot;</span>,<span class="st">&quot;min&quot;</span>,<span class="st">&quot;max&quot;</span>,<span class="st">&quot;skew&quot;</span>,<span class="st">&quot;cor&quot;</span>)
+
+<span class="co"># simulation</span>
+<span class="cf">for</span>(isim <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim){
+  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>N){
+    state.sim[j]=<span class="kw">ifelse</span>(<span class="kw">runif</span>(<span class="dv">1</span>)<span class="op">&lt;</span>state.p[j],<span class="dv">2</span>,<span class="dv">1</span>)
+    <span class="cf">if</span>(state.sim[j]<span class="op">==</span><span class="dv">1</span>){
+      flow.sim.glm[isim,j]=<span class="kw">rgamma</span>(<span class="dv">1</span>,<span class="dt">shape =</span> hmm<span class="op">$</span>pm<span class="op">$</span>shape[<span class="dv">1</span>],hmm<span class="op">$</span>pm<span class="op">$</span>rate[<span class="dv">1</span>])
+    }<span class="cf">else</span>{
+      flow.sim.glm[isim,j]=<span class="kw">rgamma</span>(<span class="dv">1</span>,<span class="dt">shape =</span> hmm<span class="op">$</span>pm<span class="op">$</span>shape[<span class="dv">2</span>],hmm<span class="op">$</span>pm<span class="op">$</span>rate[<span class="dv">2</span>])
+    }
+  }
+  sim.pdf.glm[isim,]=<span class="kw">sm.density</span>(flow.sim.glm[isim,],
+                                <span class="dt">eval.points=</span>xeval,<span class="dt">display=</span><span class="st">&quot;none&quot;</span>)<span class="op">$</span>estimate
+  <span class="co"># fill statistics</span>
+  
+  spring.stat.glm[isim,<span class="st">&quot;mean&quot;</span>]=<span class="kw">mean</span>(flow.sim.glm[isim,])
+  spring.stat.glm[isim,<span class="st">&quot;max&quot;</span>]=<span class="kw">max</span>(flow.sim.glm[isim,])
+  spring.stat.glm[isim,<span class="st">&quot;min&quot;</span>]=<span class="kw">min</span>(flow.sim.glm[isim,])
+  spring.stat.glm[isim,<span class="st">&quot;stdev&quot;</span>]=<span class="kw">sd</span>(flow.sim.glm[isim,])
+  spring.stat.glm[isim,<span class="st">&quot;skew&quot;</span>]=<span class="kw">skewness</span>(flow.sim.glm[isim,])
+  spring.stat.glm[isim,<span class="st">&quot;cor&quot;</span>]=<span class="kw">cor</span>(flow.sim.glm[isim,<span class="op">-</span>N],flow.sim.glm[isim,<span class="dv">2</span><span class="op">:</span>N])
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># bind the stats of the historic data at the top..</span>
+spring.stat.glm=<span class="kw">rbind</span>(obs,spring.stat.glm)
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))
+<span class="kw">plot.bp</span>(spring.stat.glm[,<span class="st">&quot;mean&quot;</span>],<span class="st">&quot;Mean&quot;</span>)
+<span class="kw">plot.bp</span>(spring.stat.glm[,<span class="st">&quot;stdev&quot;</span>],<span class="st">&quot;Standard Deviation&quot;</span>)
+<span class="kw">plot.bp</span>(spring.stat.glm[,<span class="st">&quot;min&quot;</span>],<span class="st">&quot;Min&quot;</span>)
+<span class="kw">plot.bp</span>(spring.stat.glm[,<span class="st">&quot;max&quot;</span>],<span class="st">&quot;Max&quot;</span>)
+<span class="kw">plot.bp</span>(spring.stat.glm[,<span class="st">&quot;skew&quot;</span>],<span class="st">&quot;Skews&quot;</span>)
+<span class="kw">plot.bp</span>(spring.stat.glm[,<span class="st">&quot;cor&quot;</span>],<span class="st">&quot;Lag-1 correlation&quot;</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.pdf</span>(xeval,xdensityorig,sim.pdf.glm)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+</div>
+<div id="compute-the-median-and-compare-with-the-observed-flow.-compute-rpss-at-the-terciles." class="section level2">
+<h2><span class="header-section-number">7.6</span> Compute the median and compare with the observed flow. Compute RPSS at the terciles.</h2>
+<p>The median values are compared with the observed values in a scatter plot. The correlation is also calculated.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">median.sim =<span class="st"> </span><span class="dv">1</span><span class="op">:</span>N
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>N) median.sim[i] =<span class="st"> </span><span class="kw">median</span>(flow.sim.glm[,i])
+<span class="co"># par(mfrow=c(1,2))</span>
+<span class="kw">plot</span>(x,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>)
+<span class="kw">lines</span>(median.sim,<span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(x,median.sim,<span class="dt">xlab=</span><span class="st">&quot;Observed flows&quot;</span>,<span class="dt">ylab =</span> <span class="st">&quot;Simulated median flows&quot;</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-21-2.png" width="672" /></p>
+<p>The time series plot shows persistance on the simulated median values, with two clear states. The calculated correlation between observation and simulated median values is:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(x,median.sim)</code></pre></div>
+<pre><code>## [1] 0.4417929</code></pre>
+<p>The Ranked Probability Skill Score at the terciles is:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs =<span class="st"> </span><span class="kw">quantile</span>(x,<span class="kw">c</span>(<span class="fl">0.333</span>,<span class="fl">0.6667</span>)) <span class="co"># flow at given terciles</span>
+pred.prob =<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>,<span class="dt">ncol =</span> nsim, <span class="dt">nrow =</span> <span class="dv">2</span>) <span class="co"># Sim. Prob. at observation points</span>
+baseline =<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.333</span>,<span class="fl">0.6667</span>) <span class="co"># Terciles</span>
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim){
+  aux.CDF=<span class="kw">ecdf</span>(flow.sim.glm[i,]) <span class="co"># ecdf for each simulation</span>
+  pred.prob[,i] =<span class="st"> </span><span class="kw">aux.CDF</span>(obs) <span class="co"># cum. prob. of given flow acc. to ecdf</span>
+}
+<span class="kw">rps</span>(obs,pred.prob,<span class="dt">baseline =</span> baseline)<span class="op">$</span>rpss <span class="co"># RPSS</span></code></pre></div>
+<pre><code>## [1] -0.08106093</code></pre>
+<p>The negative value indicates that the flowstream forecast at the terciles is not improved when using climate-related variables (real probabilities vs. binomial regression prob.).</p>
+</div>
+<div id="make-blind-predictions-from-2001-and-on" class="section level2">
+<h2><span class="header-section-number">7.7</span> Make blind predictions from 2001 and on</h2>
+<p>Evaluate the performance by computing the skills as above.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xx =<span class="st"> </span>X[<span class="dv">100</span><span class="op">:</span><span class="dv">110</span>,] <span class="co"># covariates 2000 - 2010 for glm</span>
+blind.flow =<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>,<span class="dt">nrow =</span> nsim, <span class="dt">ncol =</span> <span class="dv">11</span>) <span class="co">#init sim flows</span>
+<span class="cf">for</span>(isim <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim){
+  
+  s =<span class="st"> </span>xx[<span class="dv">1</span>,<span class="st">&quot;ts1&quot;</span>] <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="co"># initial state for the loop</span>
+  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">11</span>){
+    xx[i,<span class="st">&quot;ts1&quot;</span>] =<span class="st"> </span>s<span class="op">-</span><span class="dv">1</span> <span class="co"># replace hmm step seq. with simulated step sequence</span>
+    y =<span class="st"> </span><span class="kw">predict</span>(state.glm,<span class="dt">newdata =</span> xx[i,],<span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="co"># prob of state 2</span>
+    s =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">runif</span>(<span class="dv">1</span>)<span class="op">&lt;</span>y,<span class="dv">2</span>,<span class="dv">1</span>)                                <span class="co"># state</span>
+    f =<span class="st"> </span><span class="kw">rgamma</span>(<span class="dv">1</span>,<span class="dt">shape=</span>hmm<span class="op">$</span>pm<span class="op">$</span>shape[s],<span class="dt">scale=</span><span class="dv">1</span><span class="op">/</span>hmm<span class="op">$</span>pm<span class="op">$</span>rate[s])<span class="co"># streamflow</span>
+    blind.flow[isim,i] =<span class="st"> </span>f <span class="co"># assign to time series</span>
+  }
+}
+<span class="kw">boxplot</span>(blind.flow)
+<span class="kw">title</span>(<span class="st">&quot;Forecasted vs. real streamflows&quot;</span>)
+<span class="kw">lines</span>(x[<span class="dv">101</span><span class="op">:</span><span class="dv">111</span>],<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)
+<span class="kw">points</span>(x[<span class="dv">101</span><span class="op">:</span><span class="dv">111</span>],<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<div id="correlation-of-median-streamflows" class="section level3">
+<h3><span class="header-section-number">7.7.1</span> Correlation of median streamflows</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">blind.median =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">11</span>
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">11</span>){
+  blind.median[i] =<span class="st"> </span><span class="kw">median</span>(blind.flow[,i])
+  }
+<span class="kw">plot</span>(x[<span class="dv">101</span><span class="op">:</span><span class="dv">111</span>],blind.median)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(x[<span class="dv">101</span><span class="op">:</span><span class="dv">111</span>],blind.median)</code></pre></div>
+<pre><code>## [1] -0.06366088</code></pre>
+<p>The correlation is significantly lower than the one obtained for the historical time series.</p>
+</div>
+<div id="rpss" class="section level3">
+<h3><span class="header-section-number">7.7.2</span> RPSS</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs =<span class="st"> </span><span class="kw">quantile</span>(x[<span class="dv">101</span><span class="op">:</span><span class="dv">111</span>],<span class="kw">c</span>(<span class="fl">0.333</span>,<span class="fl">0.6667</span>)) <span class="co"># flow at given terciles</span>
+pred.prob =<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>,<span class="dt">ncol =</span> nsim, <span class="dt">nrow =</span> <span class="dv">2</span>) <span class="co"># Sim. Prob. at observation points</span>
+baseline =<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.333</span>,<span class="fl">0.6667</span>) <span class="co"># Terciles</span>
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim){
+  aux.CDF=<span class="kw">ecdf</span>(blind.flow[i,]) <span class="co"># ecdf for each simulation</span>
+  pred.prob[,i] =<span class="st"> </span><span class="kw">aux.CDF</span>(obs) <span class="co"># cum. prob. of given flow acc. to ecdf</span>
+}
+<span class="kw">rps</span>(obs,pred.prob,<span class="dt">baseline =</span> baseline)<span class="op">$</span>rpss <span class="co"># RPSS</span></code></pre></div>
+<pre><code>## [1] -0.3372899</code></pre>
+<p>The score is even more negative, showing the lack of improvement accuracy when forecasting.</p>
+</div>
+</div>
+<div id="functions-from-lib.r" class="section level2">
+<h2><span class="header-section-number">7.8</span> Functions from lib.R</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># source functions</span>
+<span class="co"># takend from &quot;http://civil.colorado.edu/~balajir/CVEN6833/R-sessions/session3/files-4HW3/lib.R&quot;</span>
+
+Pi_init &lt;-<span class="st"> </span><span class="cf">function</span>(n,<span class="dt">type=</span><span class="st">&#39;uniform&#39;</span>){
+    <span class="kw">matrix</span>(<span class="kw">rep</span>(<span class="dv">1</span><span class="op">/</span>n,n<span class="op">^</span><span class="dv">2</span>),n)}
+
+delta_init &lt;-<span class="st"> </span><span class="cf">function</span>(n, <span class="dt">type=</span><span class="st">&#39;uniform&#39;</span>){
+    d &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n)<span class="op">^</span><span class="dv">2</span>
+    d<span class="op">/</span><span class="kw">sum</span>(d)}
+
+ntile.ts &lt;-<span class="st"> </span>
+<span class="cf">function</span>(x, n, <span class="dt">limit.type =</span> <span class="st">&#39;prob&#39;</span>, <span class="dt">tie =</span> <span class="dv">1</span>, <span class="dt">altobs =</span> <span class="ot">NULL</span> ){
+    <span class="co"># returns an integer vector corresponding to n states broken by equal </span>
+    <span class="co"># probability or equal distance</span>
+    <span class="co">#</span>
+    limit &lt;-<span class="st"> </span>
+<span class="st">    </span><span class="cf">if</span>(limit.type <span class="op">==</span><span class="st"> &#39;prob&#39;</span>) 
+      <span class="kw">quantile</span>(x,<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span><span class="op">/</span>n))
+    <span class="cf">else</span> <span class="cf">if</span>(limit.type <span class="op">==</span><span class="st"> &#39;equal&#39;</span>)
+      <span class="kw">seq</span>(<span class="kw">min</span>(x),<span class="kw">max</span>(x),<span class="dt">by=</span><span class="kw">diff</span>(<span class="kw">range</span>(x))<span class="op">/</span>n)
+
+    <span class="cf">if</span>(<span class="op">!</span><span class="kw">is.null</span>(altobs)) limit &lt;-<span class="st"> </span><span class="kw">quantile</span>(altobs,<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span><span class="op">/</span>n))
+    
+    b &lt;-<span class="st"> </span><span class="kw">integer</span>(<span class="kw">length</span>(x))
+    
+    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>(n<span class="op">+</span><span class="dv">1</span>)){
+        filter &lt;-<span class="st"> </span>
+<span class="st">        </span><span class="cf">if</span>(tie <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) 
+            x <span class="op">&gt;=</span><span class="st"> </span>limit[i] <span class="op">&amp;</span><span class="st"> </span>x <span class="op">&lt;=</span><span class="st"> </span>limit[i<span class="op">+</span><span class="dv">1</span>]
+        <span class="cf">else</span> 
+            x <span class="op">&gt;</span><span class="st"> </span>limit[i] <span class="op">&amp;</span><span class="st"> </span>x <span class="op">&lt;=</span><span class="st"> </span>limit[i<span class="op">+</span><span class="dv">1</span>]
+    
+        <span class="co">#only need to set the 1&#39;s because b is already 0&#39;s</span>
+        b[filter] &lt;-<span class="st"> </span><span class="kw">as.integer</span>(i<span class="op">-</span><span class="dv">1</span>)
+    }
+    
+    <span class="cf">if</span>(<span class="kw">class</span>(x) <span class="op">==</span><span class="st"> &#39;ts&#39;</span>) 
+        <span class="kw">return</span>(<span class="kw">ts</span>(b,<span class="dt">start=</span><span class="kw">start</span>(x),<span class="dt">end=</span><span class="kw">end</span>(x))) 
+    <span class="cf">else</span> 
+        <span class="kw">return</span>(b)
+}
+
+get.named.parlist &lt;-<span class="st"> </span><span class="cf">function</span>(x,m,dist,ic,...){
+    <span class="kw">require</span>(MASS)
+    fit &lt;-<span class="st"> </span><span class="kw">fitdistr</span>(x,dist,...)
+    np &lt;-<span class="st"> </span><span class="kw">length</span>(fit<span class="op">$</span>estimate)
+    pars &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&#39;list&#39;</span>,np)
+    <span class="kw">names</span>(pars) &lt;-<span class="st"> </span><span class="kw">names</span>(fit<span class="op">$</span>estimate)
+
+    init &lt;-<span class="st"> </span><span class="kw">lapply</span>(fit<span class="op">$</span>estimate,max)
+    <span class="kw">names</span>(init) &lt;-<span class="st"> </span><span class="kw">names</span>(fit<span class="op">$</span>estimate)
+
+    <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>m){
+        <span class="co">#print(j)</span>
+        <span class="co">#browser()</span>
+
+        <span class="co">#browser()</span>
+        this.fit &lt;-<span class="st"> </span><span class="kw">fitdistr</span>(x[<span class="kw">ntile.ts</span>(x,m) <span class="op">==</span><span class="st"> </span>(j<span class="op">-</span><span class="dv">1</span>)],dist,init,...)
+        <span class="co">#for(k in 1:np)</span>
+        <span class="co">#    pars[[k]][j] &lt;- this.fit$estimate[k]</span>
+        <span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>np)
+            pars[[k]][j] &lt;-<span class="st"> </span>fit<span class="op">$</span>estimate[k]
+        <span class="cf">if</span>(dist <span class="op">==</span><span class="st"> &#39;normal&#39;</span>){
+            <span class="cf">if</span>(ic <span class="op">==</span><span class="st"> &#39;same.both&#39;</span>){
+                pars[[k]][j] &lt;-<span class="st"> </span><span class="kw">mean</span>(x)
+                pars[[k]][j] &lt;-<span class="st"> </span><span class="kw">sd</span>(x)
+            } <span class="cf">else</span> <span class="cf">if</span>( ic <span class="op">==</span><span class="st"> &#39;same.sd&#39;</span>){
+                pars[[k]][j] &lt;-<span class="st"> </span><span class="kw">mean</span>(x[<span class="kw">ntile.ts</span>(x,m) <span class="op">==</span><span class="st"> </span>(j<span class="op">-</span><span class="dv">1</span>)])
+                pars[[k]][j] &lt;-<span class="st"> </span><span class="kw">sd</span>(x)
+            }<span class="cf">else</span>{
+                pars[[k]][j] &lt;-<span class="st"> </span><span class="kw">mean</span>(x[<span class="kw">ntile.ts</span>(x,m) <span class="op">==</span><span class="st"> </span>(j<span class="op">-</span><span class="dv">1</span>)])
+                pars[[k]][j] &lt;-<span class="st"> </span><span class="kw">sd</span>(x[<span class="kw">ntile.ts</span>(x,m) <span class="op">==</span><span class="st"> </span>(j<span class="op">-</span><span class="dv">1</span>)])
+            }
+        }
+    }
+    pars
+}
+
+AIC.dthmm &lt;-<span class="st"> </span><span class="cf">function</span>(x){
+  ## Return the Akaieke Information criterion value for a fitted discrete 
+  ## time hidden markov model from the HiddenMarkov package
+  
+    <span class="co"># Model order</span>
+  m &lt;-<span class="st"> </span><span class="kw">length</span>(x<span class="op">$</span>delta)
+    <span class="co"># Log Liklihood value</span>
+  LL &lt;-<span class="st"> </span>x<span class="op">$</span>LL
+    <span class="co"># number of parameters</span>
+  p &lt;-<span class="st"> </span>m<span class="op">+</span>m<span class="op">^</span><span class="dv">2</span>
+    <span class="co"># AIC</span>
+  <span class="op">-</span><span class="dv">2</span><span class="op">*</span>LL <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>p
+}
+
+ggplot_stationary_hmm &lt;-<span class="st"> </span><span class="cf">function</span>(x,<span class="dt">binwidth=</span><span class="ot">NULL</span>,<span class="dt">res=</span><span class="dv">1000</span>,<span class="dt">cols=</span><span class="ot">NULL</span>,...){
+    
+    m &lt;-<span class="st"> </span><span class="kw">length</span>(x<span class="op">$</span>delta)
+    dens &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>,<span class="dt">nrow=</span>m<span class="op">+</span><span class="dv">1</span>,<span class="dt">ncol=</span>res)
+    r &lt;-<span class="st"> </span><span class="kw">extendrange</span>(x<span class="op">$</span>x,<span class="dt">f=</span>.<span class="dv">05</span>)
+    xrange &lt;-<span class="st"> </span><span class="kw">seq</span>(r[<span class="dv">1</span>],r[<span class="dv">2</span>],<span class="dt">len=</span>res)
+    delta &lt;-<span class="st"> </span><span class="kw">statdist</span>(x<span class="op">$</span>Pi)
+    <span class="cf">if</span>(<span class="kw">is.null</span>(binwidth)) binwidth &lt;-<span class="st"> </span><span class="kw">diff</span>(<span class="kw">range</span>(x<span class="op">$</span>x))<span class="op">/</span><span class="dv">8</span>
+    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>m){
+        
+        <span class="cf">if</span>(x<span class="op">$</span>distn <span class="op">==</span><span class="st"> &#39;gamma&#39;</span>){
+            dens[i,] &lt;-<span class="st"> </span>delta[i]<span class="op">*</span><span class="kw">dgamma</span>(xrange,<span class="dt">shape=</span>x<span class="op">$</span>pm<span class="op">$</span>shape[i],<span class="dt">rate=</span>x<span class="op">$</span>pm<span class="op">$</span>rate[i])
+        }<span class="cf">else</span> <span class="cf">if</span>(x<span class="op">$</span>distn <span class="op">==</span><span class="st"> &#39;norm&#39;</span>){
+            dens[i,] &lt;-<span class="st"> </span>delta[i]<span class="op">*</span><span class="kw">dnorm</span>(xrange,<span class="dt">mean=</span>x<span class="op">$</span>pm<span class="op">$</span>mean[i],<span class="dt">sd=</span>x<span class="op">$</span>pm<span class="op">$</span>sd[i])
+        }<span class="cf">else</span>{
+            <span class="kw">stop</span>(<span class="st">&#39;Distribution not supported&#39;</span>)
+        }
+            
+        dens[m<span class="op">+</span><span class="dv">1</span>,] &lt;-<span class="st"> </span>dens[m<span class="op">+</span><span class="dv">1</span>,] <span class="op">+</span><span class="st"> </span>dens[i,]
+    }
+
+    p &lt;-<span class="st"> </span><span class="kw">ggplot</span>()<span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_histogram</span>(<span class="dt">data=</span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">as.vector</span>(x<span class="op">$</span>x)),<span class="kw">aes</span>(<span class="dt">x=</span>x,<span class="dt">y=</span>..density..),
+            <span class="dt">binwidth=</span>binwidth,<span class="dt">fill=</span><span class="st">&#39;white&#39;</span>,<span class="dt">color=</span><span class="st">&#39;black&#39;</span>)<span class="op">+</span>
+<span class="st">        </span><span class="kw">theme_bw</span>()
+
+    dt &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">x=</span><span class="kw">numeric</span>(<span class="dv">0</span>),<span class="dt">y=</span><span class="kw">numeric</span>(<span class="dv">0</span>), <span class="dt">state=</span><span class="kw">integer</span>(<span class="dv">0</span>))
+    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>m)
+        dt &lt;-<span class="st"> </span><span class="kw">rbind</span>(dt, <span class="kw">data.table</span>(<span class="dt">x=</span>xrange,<span class="dt">y=</span>dens[i,], <span class="dt">state=</span>i))
+    dt<span class="op">$</span>state &lt;-<span class="st"> </span><span class="kw">factor</span>(dt<span class="op">$</span>state)
+    
+    p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">data=</span>dt,<span class="kw">aes</span>(<span class="dt">x=</span>x,<span class="dt">y=</span>y,<span class="dt">color=</span>state)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_line</span>(<span class="dt">data=</span><span class="kw">data.frame</span>(<span class="dt">x=</span>xrange,<span class="dt">y=</span>dens[m<span class="op">+</span><span class="dv">1</span>,]),<span class="kw">aes</span>(<span class="dt">x=</span>x,<span class="dt">y=</span>y),<span class="dt">color=</span><span class="st">&#39;black&#39;</span>,<span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_tableau</span>() <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits=</span>r)
+    p
+    
+}
+
+statdist &lt;-<span class="st"> </span><span class="cf">function</span>(tpm){
+    
+    m &lt;-<span class="st"> </span><span class="kw">nrow</span>(tpm)
+    ones &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">rep</span>(<span class="dv">1</span>,m))
+    I &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="kw">rep</span>(<span class="dv">1</span>,m))
+    U &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rep</span>(<span class="dv">1</span>,m<span class="op">^</span><span class="dv">2</span>),m)
+    <span class="kw">as.vector</span>(ones <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(I <span class="op">-</span><span class="st"> </span>tpm <span class="op">+</span><span class="st"> </span>U))
+    
+}</code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="modeling-nonstationary-extreme-value-time-series.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["CVEN 6833 - HW3.pdf", "CVEN 6833 - HW3.epub", "CVEN 6833 - HW3.mobi"],
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+</body>
+
+</html>

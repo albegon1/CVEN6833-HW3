@@ -116,8 +116,8 @@ plot.series = function(series,title){
 ```
 ```{r fig.width=12}
 plot.series(series.stat,"Historical Stationary Return Levels\n")
-plot.series(series.non.stat,"Historical Non-Stationary (location) Return Levels\n")
-plot.series(series.non.stat.ls,"Historical Non-Stationary (location and Scale Return Levels\n")
+plot.series(series.non.stat,"Historical Non-Stationary Return Levels (best location) \n")
+plot.series(series.non.stat.ls,"Historical Non-Stationary Return Levels (best location and scale) \n")
 ```
 
 
