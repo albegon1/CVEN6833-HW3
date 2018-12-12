@@ -8,7 +8,7 @@
 * Extreme Value Time Series
 * Copulas
 
-Access [here](https://albegon1.github.io/CVEN6833-HW3/)
+Access [here](https://albegon1.github.io/CVEN6833-HW3/index.html)
 
 All of the content of this repository is licensed 
 [CC0](https://creativecommons.org/publicdomain/zero/1.0/).
