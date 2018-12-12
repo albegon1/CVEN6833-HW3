@@ -1,0 +1,12 @@
+---
+title: "09-Bayesian-Dinamical-Linear-Model"
+output: html_document
+---
+
+# Bayesian Dynamical Linear Model
+
+Placeholder
+
+```{r}
+# Placeholder
+```

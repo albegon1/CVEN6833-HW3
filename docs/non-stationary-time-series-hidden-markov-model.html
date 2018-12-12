@@ -154,6 +154,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.2.2" data-path="singular-spectrum-analysis-diagnostics-forecasting.html"><a href="singular-spectrum-analysis-diagnostics-forecasting.html#ar-model-for-dominant-modes"><i class="fa fa-check"></i><b>8.2.2</b> AR model for dominant modes</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="bayesian-dynamical-linear-model.html"><a href="bayesian-dynamical-linear-model.html"><i class="fa fa-check"></i><b>9</b> Bayesian Dynamical Linear Model</a></li>
+<li class="chapter" data-level="10" data-path="hmm-with-gev-component-distributions.html"><a href="hmm-with-gev-component-distributions.html"><i class="fa fa-check"></i><b>10</b> HMM with GEV component distributions</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li> 
 
@@ -251,12 +253,12 @@ hmm &lt;-<span class="st"> </span><span class="kw">BaumWelch</span>(hmm, <span c
 decoding &lt;-<span class="st"> </span><span class="kw">Viterbi</span>(hmm)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">summary</span>(hmm))</code></pre></div>
 <pre><code>## $delta
-## [1]  1.000000e+00 6.556793e-105
+## [1] 2.683368e-104  1.000000e+00
 ## 
 ## $Pi
 ##           [,1]      [,2]
-## [1,] 0.7046162 0.2953838
-## [2,] 0.3414249 0.6585751
+## [1,] 0.6585749 0.3414251
+## [2,] 0.2953837 0.7046163
 ## 
 ## $nonstat
 ## [1] TRUE
@@ -266,10 +268,10 @@ decoding &lt;-<span class="st"> </span><span class="kw">Viterbi</span>(hmm)</cod
 ## 
 ## $pm
 ## $pm$rate
-## [1] 4.062193 2.974823
+## [1] 2.974825 4.062193
 ## 
 ## $pm$shape
-## [1] 15.203074  6.992024
+## [1]  6.992026 15.203072
 ## 
 ## 
 ## $discrete
@@ -413,16 +415,16 @@ aic &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="fl
 <span class="kw">head</span>(aic)</code></pre></div>
 <pre><code>##         logit   probit  cauchit          log  cloglog
 ## [1,] 125.3869 125.3869 125.3869     125.3869 125.3869
-## [2,] 146.9211 146.8480 147.3203     147.6516 147.2601
-## [3,] 148.3173 148.4183 147.6240     148.3154 148.2197
-## [4,] 151.5616 151.5576 151.5843     151.5754 151.5692
-## [5,] 124.8050 124.6801 125.4507 1000000.0000 125.1181
-## [6,] 125.5837 125.6196 125.6204 1000000.0000 125.7381</code></pre>
+## [2,] 146.9211 146.8480 147.3203     145.5355 146.4292
+## [3,] 148.3173 148.4183 147.6240 1000000.0000 148.6837
+## [4,] 151.5616 151.5576 151.5843     151.5075 151.5440
+## [5,] 124.8050 124.6801 125.4507 1000000.0000 124.3818
+## [6,] 125.5837 125.6196 125.6204 1000000.0000 125.7163</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">index =<span class="st"> </span><span class="kw">which</span>(aic <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(aic), <span class="dt">arr.ind =</span> <span class="ot">TRUE</span>) <span class="co"># select min. AIC</span>
 <span class="kw">print</span>(
 <span class="kw">sprintf</span>(<span class="st">&quot;Choosing the GLM which minimizes AIC for binomial family: %s link function and %s covariates&quot;</span>,links[index[,<span class="st">&quot;col&quot;</span>]],
         <span class="kw">paste</span>(<span class="kw">colnames</span>(X)[comb[index[,<span class="st">&quot;row&quot;</span>],]],<span class="dt">collapse =</span> <span class="st">&#39;, &#39;</span>)))</code></pre></div>
-<pre><code>## [1] &quot;Choosing the GLM which minimizes AIC for binomial family: probit link function and ts1, amo covariates&quot;</code></pre>
+<pre><code>## [1] &quot;Choosing the GLM which minimizes AIC for binomial family: cloglog link function and ts1, amo covariates&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">state.glm =<span class="st"> </span><span class="kw">glm</span>(Y <span class="op">~</span><span class="st"> </span>., <span class="dt">data=</span>X[,comb[index[,<span class="st">&quot;row&quot;</span>],]], <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link=</span>links[index[,<span class="st">&quot;col&quot;</span>]]))
 <span class="kw">summary</span>(state.glm) <span class="co"># Model selected</span></code></pre></div>
 <pre><code>## 
@@ -432,23 +434,23 @@ aic &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="fl
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -1.7872  -0.7333  -0.5345   0.8427   1.9937  
+## -2.0521  -0.8416   0.4986   0.7478   1.7263  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)  -0.8180     0.1756  -4.658 3.19e-06 ***
-## ts1           1.2820     0.2683   4.779 1.76e-06 ***
-## amo           0.9847     0.5931   1.660   0.0969 .  
+## (Intercept)  -0.9698     0.2798  -3.466 0.000528 ***
+## ts1           1.4190     0.3205   4.427 9.55e-06 ***
+## amo          -1.0552     0.5872  -1.797 0.072305 .  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
 ##     Null deviance: 148.06  on 109  degrees of freedom
-## Residual deviance: 118.68  on 107  degrees of freedom
-## AIC: 124.68
+## Residual deviance: 118.38  on 107  degrees of freedom
+## AIC: 124.38
 ## 
-## Number of Fisher Scoring iterations: 4</code></pre>
+## Number of Fisher Scoring iterations: 6</code></pre>
 <p>ENSO and PDO covariates resulted to be insignificant for the logistic regression, even if several laggings from the original data have been tried.</p>
 </div>
 <div id="use-the-state-glm-to-simulate-flows-from-the-component-distribution" class="section level2">
