@@ -28,7 +28,7 @@ suppressPackageStartupMessages(lapply(libr,
 mflow = read.table(
   "http://civil.colorado.edu/~balajir/CVEN6833/HWs/HW-3-2018/LeesFerry-monflows-1906-2016.txt")
 x = mflow[,2:13] %>% `rownames<-`(mflow[,1]) %>% # Apr - Jun
-  {rowSums(.[,4:6])} %>% {./10^6} # convert AF to MAF
+  {rowMeans(.[,4:6])} %>% {.*0.0004690502*0.001} # convert to  10^3 cms
 ```
 
 Finding a best HMM implies obtaining the best component (state) PDFs and the state sequence.
@@ -101,8 +101,8 @@ cat('Model order:',m,'\n')
 p <- ggplot_stationary_hmm(hmm,.5)
 print(p)
 
-state.1=ifelse(decoding==1,mean(x)-1,NA)
-state.2=ifelse(decoding==2,mean(x)+1,NA)
+state.1=ifelse(decoding==2,mean(x)-0.25,NA)
+state.2=ifelse(decoding==1,mean(x)+0.25,NA)
 plot(x,type="l",ylab="",
      main="Modified Spring flows and states (supperposed)")
 points(state.2,col='blue')
@@ -361,12 +361,12 @@ The negative value indicates that the flowstream forecast at the terciles is not
 Evaluate the performance by computing the skills as above.
 
 ```{r}
-xx = X[100:110,] # covariates 2000 - 2010 for glm
-blind.flow = matrix(NA,nrow = nsim, ncol = 11) #init sim flows
+xx = X[95:110,] # covariates 2000 - 2010 for glm
+blind.flow = matrix(NA,nrow = nsim, ncol = 16) #init sim flows
 for(isim in 1:nsim){
   
   s = xx[1,"ts1"] + 1 # initial state for the loop
-  for(i in 1:11){
+  for(i in 1:16){
     xx[i,"ts1"] = s-1 # replace hmm step seq. with simulated step sequence
     y = predict(state.glm,newdata = xx[i,],type = "response") # prob of state 2
     s = ifelse(runif(1)<y,2,1)                                # state
@@ -374,21 +374,21 @@ for(isim in 1:nsim){
     blind.flow[isim,i] = f # assign to time series
   }
 }
-boxplot(blind.flow)
+boxplot(blind.flow,names = seq(1:16)+2000)
 title("Forecasted vs. real streamflows")
-lines(x[101:111],col="red")
-points(x[101:111],col="red")
+lines(x[96:111],col="red")
+points(x[96:111],col="red")
 ```
 
 ### Correlation of median streamflows
 
 ```{r}
-blind.median = 1:11
-for(i in 1:11){
+blind.median = 1:16
+for(i in 1:16){
   blind.median[i] = median(blind.flow[,i])
   }
-plot(x[101:111],blind.median)
-cor(x[101:111],blind.median)
+plot(x[96:111],blind.median)
+cor(x[96:111],blind.median)
 ```
 
 The correlation is significantly lower than the one obtained for the historical time series.

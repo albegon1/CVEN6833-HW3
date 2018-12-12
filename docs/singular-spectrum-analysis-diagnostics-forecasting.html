@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>CVEN 6833 - Homework 3</title>
+  <meta name="description" content="Code and output for Homework Set 3">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="CVEN 6833 - Homework 3" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Code and output for Homework Set 3" />
+  <meta name="github-repo" content="albegon1/CVEN6833-HW3" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="CVEN 6833 - Homework 3" />
+  
+  <meta name="twitter:description" content="Code and output for Homework Set 3" />
+  
+
+<meta name="author" content="Alex Belenguer">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="use-of-hidden-markov-models-for-forecasting.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">CVEN 6833 - HW#3</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="1" data-path="seasonal-ar1-model.html"><a href="seasonal-ar1-model.html"><i class="fa fa-check"></i><b>1</b> Seasonal AR(1) model</a><ul>
+<li class="chapter" data-level="1.1" data-path="seasonal-ar1-model.html"><a href="seasonal-ar1-model.html#generate-250-simulations-each-of-same-length-as-the-historical-data."><i class="fa fa-check"></i><b>1.1</b> Generate 250 simulations each of same length as the historical data.</a></li>
+<li class="chapter" data-level="1.2" data-path="seasonal-ar1-model.html"><a href="seasonal-ar1-model.html#plot-statistics-from-simulations"><i class="fa fa-check"></i><b>1.2</b> Plot statistics from simulations</a></li>
+<li class="chapter" data-level="1.3" data-path="seasonal-ar1-model.html"><a href="seasonal-ar1-model.html#replace-the-simulation-of-the-errors-or-innovations-from-normal-to-gamma"><i class="fa fa-check"></i><b>1.3</b> Replace the simulation of the errors (or innovations) from Normal to Gamma</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="nonparametric-seasonal-lag-1-model.html"><a href="nonparametric-seasonal-lag-1-model.html"><i class="fa fa-check"></i><b>2</b> Nonparametric seasonal lag-1 model</a><ul>
+<li class="chapter" data-level="2.1" data-path="nonparametric-seasonal-lag-1-model.html"><a href="nonparametric-seasonal-lag-1-model.html#generate-250-simulations-each-of-same-length-as-the-historical-data.-1"><i class="fa fa-check"></i><b>2.1</b> Generate 250 simulations each of same length as the historical data.</a></li>
+<li class="chapter" data-level="2.2" data-path="nonparametric-seasonal-lag-1-model.html"><a href="nonparametric-seasonal-lag-1-model.html#plot-statistics-from-simulations-1"><i class="fa fa-check"></i><b>2.2</b> Plot statistics from simulations</a></li>
+<li class="chapter" data-level="2.3" data-path="nonparametric-seasonal-lag-1-model.html"><a href="nonparametric-seasonal-lag-1-model.html#advantagesdisadvantages-with-a-nonparametric-approach."><i class="fa fa-check"></i><b>2.3</b> Advantages/disadvantages with a nonparametric approach.</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html"><i class="fa fa-check"></i><b>3</b> Multivariate Simulation - Copulas</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#data-import-and-setup"><i class="fa fa-check"></i><b>3.0.1</b> Data import and setup</a></li>
+<li class="chapter" data-level="3.1" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#fit-a-copula-to-the-joint-cdf-copula-by-pairs"><i class="fa fa-check"></i><b>3.1</b> Fit a Copula to the joint CDF (copula by pairs)</a></li>
+<li class="chapter" data-level="3.2" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#simulate-from-the-copula-and-invert"><i class="fa fa-check"></i><b>3.2</b> Simulate from the Copula and invert</a></li>
+<li class="chapter" data-level="3.3" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#boxplot-the-statistics-listed-in-problem-1-and-compare-with-the-results-from-the-previous-methods"><i class="fa fa-check"></i><b>3.3</b> Boxplot the statistics listed in problem 1 and compare with the results from the previous methods</a></li>
+<li class="chapter" data-level="3.4" data-path="multivariate-simulation-copulas.html"><a href="multivariate-simulation-copulas.html#months-copula"><i class="fa fa-check"></i><b>3.4</b> 12 months copula</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html"><i class="fa fa-check"></i><b>4</b> Non stationary time series - Hidden Markov Model</a><ul>
+<li class="chapter" data-level="4.1" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#fit-a-best-hmm-for-the-may-lees-ferry-streamflow"><i class="fa fa-check"></i><b>4.1</b> Fit a best HMM for the May Lees Ferry streamflow</a></li>
+<li class="chapter" data-level="4.2" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#generate-250-simulations-from-the-fitted-hmm"><i class="fa fa-check"></i><b>4.2</b> Generate 250 simulations from the fitted HMM</a></li>
+<li class="chapter" data-level="4.3" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#boxplot-the-resulting-statistics"><i class="fa fa-check"></i><b>4.3</b> Boxplot the resulting statistics</a></li>
+<li class="chapter" data-level="4.4" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#fit-a-glm-for-the-state-series"><i class="fa fa-check"></i><b>4.4</b> Fit a GLM for the state series</a></li>
+<li class="chapter" data-level="4.5" data-path="non-stationary-time-series-hidden-markov-model.html"><a href="non-stationary-time-series-hidden-markov-model.html#use-the-state-glm-to-simulate-flows-from-the-component-distribution"><i class="fa fa-check"></i><b>4.5</b> Use the state GLM to simulate flows from the component distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="spectral-simulation.html"><a href="spectral-simulation.html"><i class="fa fa-check"></i><b>5</b> Spectral Simulation</a></li>
+<li class="chapter" data-level="6" data-path="modeling-nonstationary-extreme-value-time-series.html"><a href="modeling-nonstationary-extreme-value-time-series.html"><i class="fa fa-check"></i><b>6</b> Modeling Nonstationary Extreme Value Time series</a><ul>
+<li class="chapter" data-level="6.1" data-path="modeling-nonstationary-extreme-value-time-series.html"><a href="modeling-nonstationary-extreme-value-time-series.html#fit-a-stationary-gev"><i class="fa fa-check"></i><b>6.1</b> Fit a stationary GEV</a></li>
+<li class="chapter" data-level="6.2" data-path="modeling-nonstationary-extreme-value-time-series.html"><a href="modeling-nonstationary-extreme-value-time-series.html#fit-a-best-nonstationary-gev-model"><i class="fa fa-check"></i><b>6.2</b> Fit a best nonstationary GEV model</a></li>
+<li class="chapter" data-level="6.3" data-path="modeling-nonstationary-extreme-value-time-series.html"><a href="modeling-nonstationary-extreme-value-time-series.html#repeat-by-varying-scale-and-location"><i class="fa fa-check"></i><b>6.3</b> Repeat by varying scale and location</a></li>
+<li class="chapter" data-level="6.4" data-path="modeling-nonstationary-extreme-value-time-series.html"><a href="modeling-nonstationary-extreme-value-time-series.html#plot-the-results"><i class="fa fa-check"></i><b>6.4</b> Plot the results</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html"><i class="fa fa-check"></i><b>7</b> Use of Hidden Markov Models for forecasting</a><ul>
+<li class="chapter" data-level="7.1" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#fit-a-best-hmm-model-for-the-spring-season-flows"><i class="fa fa-check"></i><b>7.1</b> Fit a best HMM model for the spring season flows</a></li>
+<li class="chapter" data-level="7.2" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#generate-250-simulations-each-of-same-length-as-the-historical-data"><i class="fa fa-check"></i><b>7.2</b> Generate 250 simulations each of same length as the historical data</a></li>
+<li class="chapter" data-level="7.3" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#fit-a-best-glm-to-the-state-sequence"><i class="fa fa-check"></i><b>7.3</b> Fit a best GLM to the state sequence</a></li>
+<li class="chapter" data-level="7.4" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#for-each-year-based-on-the-predictors-obtain-the-probabilities-of-the-states"><i class="fa fa-check"></i><b>7.4</b> For each year based on the predictors, obtain the probabilities of the states</a></li>
+<li class="chapter" data-level="7.5" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#using-these-state-probabilities-simulate-flow-from-the-corresponding-state-pdfs"><i class="fa fa-check"></i><b>7.5</b> Using these state probabilities, simulate flow from the corresponding state PDFs</a></li>
+<li class="chapter" data-level="7.6" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#compute-the-median-and-compare-with-the-observed-flow.-compute-rpss-at-the-terciles."><i class="fa fa-check"></i><b>7.6</b> Compute the median and compare with the observed flow. Compute RPSS at the terciles.</a></li>
+<li class="chapter" data-level="7.7" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#make-blind-predictions-from-2001-and-on"><i class="fa fa-check"></i><b>7.7</b> Make blind predictions from 2001 and on</a><ul>
+<li class="chapter" data-level="7.7.1" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#correlation-of-median-streamflows"><i class="fa fa-check"></i><b>7.7.1</b> Correlation of median streamflows</a></li>
+<li class="chapter" data-level="7.7.2" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#rpss"><i class="fa fa-check"></i><b>7.7.2</b> RPSS</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="use-of-hidden-markov-models-for-forecasting.html"><a href="use-of-hidden-markov-models-for-forecasting.html#functions-from-lib.r"><i class="fa fa-check"></i><b>7.8</b> Functions from lib.R</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="singular-spectrum-analysis-diagnostics-forecasting.html"><a href="singular-spectrum-analysis-diagnostics-forecasting.html"><i class="fa fa-check"></i><b>8</b> Singular Spectrum Analysis – Diagnostics &amp; Forecasting</a><ul>
+<li class="chapter" data-level="8.1" data-path="singular-spectrum-analysis-diagnostics-forecasting.html"><a href="singular-spectrum-analysis-diagnostics-forecasting.html#ssa-on-time-frame-window"><i class="fa fa-check"></i><b>8.1</b> SSA on time frame window</a></li>
+<li class="chapter" data-level="8.2" data-path="singular-spectrum-analysis-diagnostics-forecasting.html"><a href="singular-spectrum-analysis-diagnostics-forecasting.html#prediction-use-ar-models-to-fit-rpc-and-predict-2001---2016-streamflows"><i class="fa fa-check"></i><b>8.2</b> Prediction: Use AR models to fit RPC and predict 2001 - 2016 streamflows</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="singular-spectrum-analysis-diagnostics-forecasting.html"><a href="singular-spectrum-analysis-diagnostics-forecasting.html#perform-ssa-until-2001"><i class="fa fa-check"></i><b>8.2.1</b> Perform SSA until 2001</a></li>
+<li class="chapter" data-level="8.2.2" data-path="singular-spectrum-analysis-diagnostics-forecasting.html"><a href="singular-spectrum-analysis-diagnostics-forecasting.html#ar-model-for-dominant-modes"><i class="fa fa-check"></i><b>8.2.2</b> AR model for dominant modes</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li> 
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CVEN 6833 - Homework 3</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="singular-spectrum-analysis-diagnostics-forecasting" class="section level1">
+<h1><span class="header-section-number">Exercise 8</span> Singular Spectrum Analysis – Diagnostics &amp; Forecasting</h1>
+<p>For the spring season flow (Apr-Jun average) at Lees Ferry on the Colorado River perform SSA and make predictions from it. The steps are as follows:</p>
+<p>** Diagnostic **</p>
+<ul>
+<li>Select a window size of about 10-20 years (feel free to experiment with the window size); create the Toeplitz matrix and perform SSA.</li>
+<li>Plot the Eigen spectrum and identify the dominant modes.</li>
+<li>Reconstruct the dominant modes (i.e. Reconstructed Components - RCs) and plot them. Infer from them the dominant periodicities.</li>
+<li>Sum the leading modes and plot them along with the original time series. This will show the ‘filtering’ capability of SSA. Feel free to play with the number of RCs.</li>
+<li>Plot the dominant modes and show their corresponding wavelet spectra</li>
+</ul>
+<p>** Prediction **</p>
+<ul>
+<li>Apply the SSA to data for the pre-2001</li>
+<li>Make a prediction for the 2001 using AR models to the leading modes; and repeat for each year through 2016.</li>
+<li>Plot the observed and predicted values; compute the median correlation.</li>
+</ul>
+<div id="ssa-on-time-frame-window" class="section level2">
+<h2><span class="header-section-number">8.1</span> SSA on time frame window</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>) <span class="co"># allow repetition of results</span>
+<span class="co"># libraries</span>
+libr=<span class="kw">c</span>(<span class="st">&quot;magrittr&quot;</span>,<span class="st">&quot;MASS&quot;</span>,<span class="st">&quot;sm.density&quot;</span>)
+<span class="kw">options</span>(<span class="dt">warn=</span><span class="op">-</span><span class="dv">999</span>)
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">lapply</span>(libr, 
+                require, <span class="dt">character.only =</span> <span class="ot">TRUE</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load flow data</span>
+mflow =<span class="st"> </span><span class="kw">read.table</span>(
+  <span class="st">&quot;http://civil.colorado.edu/~balajir/CVEN6833/HWs/HW-3-2018/LeesFerry-monflows-1906-2016.txt&quot;</span>)
+lf =<span class="st"> </span>mflow[,<span class="dv">2</span><span class="op">:</span><span class="dv">13</span>] <span class="op">%&gt;%</span><span class="st"> `</span><span class="dt">rownames&lt;-</span><span class="st">`</span>(mflow[,<span class="dv">1</span>]) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Apr - Jun</span>
+<span class="st">  </span>{<span class="kw">rowMeans</span>(.[,<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>])} <span class="op">%&gt;%</span><span class="st"> </span>{.<span class="op">*</span><span class="fl">0.0004690502</span><span class="op">*</span><span class="fl">0.001</span>} <span class="co"># convert to 10^3 cms</span>
+<span class="co"># lfann = apply(mflow[,2:13],1,sum) %&gt;% {.*0.0004690502*0.001}</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">M =<span class="st"> </span><span class="dv">20</span>
+ssaout =<span class="st">  </span><span class="kw">ssab</span>(lf,M)
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(ssaout<span class="op">$</span>lambdas)
+<span class="kw">plot</span>(<span class="kw">cumsum</span>(ssaout<span class="op">$</span>lambdas))</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-87-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(ssaout<span class="op">$</span>lambdas[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</code></pre></div>
+<pre><code>## [1] 0.4127211</code></pre>
+<p>We choose the first 5 RPC as they represent more than 40% of the variance.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">K=<span class="dv">5</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>))
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>K){
+  <span class="kw">plot</span>(ssaout<span class="op">$</span>Rpc[,i],<span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,<span class="dt">main =</span> <span class="kw">paste</span>(<span class="kw">sprintf</span>(<span class="st">&quot;RPC %s&quot;</span>,i)))
+}</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-88-1.png" width="1152" /></p>
+<p>The resulting time series from the reconstructed dominant modes is plotted with the historical data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Recon =<span class="st"> </span><span class="kw">apply</span>(ssaout<span class="op">$</span>Rpc[,<span class="dv">1</span><span class="op">:</span>K],<span class="dv">1</span>,sum)
+<span class="kw">plot</span>(mflow[,<span class="dv">1</span>],lf,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>,<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="kw">max</span>(lf)))
+<span class="kw">lines</span>(mflow[,<span class="dv">1</span>],Recon,<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)
+<span class="kw">legend</span>(<span class="dt">x=</span><span class="st">&quot;bottomleft&quot;</span>,<span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Historic values&quot;</span>,
+      <span class="st">&quot;Reconstructed dominant modes&quot;</span>),<span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>),<span class="dt">lty =</span> <span class="dv">1</span>,<span class="dt">bty=</span><span class="st">&quot;n&quot;</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-89-1.png" width="672" /></p>
+<p>The sum of all RPC gives the original time series.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Recon.tot =<span class="st"> </span><span class="kw">apply</span>(ssaout<span class="op">$</span>Rpc[,<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>],<span class="dv">1</span>,sum)
+<span class="kw">plot</span>(mflow[,<span class="dv">1</span>],lf,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>,<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="kw">max</span>(lf)))
+<span class="kw">points</span>(mflow[,<span class="dv">1</span>],Recon.tot,<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)
+<span class="kw">legend</span>(<span class="dt">x=</span><span class="st">&quot;bottomleft&quot;</span>,<span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Historic values&quot;</span>,
+      <span class="st">&quot;Reconstructed dominant modes&quot;</span>),<span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>),<span class="dt">lty =</span> <span class="dv">1</span>,<span class="dt">bty=</span><span class="st">&quot;n&quot;</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
+</div>
+<div id="prediction-use-ar-models-to-fit-rpc-and-predict-2001---2016-streamflows" class="section level2">
+<h2><span class="header-section-number">8.2</span> Prediction: Use AR models to fit RPC and predict 2001 - 2016 streamflows</h2>
+<div id="perform-ssa-until-2001" class="section level3">
+<h3><span class="header-section-number">8.2.1</span> Perform SSA until 2001</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">M =<span class="st"> </span><span class="dv">15</span> <span class="co"># window reduced</span>
+ssaout =<span class="st">  </span><span class="kw">ssab</span>(lf[<span class="dv">1</span><span class="op">:</span><span class="dv">95</span>],M) <span class="co"># 1906 - 2000</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(ssaout<span class="op">$</span>lambdas)
+<span class="kw">plot</span>(<span class="kw">cumsum</span>(ssaout<span class="op">$</span>lambdas))</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(ssaout<span class="op">$</span>lambdas[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</code></pre></div>
+<pre><code>## [1] 0.4784262</code></pre>
+<p>We choose the first 5 RPC as they represent more than 40% of the variance.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">K=<span class="dv">5</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>))
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>K){
+  <span class="kw">plot</span>(ssaout<span class="op">$</span>Rpc[,i],<span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,<span class="dt">main =</span> <span class="kw">paste</span>(<span class="kw">sprintf</span>(<span class="st">&quot;RPC %s&quot;</span>,i)))
+}</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-92-1.png" width="1152" /></p>
+<p>The resulting time series from the reconstructed dominant modes is plotted with the historical data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Recon =<span class="st"> </span><span class="kw">apply</span>(ssaout<span class="op">$</span>Rpc[,<span class="dv">1</span><span class="op">:</span>K],<span class="dv">1</span>,sum)
+<span class="kw">plot</span>(mflow[<span class="dv">1</span><span class="op">:</span><span class="dv">95</span>,<span class="dv">1</span>],lf[<span class="dv">1</span><span class="op">:</span><span class="dv">95</span>],<span class="dt">col=</span><span class="st">&quot;red&quot;</span>,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>,<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="kw">max</span>(lf)))
+<span class="kw">lines</span>(mflow[<span class="dv">1</span><span class="op">:</span><span class="dv">95</span>,<span class="dv">1</span>],Recon,<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)
+<span class="kw">legend</span>(<span class="dt">x=</span><span class="st">&quot;bottomleft&quot;</span>,<span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Historic values&quot;</span>,
+      <span class="st">&quot;Reconstructed dominant modes&quot;</span>),<span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>),<span class="dt">lty =</span> <span class="dv">1</span>,<span class="dt">bty=</span><span class="st">&quot;n&quot;</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
+</div>
+<div id="ar-model-for-dominant-modes" class="section level3">
+<h3><span class="header-section-number">8.2.2</span> AR model for dominant modes</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Fit best AR to each dominant RPC</span>
+rc.ar =<span class="st"> </span><span class="kw">as.list</span>(<span class="dv">1</span><span class="op">:</span>K)
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>K) rc.ar[[i]] =<span class="st"> </span><span class="kw">ar</span>(ssaout<span class="op">$</span>Rpc[,i])
+
+<span class="co"># Fit a Normal to RPC 6 to 15</span>
+resid =<span class="st"> </span><span class="kw">apply</span>(ssaout<span class="op">$</span>Rpc[,(K<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>M],<span class="dv">1</span>,sum)
+noise =<span class="st"> </span><span class="kw">fitdistr</span>(resid,<span class="dt">densfun =</span> <span class="st">&quot;normal&quot;</span>)<span class="op">$</span>estimate
+<span class="kw">hist</span>(resid, <span class="dt">probability =</span> <span class="ot">TRUE</span>)
+<span class="kw">sm.density</span>(<span class="kw">rnorm</span>(<span class="dv">1000</span>,noise[<span class="dv">1</span>],noise[<span class="dv">2</span>]),<span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-94-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulate 2001 to 2016</span>
+nsim =<span class="st"> </span><span class="dv">250</span>
+pred.ahead =<span class="st"> </span>se.ahead =<span class="st"> </span><span class="kw">array</span>(<span class="ot">NA</span>, <span class="kw">c</span>(K, <span class="dv">16</span>, nsim))
+sim =<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>,<span class="dt">nrow =</span> nsim,<span class="dt">ncol =</span> <span class="dv">16</span>)
+<span class="cf">for</span>(isim <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim){
+  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>K){
+    xp =<span class="st"> </span><span class="kw">predict</span>(rc.ar[[i]],<span class="dt">n.ahead =</span> <span class="dv">16</span>)
+    pred.ahead[i,,isim] =<span class="st"> </span>xp<span class="op">$</span>pred
+    se.ahead[i,,isim] =<span class="st"> </span>xp<span class="op">$</span>se
+  }
+  <span class="co"># Add all RPC and add noise (normally distributed)</span>
+  sim[isim,] =<span class="st"> </span><span class="kw">colSums</span>(pred.ahead[,,isim]) <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">16</span>,noise[<span class="dv">1</span>],noise[<span class="dv">2</span>])
+}
+<span class="co"># plot(sim,type = &quot;l&quot;,ylim = c(0,max(sim,lf[96:111])))</span>
+<span class="co"># lines(lf[96:111],col = &quot;red&quot;)</span>
+<span class="co"># legend(x=&quot;topleft&quot;,legend = c(&quot;Historic values&quot;,</span>
+<span class="co">#       &quot;Simulated values&quot;),col=c(&quot;red&quot;,&quot;black&quot;),lty = 1,bty=&quot;n&quot;)</span></code></pre></div>
+<p>The forecast is presented as boxplots. The correlation is calculated using the median values.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Median correlation</span>
+<span class="kw">boxplot</span>(sim,<span class="dt">names =</span> <span class="kw">seq</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">16</span>)<span class="op">+</span><span class="dv">2000</span>)
+<span class="kw">title</span>(<span class="st">&quot;Forecasted vs. real streamflows&quot;</span>)
+<span class="kw">lines</span>(lf[<span class="dv">96</span><span class="op">:</span><span class="dv">111</span>],<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)
+<span class="kw">points</span>(lf[<span class="dv">96</span><span class="op">:</span><span class="dv">111</span>],<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="CVEN_6833_-_HW3_files/figure-html/unnamed-chunk-95-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim.median =<span class="st"> </span><span class="kw">apply</span>(<span class="kw">t</span>(sim),<span class="dv">1</span>,median) <span class="co"># Get median value of each step</span>
+<span class="kw">cor</span>(sim.median, lf[<span class="dv">96</span><span class="op">:</span><span class="dv">111</span>]) <span class="co"># Correlation</span></code></pre></div>
+<pre><code>## [1] 0.2562116</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ssab =<span class="st"> </span><span class="cf">function</span>(yy,M) {
+#### SSA 
+N =<span class="st"> </span><span class="kw">length</span>(yy)
+
+m1 =<span class="st"> </span>M<span class="op">-</span><span class="dv">1</span>
+Np =<span class="st"> </span>N<span class="op">-</span>M<span class="op">+</span><span class="dv">1</span>
+Np1 =<span class="st"> </span>Np<span class="op">+</span><span class="dv">1</span>
+
+## create the lagged matrix
+topl =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>,Np,M)
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>M){
+i1=i<span class="op">-</span><span class="dv">1</span><span class="op">+</span><span class="dv">1</span>
+i2 =<span class="st"> </span>Np<span class="op">+</span>i<span class="op">-</span><span class="dv">1</span>
+topl[,i]=yy[i1<span class="op">:</span>i2]
+}
+
+<span class="co">#zz=scale(topl)</span>
+
+zs=<span class="kw">var</span>(topl)
+zsvd =<span class="st"> </span><span class="kw">svd</span>(zs)
+
+<span class="co">#Eigen Values.. - fraction variance </span>
+lambdas=(zsvd<span class="op">$</span>d<span class="op">/</span><span class="kw">sum</span>(zsvd<span class="op">$</span>d))
+
+### PCs
+At =<span class="st"> </span>topl <span class="op">%*%</span><span class="st"> </span>zsvd<span class="op">$</span>u
+
+
+#### Reconstructed Components RCs
+Rpc =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>,N,M)
+
+<span class="cf">for</span>(ipc <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>M){
+
+## t = 1,M-1  mt = 1/t; lt = 1, ut =t
+lt=<span class="dv">1</span>
+m1 =<span class="st"> </span>M<span class="op">-</span><span class="dv">1</span>
+
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>m1){
+
+i1 =<span class="st"> </span>i<span class="op">-</span>lt<span class="op">+</span><span class="dv">1</span>
+i2 =<span class="st"> </span>i<span class="op">-</span>i<span class="op">+</span><span class="dv">1</span>
+
+Rpc[i,ipc] =<span class="st"> </span><span class="kw">sum</span>(At[i1<span class="op">:</span>i2,ipc]<span class="op">*</span>zsvd<span class="op">$</span>u[lt<span class="op">:</span>i,ipc])<span class="op">/</span>i
+
+}
+
+### t = M, N&#39;, mt = 1/M, lt = 1, ut = M
+lt=<span class="dv">1</span>
+ut=M
+
+<span class="cf">for</span>(i <span class="cf">in</span> M<span class="op">:</span>Np){
+
+i1 =<span class="st"> </span>i<span class="op">-</span>lt<span class="op">+</span><span class="dv">1</span>
+i2 =<span class="st"> </span>i<span class="op">-</span>M<span class="op">+</span><span class="dv">1</span>
+
+Rpc[i,ipc] =<span class="st"> </span><span class="kw">sum</span>(At[i1<span class="op">:</span>i2,ipc]<span class="op">*</span>zsvd<span class="op">$</span>u[lt<span class="op">:</span>ut,ipc])<span class="op">/</span>M
+
+}
+
+
+### t = N&#39;+1, N, mt = 1/(N-t+1), lt = t-N+M, ut = M
+lt=<span class="dv">1</span>
+ut=M
+
+<span class="cf">for</span>(i <span class="cf">in</span> Np1<span class="op">:</span>N){
+lt =<span class="st"> </span>i<span class="op">-</span>N<span class="op">+</span>M
+i1 =<span class="st"> </span>i<span class="op">-</span>lt<span class="op">+</span><span class="dv">1</span>
+i2 =<span class="st"> </span>i<span class="op">-</span>M<span class="op">+</span><span class="dv">1</span>
+mt =<span class="st"> </span>(N<span class="op">-</span>i<span class="op">+</span><span class="dv">1</span>)
+
+Rpc[i,ipc] =<span class="st"> </span><span class="kw">sum</span>(At[i1<span class="op">:</span>i2,ipc]<span class="op">*</span>zsvd<span class="op">$</span>u[lt<span class="op">:</span>ut,ipc])<span class="op">/</span>mt
+
+}
+
+}
+
+
+out=<span class="kw">c</span>()
+out<span class="op">$</span>lambdas =<span class="st"> </span>lambdas
+out<span class="op">$</span>eof =<span class="st"> </span>zsvd<span class="op">$</span>u
+out<span class="op">$</span>At =<span class="st"> </span>At
+out<span class="op">$</span>Rpc =<span class="st"> </span>Rpc
+
+<span class="kw">as.list</span>(out)
+}</code></pre></div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="use-of-hidden-markov-models-for-forecasting.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["CVEN 6833 - HW3.pdf", "CVEN 6833 - HW3.epub", "CVEN 6833 - HW3.mobi"],
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+</body>
+
+</html>
